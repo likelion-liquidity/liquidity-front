@@ -12,8 +12,7 @@ Go to [Kaikas docs](https://docs.kaikas.io/)
 
 ### Klaytn Provider
 
-- [ ] klaytn.enable()
-- [ ] klaytn.sendAsync(options, callback)
+- [x] klaytn.enable() => getKaikasAccts()
 - [ ] klaytn.on(eventName, callback)
 - [ ] klaytn._kaikas
     - [ ] klaytn._kaikas.isEnabled()
@@ -24,7 +23,7 @@ Go to [Kaikas docs](https://docs.kaikas.io/)
 
 - [ ] caver.klay.getBalance
 - [ ] caver.klay.sign
-- [ ] caver.klay.sendTransaction
+- [x] caver.klay.sendTransaction
 - [ ] caver.klay.signTransaction
 - [ ] caver.klay.sendSignedTransaction
 - [ ] caver.klay.Contract
