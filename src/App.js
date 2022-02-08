@@ -1,11 +1,13 @@
-import { KlayEnable } from './api/UseKaikas';
+import { useState } from 'react';
+import { getKaikasAccts } from './api/UseKaikas';
 import './App.css';
 
 function App() {
-  KlayEnable();
+  const [obj, setObj] = useState("TEAM LIQUIDITY");
+  getKaikasAccts().then(res => setObj(res));
   return (
     <div className="App">
-      TEAM LIQUIDITY
+      {obj}
     </div>
   );
 }
