@@ -12,22 +12,22 @@ Go to [Kaikas docs](https://docs.kaikas.io/)
 
 ### Klaytn Provider
 
-- [] klaytn.enable()
-- [] klaytn.sendAsync(options, callback)
-- [] klaytn.on(eventName, callback)
-- [] klaytn._kaikas
-    - [] klaytn._kaikas.isEnabled()
-    - [] klaytn._kaikas.isApproved()
-    - [] klaytn._kaikas.isUnlocked()
+- [ ] klaytn.enable()
+- [ ] klaytn.sendAsync(options, callback)
+- [ ] klaytn.on(eventName, callback)
+- [ ] klaytn._kaikas
+    - [ ] klaytn._kaikas.isEnabled()
+    - [ ] klaytn._kaikas.isApproved()
+    - [ ] klaytn._kaikas.isUnlocked()
 
 ### Caver Methods
 
-- [] caver.klay.getBalance
-- [] caver.klay.sign
-- [] caver.klay.sendTransaction
-- [] caver.klay.signTransaction
-- [] caver.klay.sendSignedTransaction
-- [] caver.klay.Contract
+- [ ] caver.klay.getBalance
+- [ ] caver.klay.sign
+- [ ] caver.klay.sendTransaction
+- [ ] caver.klay.signTransaction
+- [ ] caver.klay.sendSignedTransaction
+- [ ] caver.klay.Contract
 
 
 ## Klip
@@ -37,30 +37,30 @@ Go to [Klip docs](https://docs.klipwallet.com/)
 ### Card Minting
 
 #### 계정 관리
-- [] Sign In
-- [] Change Password
-- [] Change PIN
+- [ ] Sign In
+- [ ] Change Password
+- [ ] Change PIN
 
 #### 카드 관리
-- [] Upload Image
-- [] Upload NFT Resource
-- [] Mint Card to User
-- [] Mint Card to Klip Member
-- [] Get Mint Count
-- [] Send Card to User
-- [] Send Card to Klip Member
-- [] Get Card Information by Bapp
-- [] Get Card Information
-- [] Delete Card
-- [] Approve Escrow
-- [] Get Escrow Approval Status
-- [] Create Escrow
-- [] Get Cards in Escrow
-- [] Cancel Escrow
-- [] Get Transaction Result
+- [ ] Upload Image
+- [ ] Upload NFT Resource
+- [ ] Mint Card to User
+- [ ] Mint Card to Klip Member
+- [ ] Get Mint Count
+- [ ] Send Card to User
+- [ ] Send Card to Klip Member
+- [ ] Get Card Information by Bapp
+- [ ] Get Card Information
+- [ ] Delete Card
+- [ ] Approve Escrow
+- [ ] Get Escrow Approval Status
+- [ ] Create Escrow
+- [ ] Get Cards in Escrow
+- [ ] Cancel Escrow
+- [ ] Get Transaction Result
 
 ### App2App
 - [x] Prepare
 - [x] Request
 - [x] Result
-- [] Get Card Information
+- [ ] Get Card Information
