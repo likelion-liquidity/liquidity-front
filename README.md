@@ -2,7 +2,7 @@
 
 ## LIQUDITY SMART CONTRACT(KAS:KIP-17, KIP-7)
 
-Go to [Kaikas docs](https://docs.klaytnapi.com/)
+Go to [KAS docs](https://docs.klaytnapi.com/)
 
 Liquidity 스마트 컨트랙트가 작업이 진행된 후 작업 진행
 
