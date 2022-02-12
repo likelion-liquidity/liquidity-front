@@ -6,16 +6,18 @@ import { getKaikasAccts } from 'lib/api/UseKaikas';
 import { getKlaytnProvider } from 'lib/helpers';
 import Button from 'components/common/Button';
 import palette from 'styles/palette';
-import caver from 'lib/klaytn/caver';
+import caver from 'caver-js';
+// import caver from 'lib/klaytn/caver';
 
 const St = {
   AppbarWrapper: styled.div`
+    z-index: 1;
     width: 89%;
     margin: 0 auto;
     max-width: 1184px;
-    height: 80px;
+    height: 60px;
 
-    min-height: 64px;
+    min-height: 40px;
     display: flex;
     position: relative;
     justify-content: space-between;
@@ -24,7 +26,7 @@ const St = {
 
   HeaderContainerLeft: styled.div``,
   HeaderContainerLogoWrapper: styled.div`
-    height: 60px;
+    height: 50px;
     img {
       height: 100%;
       width: 100%;
@@ -39,8 +41,8 @@ const St = {
   HeaderLinkWrapper: styled.ul`
     display: flex;
     flex-direction: row;
-    padding: 8px 16px;
-    display: flex;
+
+    margin-top: 0;
 
     a {
       text-decoration: none;

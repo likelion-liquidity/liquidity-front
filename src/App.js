@@ -11,7 +11,9 @@ import {
 import Borrow from 'pages/Borrow';
 import Stake from 'pages/Stake';
 import Header from 'components/base/Header';
+import Common from 'pages/Common';
 import Footer from 'components/base/Footer';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const St = {
   BaseRoot: styled.div`
@@ -25,7 +27,7 @@ const St = {
     min-height: calc(100vh - 160px);
     display: flex;
     margin: 0 auto 48px;
-    padding: 80px 20px 0;
+    padding: 0px 20px 0;
   `
 };
 function App() {
@@ -49,10 +51,10 @@ function App() {
         <St.BaseRoot>
           <Header account={account} setAccount={setAccount} />
           <St.ContentView>
-            TEAM LIQUIDITY
             <Routes>
               <Route path="borrow" element={<Borrow />} />
               <Route path="stake" element={<Stake />} />
+              <Route path="common" element={<Common />} />
             </Routes>
           </St.ContentView>
         </St.BaseRoot>
