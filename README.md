@@ -1,5 +1,12 @@
 # Liquidity Front
 
+## Components
+
+- [ ] Button
+- [ ] Card
+- [ ] Common modal
+- [ ] element in NFT list
+
 ## LIQUDITY SMART CONTRACT(KAS:KIP-17, KIP-7)
 
 Go to [KAS docs](https://docs.klaytnapi.com/)
