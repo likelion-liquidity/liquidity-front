@@ -2,7 +2,7 @@
 
 ## Components
 
-- [ ] Button
+- [x] Button
 - [ ] Card
 - [ ] Common modal
 - [ ] element in NFT list

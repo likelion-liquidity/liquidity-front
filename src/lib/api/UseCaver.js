@@ -1,4 +1,4 @@
-import caver from 'lib/klaytn/caver';
+import caver from 'caver-js';
 import KIP17ABI from '../abi/KIP17TokenABI.json';
 // import {
 //     ACCESS_KEY_ID,
