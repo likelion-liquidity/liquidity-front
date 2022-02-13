@@ -6,7 +6,7 @@ import { getKaikasAccts } from 'lib/api/UseKaikas';
 import { getKlaytnProvider } from 'lib/helpers';
 import Button from 'components/common/Button';
 import palette from 'styles/palette';
-import caver from 'lib/klaytn/caver';
+import caver from 'caver-js';
 
 const St = {
   AppbarWrapper: styled.div`
@@ -150,7 +150,7 @@ const Appbar = ({ account, setAccount }) => {
             </NavLink>
           ))}
         </St.HeaderLinkWrapper>
-        <Button onClick={handleConnectWallet} color="blue_4">
+        <Button onClick={handleConnectWallet} color="blue_6">
           {account ? 'disconnect wallet' : 'connect wallet'}
         </Button>
       </St.HeaderContaineRight>

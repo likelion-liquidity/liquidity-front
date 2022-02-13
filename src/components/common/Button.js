@@ -12,6 +12,18 @@ const getButtonColor = (color, colorReverse) => {
           color: ${palette.blue_4};
           background-color: white;
         `;
+      case "blue_5":
+        return css`
+          border: 2px solid ${palette.blue_5};
+          color: ${palette.blue_5};
+          background-color: white;
+        `;
+      case "blue_6":
+        return css`
+          border: 2px solid ${palette.blue_6};
+          color: ${palette.blue_6};
+          background-color: white;
+        `;
       default:
         return css`
           border: 2px solid ${palette.black};
@@ -24,6 +36,16 @@ const getButtonColor = (color, colorReverse) => {
     case 'blue_4':
       return css`
         background-color: ${palette.blue_4};
+        color: white;
+      `;
+    case 'blue_5':
+      return css`
+        background-color: ${palette.blue_5};
+        color: white;
+      `;
+    case 'blue_6':
+      return css`
+        background-color: ${palette.blue_6};
         color: white;
       `;
     case 'bittersweet':
