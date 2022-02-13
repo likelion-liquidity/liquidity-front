@@ -1,10 +1,10 @@
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import useModal from 'hooks/useModal';
 import { NavLink, Link } from 'react-router-dom';
 import { getKaikasAccts } from 'lib/api/UseKaikas';
 import { getKlaytnProvider } from 'lib/helpers';
-import Button from 'components/common/Button';
+import { Button } from 'components/common';
 import palette from 'styles/palette';
 import caver from 'caver-js';
 // import caver from 'lib/klaytn/caver';
@@ -133,8 +133,10 @@ const Appbar = ({ account, setAccount }) => {
   ];
 
   const handleConnectWallet = () => {
-    loadAccountInfo();
+    openModal();
+    //loadAccountInfo();
   };
+
   return (
     <St.AppbarWrapper>
       <St.HeaderContainerLeft className="header-container-left">

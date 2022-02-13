@@ -5,6 +5,14 @@ const St = {
     height: 200px;
     background-color: black;
     width: 100%;
+    left: 0;
+    position: absolute;
+
+    img {
+      object-fit: cover;
+      width: 100%;
+      height: 100%;
+    }
   `,
 
   NFTDescriptionContainer: styled.div`
@@ -14,7 +22,7 @@ const St = {
     flex-direction: column;
   `,
   NFTLogoContainer: styled.div`
-    margin-top: -64px;
+    margin-top: 128px;
     position: relative;
     align-items: center;
     display: flex;
@@ -51,13 +59,42 @@ const St = {
     max-width: 600px;
     overflow: hidden;
     text-align: center;
+  `,
+  NFTInfoContainer: styled.div`
+    display: flex;
+    justify-content: center;
+    width: 144px;
+    height: 30px;
+    border-radius: inherit;
+  `,
+  CoinLogo: styled.div`
+    width: 25px;
+    height: 25px;
+    margin-right: 2px;
+    img{
+        width:100%;
+        height:100%:
+    }
+  `,
+  Price: styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
   `
 };
 
 const NFTInfoHeader = () => {
   return (
     <div>
-      <St.NFTDescriptionImageContainer></St.NFTDescriptionImageContainer>
+      <St.NFTDescriptionImageContainer>
+        <div style={{ width: 'inherit', height: 'inherit' }}>
+          <img
+            src="https://lh3.googleusercontent.com/fFYvhocbgwWPHEQuwCpBuyuh_ws7bjp4mH_hMcTOGFLmj7ESVLY1Uuo8FXXsaWsJz4iGPUnA4HqbA9O7z5EADOthN07bg1lsdiJ6hg=h600"
+            alt=""
+          />
+        </div>
+      </St.NFTDescriptionImageContainer>
       <St.NFTDescriptionContainer>
         <St.NFTLogoContainer>
           <St.NFTLogo>
@@ -68,10 +105,16 @@ const NFTInfoHeader = () => {
           </St.NFTLogo>
         </St.NFTLogoContainer>
         <St.NFTTitleCotainer>
-          <St.Title>klay City</St.Title>
+          <St.Title>META-KONGS</St.Title>
         </St.NFTTitleCotainer>
-
-        <h3>price 6000 </h3>
+        <St.NFTInfoContainer>
+          <St.CoinLogo>
+            <img src="https://static.opensea.io/tokens/KLAY.png" alt="" />
+          </St.CoinLogo>
+          <St.Price>
+            <span> 8,300 </span>
+          </St.Price>
+        </St.NFTInfoContainer>
       </St.NFTDescriptionContainer>
     </div>
   );

@@ -47,6 +47,7 @@ function App() {
         <meta name="description" content="LIQUIDITY " />
         <meta property="og:image" content="" />
       </Helmet>
+      <div id="root-modal" />
       <Router>
         <St.BaseRoot>
           <Header account={account} setAccount={setAccount} />

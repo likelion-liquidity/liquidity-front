@@ -1,6 +1,9 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useRef, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import palette from 'styles/palette';
+import { addComma } from 'lib/helpers';
+
 const St = {
   LTVBarWrapper: styled.div`
     height: 15px;
@@ -16,7 +19,7 @@ const St = {
   `,
   LTVBarInner: styled.div`
     position: absolute;
-    width: 44.2%;
+    width: ${(props) => props.ltvCurrentPosition}%;
     height: 100%;
     background-color: ${palette.blue_6};
     border-radius: 20px;
@@ -41,39 +44,60 @@ const St = {
 };
 
 const value = 100 / 60;
-const LTVBar = () => {
+
+const LTVBar = ({
+  collateralValue = 0, // 담보가치
+  borrowedValue = 0, //빌린 금액
+  repayAmount = 0
+}) => {
+  const [ltvCurrentPosition, setLtvCurrentPosition] = useState(0);
+  const [ltvCurrentPositionWidth, setLtvCurrentPositionWidth] = useState(0);
   const [ltv45Width, setLtv45Width] = useState(0);
   const [ltv60Width, setLtv60Width] = useState(0);
-  const ltvbarRef = useRef();
+  const ltvbarRef = useRef(null);
 
   const getOuterSize = () => {
     if (!ltvbarRef.current) return;
-    setLtv45Width(ltvbarRef.current.offsetWidth * ((45 * value) / 100));
-    setLtv60Width(ltvbarRef.current.offsetWidth);
+    const ltvBarElementWidth = ltvbarRef.current.offsetWidth;
+    setLtvCurrentPositionWidth(
+      ltvBarElementWidth * ((ltvCurrentPosition * value) / 100)
+    );
+    setLtv45Width(ltvBarElementWidth * ((45 * value) / 100));
+    setLtv60Width(ltvBarElementWidth);
   };
 
   useEffect(() => {
-    getOuterSize();
     window.addEventListener('resize', getOuterSize);
-
     return () => {
       window.removeEventListener('resize', getOuterSize);
     };
-  }, []);
+  }, [ltvCurrentPosition, ltvbarRef, getOuterSize]);
+
+  useEffect(() => {
+    setLtvCurrentPosition(
+      parseFloat(((borrowedValue / collateralValue) * 100).toFixed(2))
+    );
+    getOuterSize();
+  }, [collateralValue, borrowedValue, getOuterSize]);
 
   return (
     <St.LTVBarWrapper>
       <St.FigureContainer>
         <span>LTV</span>
+        <St.LtvPercentInfoOuter ltvWidth={ltvCurrentPositionWidth}>
+          <St.LtvPercentInfoInner>
+            {addComma(ltvCurrentPosition)}%
+          </St.LtvPercentInfoInner>
+        </St.LtvPercentInfoOuter>
         <St.LtvPercentInfoOuter ltvWidth={ltv45Width}>
           <St.LtvPercentInfoInner>45%</St.LtvPercentInfoInner>
         </St.LtvPercentInfoOuter>
         <St.LtvPercentInfoOuter ltvWidth={ltv60Width}>
-          <St.LtvPercentInfoInner>65%</St.LtvPercentInfoInner>
+          <St.LtvPercentInfoInner>60%</St.LtvPercentInfoInner>
         </St.LtvPercentInfoOuter>
       </St.FigureContainer>
       <St.LTVBarOuter id="ltv-outer" ref={ltvbarRef}>
-        <St.LTVBarInner />
+        <St.LTVBarInner ltvCurrentPosition={(ltvCurrentPosition / 60) * 100} />
       </St.LTVBarOuter>
     </St.LTVBarWrapper>
   );
