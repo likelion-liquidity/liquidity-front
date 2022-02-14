@@ -41,8 +41,7 @@ const St = {
     display: flex;
     flex-direction: row;
 
-    margin-top: 0;
-
+    margin: auto;
     a {
       text-decoration: none;
       margin: 10px 5px;
