@@ -9,6 +9,7 @@ const CommonTestPage = () => {
     useState(false);
   const [selectedNftTokendId, setSelectedNftTokendId] = useState('');
   const [selectedNft, setSelectedNft] = useState(null);
+
   const handleOnClickNFT = (nftTokenId) => {
     setSelectedNftTokendId(nftTokenId);
     const selectedNFT = NFT_TOKEN_ARRAY.find(
@@ -17,7 +18,7 @@ const CommonTestPage = () => {
     setSelectedNft(selectedNFT);
   };
 
-  /* nft 카드 선택시 desc on m off 처리 */
+  /* nft 카드 선택시 desc on, off 처리 */
   useEffect(() => {
     if (selectedNftTokendId === '') {
       setIsOpenDescriptionContainer(false);

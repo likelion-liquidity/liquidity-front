@@ -127,7 +127,7 @@ const Appbar = ({ account, setAccount }) => {
 
   const links = [
     { name: 'Borrow', path: '/borrow' },
-    { name: 'Stake', path: '/stake' }
+    { name: 'Total', path: '/total' }
   ];
 
   const handleConnectWallet = () => {

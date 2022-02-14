@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { ToastContainer, toast } from 'react-toastify';
 import styled from 'styled-components';
 import { getKaikasAccts } from 'lib/api/UseKaikas';
 import { Helmet } from 'react-helmet-async';
@@ -12,8 +13,10 @@ import Borrow from 'pages/Borrow';
 import Stake from 'pages/Stake';
 import Header from 'components/base/Header';
 import Common from 'pages/Common';
+import Total from 'pages/Total';
 import Footer from 'components/base/Footer';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import 'react-toastify/dist/ReactToastify.css';
 
 const St = {
   BaseRoot: styled.div`
@@ -53,11 +56,14 @@ function App() {
           <Header account={account} setAccount={setAccount} />
           <St.ContentView>
             <Routes>
-              <Route path="borrow" element={<Borrow />} />
+              <Route path="/borrow" element={<Borrow />} />
+              <Route path="borrow/:nftname" element={<Common />} />
               <Route path="stake" element={<Stake />} />
               <Route path="common" element={<Common />} />
+              <Route path="total" element={<Total />} />
             </Routes>
           </St.ContentView>
+          <ToastContainer />
         </St.BaseRoot>
       </Router>
     </>

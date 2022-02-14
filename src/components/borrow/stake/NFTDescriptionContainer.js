@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import palette from 'styles/palette';
 import { addComma } from 'lib/helpers';
 
+import { ToastContainer, toast } from 'react-toastify';
+
 const St = {
   DescriptionContainer: styled.div`
     position: fixed;
@@ -29,12 +31,20 @@ const St = {
     justify-content: center;
     padding: 20px;
   `,
-  StakeButtonContainer: styled.div`
+  StakeButtonWrapper: styled.div`
     display: flex;
     justifycontent: center;
     padding: 20px;
+  `,
+  StakeButtonContainer: styled.div`
+    width: 100%;
+    display: flex;
+    justify-content: center;
   `
 };
+const resolveWithSomeData = new Promise((resolve) =>
+  setTimeout(() => resolve('world'), 3000)
+);
 
 const NFTDescriptionContainer = ({
   isOpenDescriptionContainer,
@@ -43,6 +53,17 @@ const NFTDescriptionContainer = ({
   collateralValue = 50000, //test
   borrowedValue = 20004 //test
 }) => {
+  const handleStake = () => {
+    const resolveAfter3Sec = new Promise((resolve) =>
+      setTimeout(resolve, 3000)
+    );
+    toast.promise(resolveAfter3Sec, {
+      pending: 'Promise is pending',
+      success: 'Promise resolved 👌',
+      error: 'Promise rejected 🤯'
+    });
+  };
+
   return (
     <St.DescriptionContainer
       isOpenDescriptionContainer={isOpenDescriptionContainer}
@@ -50,8 +71,7 @@ const NFTDescriptionContainer = ({
       <St.DescriptionTokenId>
         <h3> {selectedNft?.tokenId}</h3>
       </St.DescriptionTokenId>
-      {/* <div>collateralValue : {addComma(collateralValue)}$</div>
-      <div> borrowedValue :{addComma(borrowedValue)}$</div> */}
+
       <div style={{ textAlign: 'center' }}>
         DepositValue :{addComma(depositValue)}$
       </div>
@@ -68,15 +88,13 @@ const NFTDescriptionContainer = ({
           />
         </div>
       </St.LtvBarContainer>
-      <St.StakeButtonContainer>
-        <div
-          style={{ width: '100%', display: 'flex', justifyContent: 'center' }}
-        >
-          <Button color="blue_4" width="200px">
+      <St.StakeButtonWrapper>
+        <St.StakeButtonContainer>
+          <Button color="blue_4" width="200px" onClick={handleStake}>
             Stake
           </Button>
-        </div>
-      </St.StakeButtonContainer>
+        </St.StakeButtonContainer>
+      </St.StakeButtonWrapper>
     </St.DescriptionContainer>
   );
 };

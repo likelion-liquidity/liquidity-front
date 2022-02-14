@@ -88,9 +88,9 @@ const NFTInfoHeader = () => {
   return (
     <div>
       <St.NFTDescriptionImageContainer>
-        <div style={{ width: 'inherit', height: 'inherit' }}>
+        <div style={{ width: 'inherit', height: 'inherit' }} id="banner">
           <img
-            src="https://lh3.googleusercontent.com/fFYvhocbgwWPHEQuwCpBuyuh_ws7bjp4mH_hMcTOGFLmj7ESVLY1Uuo8FXXsaWsJz4iGPUnA4HqbA9O7z5EADOthN07bg1lsdiJ6hg=h600"
+            src="https://lh3.googleusercontent.com/LkkMZIONLcKnqkzI-J17FZlXBkmnmDH2unCJ6o_blsjrRvINYJ7XySH7wg3xsJ78WTyQpGhgqWSCt5ytQkfE67M-Cyfy4xlXuqjQW4Y=h600"
             alt=""
           />
         </div>
@@ -99,7 +99,7 @@ const NFTInfoHeader = () => {
         <St.NFTLogoContainer>
           <St.NFTLogo>
             <img
-              src="https://lh3.googleusercontent.com/QJgoaGpc1G1Diea0vFP7JImvBF8F7OczTxdhHMUR1F439HNUooSdQxMhvRGwCPcFjJg9iERKqk4Lvz7qzxqBzQhqMKW925mPxKyJ=s130"
+              src="https://lh3.googleusercontent.com/AX_uuKN-OFhtHXtzw5PJ3K-bGW5tg2svacBEv8xO_ii3UCEo6UTjqec4MiXFGP3gsxPD-p-W0d315pEvIOxG3pKNWfT3G8KvAgIl=s130"
               alt=""
             />
           </St.NFTLogo>
