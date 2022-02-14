@@ -26,8 +26,8 @@ const getButtonColor = (color, colorReverse) => {
         `;
       default:
         return css`
-          border: 2px solid ${palette.black};
-          color: ${palette.black};
+          border: 2px solid ${palette.gray_aa};
+          color: ${palette.gray_aa};
           background-color: white;
         `;
     }
@@ -88,7 +88,6 @@ const Container = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100%;
   height: 48px;
   padding: 0 15px;
   border: 0;

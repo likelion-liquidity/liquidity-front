@@ -49,7 +49,6 @@ function App() {
         <St.BaseRoot>
           <Header account={account} setAccount={setAccount} />
           <St.ContentView>
-            TEAM LIQUIDITY
             <Routes>
               <Route path="borrow" element={<Borrow />} />
               <Route path="stake" element={<Stake />} />
