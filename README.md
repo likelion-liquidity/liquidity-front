@@ -1,5 +1,11 @@
 # Liquidity Front
 
+## Pages
+
+- [ ] Borrow
+- [ ] Stake
+- [ ] Repay
+
 ## Components
 
 - [x] Button
