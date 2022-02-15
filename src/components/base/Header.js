@@ -1,21 +1,22 @@
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import useModal from 'hooks/useModal';
 import { NavLink, Link } from 'react-router-dom';
 import { getKaikasAccts } from 'lib/api/UseKaikas';
 import { getKlaytnProvider } from 'lib/helpers';
-import Button from 'components/common/Button';
+import { Button } from 'components/common';
 import palette from 'styles/palette';
 import caver from 'caver-js';
 
 const St = {
   AppbarWrapper: styled.div`
+    z-index: 1;
     width: 89%;
     margin: 0 auto;
     max-width: 1184px;
-    height: 80px;
+    height: 60px;
 
-    min-height: 64px;
+    min-height: 40px;
     display: flex;
     position: relative;
     justify-content: space-between;
@@ -24,7 +25,7 @@ const St = {
 
   HeaderContainerLeft: styled.div``,
   HeaderContainerLogoWrapper: styled.div`
-    height: 60px;
+    height: 50px;
     img {
       height: 100%;
       width: 100%;
@@ -39,9 +40,8 @@ const St = {
   HeaderLinkWrapper: styled.ul`
     display: flex;
     flex-direction: row;
-    padding: 8px 16px;
-    display: flex;
 
+    margin: auto;
     a {
       text-decoration: none;
       margin: 10px 5px;
@@ -127,12 +127,14 @@ const Appbar = ({ account, setAccount }) => {
 
   const links = [
     { name: 'Borrow', path: '/borrow' },
-    { name: 'Stake', path: '/stake' }
+    { name: 'Total', path: '/total' }
   ];
 
   const handleConnectWallet = () => {
-    loadAccountInfo();
+    openModal();
+    //loadAccountInfo();
   };
+
   return (
     <St.AppbarWrapper>
       <St.HeaderContainerLeft className="header-container-left">
