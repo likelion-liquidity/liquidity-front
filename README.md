@@ -2,16 +2,16 @@
 
 ## Pages
 
-- [ ] Borrow
+- [x] Borrow
 - [ ] Stake
 - [ ] Repay
 
 ## Components
 
 - [x] Button
-- [ ] Card
-- [ ] Common modal
-- [ ] element in NFT list
+- [x] Card
+- [x] Common modal
+- [x] asset
 
 ## LIQUDITY SMART CONTRACT(KAS:KIP-17, KIP-7)
 
