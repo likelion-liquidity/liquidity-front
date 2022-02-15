@@ -2,7 +2,7 @@ import { Button, LTVBar } from 'components/common';
 import styled from 'styled-components';
 import palette from 'styles/palette';
 import { addComma } from 'lib/helpers';
-
+import { useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 
 const St = {
@@ -42,9 +42,6 @@ const St = {
     justify-content: center;
   `
 };
-const resolveWithSomeData = new Promise((resolve) =>
-  setTimeout(() => resolve('world'), 3000)
-);
 
 const NFTDescriptionContainer = ({
   isOpenDescriptionContainer,
@@ -53,7 +50,13 @@ const NFTDescriptionContainer = ({
   collateralValue = 50000, //test
   borrowedValue = 20004 //test
 }) => {
-  const handleStake = () => {
+  const navigate = useNavigate();
+
+  const handleMoveStakeNFT = (title) => {
+    navigate(`/manage/${title}`);
+  };
+
+  const handleStake = async () => {
     const resolveAfter3Sec = new Promise((resolve) =>
       setTimeout(resolve, 3000)
     );
@@ -62,6 +65,9 @@ const NFTDescriptionContainer = ({
       success: 'Promise resolved 👌',
       error: 'Promise rejected 🤯'
     });
+
+    await resolveAfter3Sec;
+    handleMoveStakeNFT();
   };
 
   return (
