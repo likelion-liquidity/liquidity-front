@@ -4,7 +4,7 @@ import { useState } from 'react';
 import styled from 'styled-components';
 import { DUMMY } from './Dummy';
 
-const CT = {
+const St = {
   Container:styled.div`
   `,
   ContentViewContainer:styled.div`
@@ -53,7 +53,7 @@ const Borrow = () => {
 
   const onClickPaginationBtn = num => {
     if(num < 1 || num > itemN/5+1) return;
-    setPageN(num)
+    setPageN(num);
   };
 
   const renderPagination = () => {
@@ -67,17 +67,17 @@ const Borrow = () => {
   };
 
   return (
-    <CT.Container>
-      <CT.FilterContainer>
+    <St.Container>
+      <St.FilterContainer>
         <ChkBox type="checkbox" onClick={() => setCheckStatus(true)} />
         내 자산 보기
-      </CT.FilterContainer>
-      <CT.ContentViewHeaderContainer>
-        <CT.Th1>nft</CT.Th1>
-        <CT.Th2>ltv</CT.Th2>
-        <CT.Th3>floor price</CT.Th3>
-      </CT.ContentViewHeaderContainer>
-      <CT.ContentViewContainer>
+      </St.FilterContainer>
+      <St.ContentViewHeaderContainer>
+        <St.Th1>nft</St.Th1>
+        <St.Th2>ltv</St.Th2>
+        <St.Th3>floor price</St.Th3>
+      </St.ContentViewHeaderContainer>
+      <St.ContentViewContainer>
         {DUMMY.map((e, index) => {
           if(index >= (pageN-1)*5 && index < 5*pageN){
             return (
@@ -91,11 +91,11 @@ const Borrow = () => {
             );
           }
         })}
-       </CT.ContentViewContainer>
-       <CT.PaginationContainer>
+       </St.ContentViewContainer>
+       <St.PaginationContainer>
          {renderPagination()}
-       </CT.PaginationContainer>
-    </CT.Container>
+       </St.PaginationContainer>
+    </St.Container>
   );
 };
 
