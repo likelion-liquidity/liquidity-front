@@ -71,7 +71,7 @@ const Input = ({
     <Container
       iconExist={!!icon}
       isValid={isValid}
-      useValidation={validateMode && useValidation}
+      useValidation={useValidation}
     >
       {label && (
         <label>
@@ -81,7 +81,7 @@ const Input = ({
       )}
       {!label && <input {...props} />}
       {icon}
-      {useValidation && validateMode && !isValid && errorMessage && (
+      {useValidation && !isValid && errorMessage && (
         <p className="input-error-message">{errorMessage}</p>
       )}
     </Container>
