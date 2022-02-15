@@ -8,10 +8,9 @@ const getAssetColor = (color, colorReverse) => {
     switch (color) {
       default:
         return css`
-          border: 2px solid rgba(0, 0, 0, 0.3);
           color: ${palette.black};
-          background-color: white;
-        `;
+          background-color: ${palette.blue_0};
+          `;
     }
   }
   switch (color) {
@@ -42,7 +41,8 @@ const CT = {
   border-radius: 8px;
   font-size: 20px;
   font-weight: 500;
-  margin-bottom:5px;
+  margin-bottom:15px;
+  box-shadow: rgb(0 0 0 / 12%) 11px 13px 30px -8px;
   width: ${(props) => props.width};
   ${(props) => getAssetColor(props.color || '', props.colorReverse)};
   ${(props) => getAssetSize(props.size)}
@@ -84,7 +84,7 @@ const Asset = ({
       {titleProps ? <CT.TitleContainer>{titleProps.title}</CT.TitleContainer> : null}
       {ltvProps ? <CT.LtvContainer>{ltvProps.ltv}</CT.LtvContainer>  : null}
       {priceProps ? <CT.PriceContainer>{priceProps.price}</CT.PriceContainer>  : null}
-      <CT.ButtonContainer><Button color="blue_6">borrow</Button></CT.ButtonContainer>
+      <CT.ButtonContainer><Button color="blue_4" onClick={()=>alert("test")}>Borrow</Button></CT.ButtonContainer>
     </CT.Container>
   );
 };

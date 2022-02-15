@@ -9,9 +9,9 @@
 ## Components
 
 - [x] Button
-- [ ] Card
-- [ ] Common modal
-- [ ] asset
+- [x] Card
+- [x] Common modal
+- [x] asset
 
 ## LIQUDITY SMART CONTRACT(KAS:KIP-17, KIP-7)
 

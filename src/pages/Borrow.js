@@ -3,6 +3,7 @@ import Button from 'components/common/Button';
 import { useState } from 'react';
 import styled from 'styled-components';
 import { DUMMY } from './Dummy';
+import palette from 'styles/palette';
 
 const St = {
   Container:styled.div`
@@ -14,13 +15,15 @@ const St = {
   `,
   FilterContainer:styled.div`
     display:flex;
+    margin-top:30px;
     margin-bottom:5px;
     justify-content:flex-end;
     font-size:15px;
   `,
   ContentViewHeaderContainer:styled.div`
   display:flex;
-  border: 1px solid rgba(0, 0, 0, 0.5);
+  background-color: ${palette.blue_1};
+  box-shadow: rgb(0 0 0 / 12%) 11px 13px 30px -8px;
   margin-bottom:5px;
   border-radius:5px;
   padding:5px 15px;
@@ -38,13 +41,14 @@ const St = {
     display:flex;
     align-items:center;
     justify-content:center;
-  `
+  `,
+  ChkBox:styled.input`
+    width:20px;
+    height:20px;
+  `,
+  Text:styled.div`margin-left:5px;`
 };
 
-const ChkBox = styled.input`
-  width:15px;
-  height:15px;
-`;
 
 const Borrow = () => {
   const [pageN, setPageN] = useState(1);
@@ -69,8 +73,8 @@ const Borrow = () => {
   return (
     <St.Container>
       <St.FilterContainer>
-        <ChkBox type="checkbox" onClick={() => setCheckStatus(true)} />
-        내 자산 보기
+        <St.ChkBox type="checkbox" onClick={() => setCheckStatus(true)} />
+        <St.Text>My Assets</St.Text>
       </St.FilterContainer>
       <St.ContentViewHeaderContainer>
         <St.Th1>nft</St.Th1>

@@ -1,4 +1,4 @@
-import NFTCard from 'components/common/NFTCard';
+import NFTCard from 'components/common/NftCard';
 import { useState } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import { NFT_TOKEN_ARRAY } from 'lib/staticData';
