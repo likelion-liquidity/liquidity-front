@@ -9,12 +9,10 @@ const St = {
   Wrapper: styled.div`
     margin: 25px 0 25px 0;
     border-radius: 10px;
-    height: 100%;
     min-width: 1000px;
     padding: 60px;
     display: flex;
     flex-direction: column;
-    background-color: ${palette.blue_0};
   `,
   AssetsWrapper: styled.div`
     display: flex;

@@ -58,9 +58,7 @@ function App() {
             <Routes>
               <Route path="/borrow" element={<Borrow />} />
               <Route path="borrow/:nftname" element={<Common />} />
-              <Route path="stake" element={<Stake />} />
-              <Route path="common" element={<Common />} />
-              <Route path="total" element={<Total />} />
+              <Route path="manage/:nftname" element={<Total />} />
             </Routes>
           </St.ContentView>
           <ToastContainer />

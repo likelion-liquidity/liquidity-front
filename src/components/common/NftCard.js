@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { NavLink, Link } from 'react-router-dom';
 import palette from 'styles/palette';
@@ -136,4 +136,4 @@ const NFTCard = ({
   );
 };
 
-export default NFTCard;
+export default React.memo(NFTCard);
