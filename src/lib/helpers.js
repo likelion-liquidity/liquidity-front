@@ -5,6 +5,15 @@ export const getKlaytnProvider = () => {
   Error('failed connecting to Kaikas');
 };
 
+export const clearAccountInfo = setAccount => {
+  setAccount({
+    txType: null,
+    account: '',
+    balance: 0,
+    network: null
+  });
+};
+
 /**
  * 콤마를 추가한다.
  * @returns add comma number
