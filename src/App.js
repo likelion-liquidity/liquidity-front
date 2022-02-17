@@ -10,7 +10,6 @@ import {
   Outlet
 } from 'react-router-dom';
 import Borrow from 'pages/Borrow';
-import Stake from 'pages/Stake';
 import Header from 'components/base/Header';
 import Common from 'pages/Common';
 import Total from 'pages/Total';

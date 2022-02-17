@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import palette from 'styles/palette';
 import { addComma } from 'lib/helpers';
 import { useNavigate } from 'react-router-dom';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 
 const St = {
   DescriptionContainer: styled.div`
@@ -14,7 +14,7 @@ const St = {
     left: 0;
     width: 100%;
     background: white;
-    transition: 0.4s all;
+    transition: 0.2s all;
     transform: ${(props) =>
       props.isOpenDescriptionContainer ? 'translateY(0)' : 'translateY(100%)'};
   `,
@@ -46,7 +46,8 @@ const St = {
 const NFTDescriptionContainer = ({
   isOpenDescriptionContainer,
   selectedNft,
-  depositValue = 6000 * 1.2, //floor price
+  isStakedSelectedNft,
+  depositValue = 8000 * 1.2, //floor price
   collateralValue = 50000, //test
   borrowedValue = 20004 //test
 }) => {
@@ -57,6 +58,20 @@ const NFTDescriptionContainer = ({
   };
 
   const handleStake = async () => {
+    const resolveAfter3Sec = new Promise((resolve) =>
+      setTimeout(resolve, 3000)
+    );
+    toast.promise(resolveAfter3Sec, {
+      pending: 'Promise is pending',
+      success: 'Promise resolved 👌',
+      error: 'Promise rejected 🤯'
+    });
+
+    await resolveAfter3Sec;
+    handleMoveStakeNFT();
+  };
+
+  const handleRepay = async () => {
     const resolveAfter3Sec = new Promise((resolve) =>
       setTimeout(resolve, 3000)
     );
@@ -96,9 +111,15 @@ const NFTDescriptionContainer = ({
       </St.LtvBarContainer>
       <St.StakeButtonWrapper>
         <St.StakeButtonContainer>
-          <Button color="blue_4" width="200px" onClick={handleStake}>
-            Stake
-          </Button>
+          {isStakedSelectedNft ? (
+            <Button color="blue_4" width="200px" onClick={handleRepay}>
+              Repay
+            </Button>
+          ) : (
+            <Button color="blue_4" width="200px" onClick={handleStake}>
+              Stake
+            </Button>
+          )}
         </St.StakeButtonContainer>
       </St.StakeButtonWrapper>
     </St.DescriptionContainer>

@@ -1,43 +1,63 @@
+import { useState } from 'react';
+import styled from 'styled-components';
 import NFTCardContainer from 'components/borrow/stake/NFTCardContainer';
 import { Asset } from 'components/common';
 import { DUMMY } from 'pages/Dummy';
-import { Accordion, useAccordionButton } from 'react-bootstrap';
 
-function CustomToggle({ children, eventKey }) {
-  const decoratedOnClick = useAccordionButton(eventKey, () =>
-    console.log('totally custom!')
-  );
+const St = {
+  FilterContainer: styled.div`
+    display: flex;
+    margin-top: 30px;
+    margin-bottom: 5px;
+    justify-content: flex-end;
+    font-size: 15px;
+  `,
 
-  return (
-    <button
-      type="button"
-      style={{ backgroundColor: 'pink' }}
-      onClick={decoratedOnClick}
-    >
-      {children}
-    </button>
-  );
-}
+  ChkBox: styled.input`
+    width: 20px;
+    height: 20px;
+  `,
+  Text: styled.div`
+    margin-left: 5px;
+  `
+};
 
-const NFTStakeListContainer = () => {
+const NFTStakeListContainer = ({
+  handleOnClickNFT,
+  selectedNftTokendId,
+  isDisplayStaked,
+  handleStakedCheckButton
+}) => {
+  const [isDiaplayCardContainer, setIsDisplayCardContainer] = useState(false);
+
+  const handleManageButton = () => {
+    setIsDisplayCardContainer((prev) => !prev);
+  };
+
   return (
     <div>
       <Asset
         imgProps={DUMMY[0].imgProps}
-        titleProps={DUMMY[0].titleProps}
+        titleProps={{ title: 'meta-kongs' }}
         ltvProps={DUMMY[0].ltvProps}
         priceProps={DUMMY[0].priceProps}
-        buttonProps={{ title: 'manage' }}
+        buttonProps={{ title: 'manage', handleOnClick: handleManageButton }}
         width="100%"
         // handleOnClick={handleMoveStakeNFT}
       />
-
-      <Accordion defaultActiveKey="0">
-        <CustomToggle eventKey="0">Click me!</CustomToggle>
-        <Accordion.Collapse eventKey="0">
-          <NFTCardContainer />
-        </Accordion.Collapse>
-      </Accordion>
+      {isDiaplayCardContainer && (
+        <>
+          <St.FilterContainer>
+            <St.ChkBox type="checkbox" onClick={handleStakedCheckButton} />
+            <St.Text>Staked</St.Text>
+          </St.FilterContainer>
+          <NFTCardContainer
+            selectedNftTokendId={selectedNftTokendId}
+            handleOnClickNFT={handleOnClickNFT}
+            isDisplayStaked={isDisplayStaked}
+          />
+        </>
+      )}
     </div>
   );
 };

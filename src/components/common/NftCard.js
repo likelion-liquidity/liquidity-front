@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { NavLink, Link } from 'react-router-dom';
+import { Badge } from 'react-bootstrap';
 import palette from 'styles/palette';
 import LazyImage from 'components/common/LazyImage';
 
@@ -97,7 +97,8 @@ const NFTCard = ({
   nftTokenId,
   imageSrc,
   selectedNftTokendId,
-  handleOnClickNFT
+  handleOnClickNFT,
+  isStaked
 }) => {
   const [isSelected, setIsSelected] = useState('');
 
@@ -108,10 +109,10 @@ const NFTCard = ({
 
   const cardSelect = () => {
     if (isSelected) {
-      handleOnClickNFT('');
+      handleOnClickNFT('', isStaked);
       return;
     }
-    handleOnClickNFT(nftTokenId);
+    handleOnClickNFT(nftTokenId, isStaked);
   };
 
   return (
@@ -122,9 +123,13 @@ const NFTCard = ({
             <LazyImage src={imageSrc} />
           </St.ArticleThumbnail>
         </div>
-
         <div>
           <St.ContentWrapper>
+            {isStaked ? (
+              <Badge bg="info">Staked</Badge>
+            ) : (
+              <Badge bg="secondary">Not staked</Badge>
+            )}
             <St.ContentHeader>
               <St.ContentTitle>{title}</St.ContentTitle>
             </St.ContentHeader>

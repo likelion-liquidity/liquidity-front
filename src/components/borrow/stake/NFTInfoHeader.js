@@ -61,8 +61,9 @@ const St = {
     text-align: center;
   `,
   NFTInfoContainer: styled.div`
-    display: flex;
+    flex-direction: column;
     justify-content: center;
+    align-items: center;
     width: 144px;
     height: 30px;
     border-radius: inherit;
@@ -84,7 +85,7 @@ const St = {
   `
 };
 
-const NFTInfoHeader = () => {
+const NFTInfoHeader = ({ nftTitle = '', floorPrice = 0 }) => {
   return (
     <div>
       <St.NFTDescriptionImageContainer>
@@ -108,12 +109,15 @@ const NFTInfoHeader = () => {
           <St.Title>META-KONGS</St.Title>
         </St.NFTTitleCotainer>
         <St.NFTInfoContainer>
-          <St.CoinLogo>
-            <img src="https://static.opensea.io/tokens/KLAY.png" alt="" />
-          </St.CoinLogo>
-          <St.Price>
-            <span> 8,300 </span>
-          </St.Price>
+          <div style={{ display: 'flex', justifyContent: 'center' }}>
+            <St.CoinLogo>
+              <img src="https://static.opensea.io/tokens/KLAY.png" alt="" />
+            </St.CoinLogo>
+            <St.Price>
+              <span> 8,300 </span>
+            </St.Price>
+          </div>
+          <div style={{ textAlign: 'center' }}>floor price</div>
         </St.NFTInfoContainer>
       </St.NFTDescriptionContainer>
     </div>

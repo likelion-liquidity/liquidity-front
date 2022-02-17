@@ -7,9 +7,10 @@ import useModal from 'hooks/useModal';
 
 const St = {
   Wrapper: styled.div`
+    width: 100%;
     margin: 25px 0 25px 0;
     border-radius: 10px;
-    min-width: 1000px;
+
     padding: 60px;
     display: flex;
     flex-direction: column;
