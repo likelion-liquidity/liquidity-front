@@ -2,11 +2,11 @@ import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import useModal from 'hooks/useModal';
 import { NavLink, Link } from 'react-router-dom';
-import { getKaikasAccts } from 'lib/api/UseKaikas';
-import { getKlaytnProvider } from 'lib/helpers';
+import { caver, getKaikasAccts } from 'lib/api/UseKaikas';
+import { clearAccountInfo, getKlaytnProvider } from 'lib/helpers';
 import { Button } from 'components/common';
 import palette from 'styles/palette';
-import caver from 'caver-js';
+import { toast } from 'react-toastify';
 
 const St = {
   AppbarWrapper: styled.div`
@@ -73,16 +73,32 @@ const St = {
 
 const Appbar = ({ account, setAccount }) => {
   const { openModal, ModalPortal, closeModal } = useModal();
+  const [isConnected, setIsConnected] = useState(false);
+  
 
   const loadAccountInfo = async () => {
     const klaytn = getKlaytnProvider();
-    console.log(klaytn);
+    if(isConnected){
+      clearAccountInfo(setAccount);
+      setIsConnected(false);
+      toast.info("Your wallet is disconnected", {
+        autoClose:1500,
+        position:toast.POSITION.BOTTOM_CENTER
+      });
+      return;
+    }
+    
     if (klaytn) {
       try {
         const res = await getKaikasAccts();
         console.log('res = ', res);
-        // setAccountInfo(klaytn);
+        setAccountInfo(klaytn);
+        setIsConnected(true);
         klaytn.on('accountsChanged', () => setAccountInfo(klaytn));
+        toast.success("Your wallet is connected!!", {
+          autoClose:1500,
+          position:toast.POSITION.BOTTOM_CENTER
+        });
       } catch (error) {
         console.log('User denied account access');
       }
@@ -92,6 +108,8 @@ const Appbar = ({ account, setAccount }) => {
       );
     }
   };
+  
+  console.log('account = ', account);
 
   const setAccountInfo = async () => {
     const klaytn = getKlaytnProvider();
@@ -118,11 +136,9 @@ const Appbar = ({ account, setAccount }) => {
     klaytn.on('networkChanged', () => setNetworkInfo(klaytn.networkVersion));
   };
 
-  console.log('account = ', account);
-
-  useEffect(() => {
+  useEffect(async () => {
     setNetworkInfo();
-    //loadAccountInfo();
+    // loadAccountInfo();
   }, []);
 
   const links = [
@@ -132,7 +148,7 @@ const Appbar = ({ account, setAccount }) => {
 
   const handleConnectWallet = () => {
     openModal();
-    //loadAccountInfo();
+    loadAccountInfo();
   };
 
   return (
@@ -153,7 +169,7 @@ const Appbar = ({ account, setAccount }) => {
           ))}
         </St.HeaderLinkWrapper>
         <Button onClick={handleConnectWallet} color="blue_6">
-          {account ? 'disconnect wallet' : 'connect wallet'}
+          {isConnected ? 'disconnect wallet' : 'connect wallet'}
         </Button>
       </St.HeaderContaineRight>
     </St.AppbarWrapper>
