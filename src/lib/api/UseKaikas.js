@@ -2,7 +2,8 @@ import Caver from 'caver-js';
 import { getKlaytnProvider } from 'lib/helpers';
 
 const klaytn = getKlaytnProvider();
-const caver = new Caver(klaytn);
+
+export const caver = new Caver(klaytn);
 
 export const getKaikasAccts = () => klaytn.enable();
 

@@ -17,6 +17,7 @@ import Total from 'pages/Total';
 import Footer from 'components/base/Footer';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-toastify/dist/ReactToastify.css';
+import { getKlaytnProvider } from 'lib/helpers';
 
 const St = {
   BaseRoot: styled.div`
