@@ -25,3 +25,15 @@ export const addComma = (num) => {
   }
   return '0';
 };
+
+/**
+ * 최상단으로 스크롤을 올린다.
+ * @returns void
+ */
+export const handleScrollTop = (smooth = false) => {
+  if (smooth) {
+    if (document) window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+    return;
+  }
+  if (document) window.scroll(0, 0);
+};

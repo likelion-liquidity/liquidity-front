@@ -2,8 +2,8 @@ import { Button, LTVBar } from 'components/common';
 import styled from 'styled-components';
 import palette from 'styles/palette';
 import { addComma } from 'lib/helpers';
-
-import { ToastContainer, toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 const St = {
   DescriptionContainer: styled.div`
@@ -14,7 +14,7 @@ const St = {
     left: 0;
     width: 100%;
     background: white;
-    transition: 0.4s all;
+    transition: 0.2s all;
     transform: ${(props) =>
       props.isOpenDescriptionContainer ? 'translateY(0)' : 'translateY(100%)'};
   `,
@@ -42,18 +42,22 @@ const St = {
     justify-content: center;
   `
 };
-const resolveWithSomeData = new Promise((resolve) =>
-  setTimeout(() => resolve('world'), 3000)
-);
 
 const NFTDescriptionContainer = ({
   isOpenDescriptionContainer,
   selectedNft,
-  depositValue = 6000 * 1.2, //floor price
+  isStakedSelectedNft,
+  depositValue = 8000 * 1.2, //floor price
   collateralValue = 50000, //test
   borrowedValue = 20004 //test
 }) => {
-  const handleStake = () => {
+  const navigate = useNavigate();
+
+  const handleMoveStakeNFT = (title) => {
+    navigate(`/manage/${title}`);
+  };
+
+  const handleStake = async () => {
     const resolveAfter3Sec = new Promise((resolve) =>
       setTimeout(resolve, 3000)
     );
@@ -62,6 +66,23 @@ const NFTDescriptionContainer = ({
       success: 'Promise resolved 👌',
       error: 'Promise rejected 🤯'
     });
+
+    await resolveAfter3Sec;
+    handleMoveStakeNFT();
+  };
+
+  const handleRepay = async () => {
+    const resolveAfter3Sec = new Promise((resolve) =>
+      setTimeout(resolve, 3000)
+    );
+    toast.promise(resolveAfter3Sec, {
+      pending: 'Promise is pending',
+      success: 'Promise resolved 👌',
+      error: 'Promise rejected 🤯'
+    });
+
+    await resolveAfter3Sec;
+    handleMoveStakeNFT();
   };
 
   return (
@@ -90,9 +111,15 @@ const NFTDescriptionContainer = ({
       </St.LtvBarContainer>
       <St.StakeButtonWrapper>
         <St.StakeButtonContainer>
-          <Button color="blue_4" width="200px" onClick={handleStake}>
-            Stake
-          </Button>
+          {isStakedSelectedNft ? (
+            <Button color="blue_4" width="200px" onClick={handleRepay}>
+              Repay
+            </Button>
+          ) : (
+            <Button color="blue_4" width="200px" onClick={handleStake}>
+              Stake
+            </Button>
+          )}
         </St.StakeButtonContainer>
       </St.StakeButtonWrapper>
     </St.DescriptionContainer>

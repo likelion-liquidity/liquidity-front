@@ -9,8 +9,8 @@ const getAssetColor = (color, colorReverse) => {
       default:
         return css`
           color: ${palette.black};
-          background-color: ${palette.blue_0};
-          `;
+          background-color: white;
+        `;
     }
   }
   switch (color) {
@@ -32,60 +32,84 @@ const getAssetSize = (size) => {
   }
 };
 
-const CT = {
-  Container:styled.div`
-  display: flex;
-  align-items: center;
-  height: 48px;
-  padding: 3px 25px;
-  border-radius: 8px;
-  font-size: 20px;
-  font-weight: 500;
-  margin-bottom:15px;
-  box-shadow: rgb(0 0 0 / 12%) 11px 13px 30px -8px;
-  width: ${(props) => props.width};
-  ${(props) => getAssetColor(props.color || '', props.colorReverse)};
-  ${(props) => getAssetSize(props.size)}
+const St = {
+  Container: styled.div`
+    display: flex;
+    align-items: center;
+    height: 48px;
+    padding: 3px 25px;
+    //border-radius: 8px;
+    font-size: 15px;
+    font-weight: 500;
+    // margin-bottom: 15px;
+    box-shadow: rgb(0 0 0 / 12%) 11px 13px 30px -8px;
+    width: ${(props) => props.width};
+    ${(props) => getAssetColor(props.color || '', props.colorReverse)};
+    ${(props) => getAssetSize(props.size)}
   `,
-  ImageContainer:styled.div`width:18%;`,
-  TitleContainer:styled.div`width:32%;`,
-  LtvContainer:styled.div`width:17%;`,
-  PriceContainer:styled.div`width:17%;`,
-  ButtonContainer:styled.div`width:16%;`
+  ImageContainer: styled.div`
+    border: none;
+    width: 18%;
+  `,
+  TitleContainer: styled.div`
+    width: 32%;
+  `,
+  LtvContainer: styled.div`
+    width: 17%;
+  `,
+  PriceContainer: styled.div`
+    width: 17%;
+  `,
+  ButtonContainer: styled.div`
+    width: 16%;
+  `
 };
 
 const Image = styled.img`
-  width:75px;
-  height:75px;
-  border-radius:50%; 
-  border: 1px solid rgba(0, 0, 0, 0.5);
+  width: 75px;
+  height: 75px;
+  border-radius: 50%;
 `;
 
 const Asset = ({
   color,
   size,
-  width="650px",
+  width = '780px',
   colorReverse = true,
-  imgProps=null,
-  titleProps=null,
-  ltvProps=null,
-  priceProps=null,
+  imgProps = null,
+  titleProps = null,
+  ltvProps = null,
+  priceProps = null,
+  buttonProps = null,
   ...props
 }) => {
   return (
-    <CT.Container
+    <St.Container
       {...props}
       color={color}
       size={size}
       width={width}
       colorReverse={colorReverse}
     >
-      {imgProps ? <CT.ImageContainer><Image src={imgProps.src} alt={imgProps.alt} /></CT.ImageContainer> : null}
-      {titleProps ? <CT.TitleContainer>{titleProps.title}</CT.TitleContainer> : null}
-      {ltvProps ? <CT.LtvContainer>{ltvProps.ltv}</CT.LtvContainer>  : null}
-      {priceProps ? <CT.PriceContainer>{priceProps.price}</CT.PriceContainer>  : null}
-      <CT.ButtonContainer><Button color="blue_4" onClick={()=>alert("test")}>Borrow</Button></CT.ButtonContainer>
-    </CT.Container>
+      {imgProps && (
+        <St.ImageContainer>
+          <Image src={imgProps.src} alt={imgProps.alt} />
+        </St.ImageContainer>
+      )}
+      {titleProps && <St.TitleContainer>{titleProps.title}</St.TitleContainer>}
+      {ltvProps && <St.LtvContainer>{ltvProps.ltv}</St.LtvContainer>}
+      {priceProps && <St.PriceContainer>{priceProps.price}</St.PriceContainer>}
+      <St.ButtonContainer>
+        {buttonProps && (
+          <Button
+            color="blue_4"
+            onClick={() => buttonProps.handleOnClick(titleProps?.title)}
+          >
+            {buttonProps.title ? buttonProps.title : 'Borrow'}
+          </Button>
+        )}
+      </St.ButtonContainer>
+    </St.Container>
   );
 };
 

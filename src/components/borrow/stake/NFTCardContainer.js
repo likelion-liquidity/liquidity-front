@@ -1,14 +1,14 @@
 import NFTCard from 'components/common/NftCard';
 import { useState } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
-import { NFT_TOKEN_ARRAY } from 'lib/staticData';
+import { NFT_TOKEN_ARRAY, NFT_STAKED_LIST } from 'lib/staticData';
 import styled from 'styled-components';
 const St = {
   CardContainer: styled.div`
-      min-width 80vw;
-      overflow : scroll;
-      margin : 10px;
-    `
+    width: 100%;
+    overflow: auto;
+    margin: 10px;
+  `
 };
 
 // Nft {
@@ -22,20 +22,45 @@ const St = {
 // }
 /* test */
 
-const NFTCardContainer = ({ selectedNftTokendId, handleOnClickNFT }) => {
+const NFTCardContainer = ({
+  selectedNftTokendId,
+  handleOnClickNFT,
+  isDisplayStaked = false
+}) => {
   return (
     <St.CardContainer>
       <Container>
         <Row>
           {NFT_TOKEN_ARRAY?.map((nft, index) => {
+            const isStaked = NFT_STAKED_LIST.find(
+              (nftStaked) => nftStaked.tokenId === nft.tokenId
+            );
+            if (isDisplayStaked) {
+              if (isStaked) {
+                return (
+                  <Col xs={12} md={4} lg={3} key={`nft-card-${index}`}>
+                    <NFTCard
+                      title={nft?.title}
+                      nftTokenId={nft?.tokenId}
+                      imageSrc={nft?.imageSrc}
+                      selectedNftTokendId={selectedNftTokendId}
+                      handleOnClickNFT={handleOnClickNFT}
+                      isStaked={isStaked}
+                    />
+                  </Col>
+                );
+              }
+              return <></>;
+            }
             return (
-              <Col xs={12} md={6} lg={4} key={`nft-card-${index}`}>
+              <Col xs={12} md={4} lg={3} key={`nft-card-${index}`}>
                 <NFTCard
                   title={nft?.title}
                   nftTokenId={nft?.tokenId}
                   imageSrc={nft?.imageSrc}
                   selectedNftTokendId={selectedNftTokendId}
                   handleOnClickNFT={handleOnClickNFT}
+                  isStaked={isStaked}
                 />
               </Col>
             );

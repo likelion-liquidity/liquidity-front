@@ -10,7 +10,6 @@ import {
   Outlet
 } from 'react-router-dom';
 import Borrow from 'pages/Borrow';
-import Stake from 'pages/Stake';
 import Header from 'components/base/Header';
 import Common from 'pages/Common';
 import Total from 'pages/Total';
@@ -59,9 +58,7 @@ function App() {
             <Routes>
               <Route path="/borrow" element={<Borrow />} />
               <Route path="borrow/:nftname" element={<Common />} />
-              <Route path="stake" element={<Stake />} />
-              <Route path="common" element={<Common />} />
-              <Route path="total" element={<Total />} />
+              <Route path="manage/:nftname" element={<Total />} />
             </Routes>
           </St.ContentView>
           <ToastContainer />
