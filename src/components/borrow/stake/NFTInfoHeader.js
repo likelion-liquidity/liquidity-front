@@ -106,7 +106,7 @@ const NFTInfoHeader = ({ nftTitle = '', floorPrice = 0 }) => {
           </St.NFTLogo>
         </St.NFTLogoContainer>
         <St.NFTTitleCotainer>
-          <St.Title>META-KONGS</St.Title>
+          <St.Title>{nftTitle}</St.Title>
         </St.NFTTitleCotainer>
         <St.NFTInfoContainer>
           <div style={{ display: 'flex', justifyContent: 'center' }}>
@@ -114,7 +114,7 @@ const NFTInfoHeader = ({ nftTitle = '', floorPrice = 0 }) => {
               <img src="https://static.opensea.io/tokens/KLAY.png" alt="" />
             </St.CoinLogo>
             <St.Price>
-              <span> 8,300 </span>
+              <span> {floorPrice} </span>
             </St.Price>
           </div>
           <div style={{ textAlign: 'center' }}>floor price</div>

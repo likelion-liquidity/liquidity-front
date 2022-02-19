@@ -1,11 +1,18 @@
 import Asset from 'components/common/Asset';
 import Button from 'components/common/Button';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { DUMMY } from './Dummy';
 import palette from 'styles/palette';
-
+import DATAHOLDER_ABI from 'abi/DataHolderABI.json';
+import { caver } from 'lib/api/UseKaikas';
+import {
+  getTokenInfo,
+  getEosTokenAddress,
+  getNftContract
+} from 'lib/api/UseTokenApi';
+const DATA_HOLDER_ADDRESS = '0x924965fFD912544AeeC612812F4aABD124278C1C';
 const St = {
   Container: styled.div``,
   ContentViewContainer: styled.div`
@@ -59,6 +66,7 @@ const Borrow = () => {
   const [pageN, setPageN] = useState(1);
   const [itemN, setItemN] = useState(DUMMY.length);
   const [checkStatus, setCheckStatus] = useState(false);
+  const [whiteListNFTList, setWhiteListNFTList] = useState([]);
   const navigate = useNavigate();
   const onClickPaginationBtn = (num) => {
     if (num < 1 || num > itemN / 5 + 1) return;
@@ -100,9 +108,46 @@ const Borrow = () => {
     return result;
   };
 
+  const [blockNumber, setBlockNumber] = useState(0);
   const handleMoveStakeNFT = (title) => {
     navigate(`/borrow/${title}`);
   };
+
+  /*
+     데이터가 상대적으로 부족함
+     해당 컨트렉트의 img 또는 필요 데이터를 static 파일로 
+     가지고 있어도 될 것 같음
+  */
+  const getWhiteList = async () => {
+    try {
+      // if (!accountInfo.from) return;
+
+      const contract = caver.contract.create(
+        DATAHOLDER_ABI,
+        DATA_HOLDER_ADDRESS
+      );
+
+      const whiteListNFT = await contract.methods.getWhiteListNftList().call();
+
+      console.log('whiteListNFT = ', whiteListNFT);
+      const nftContractPromise = whiteListNFT.map((item) =>
+        getNftContract(item)
+      );
+
+      const nftContractInfos = await Promise.all(nftContractPromise).then(
+        (values) => {
+          return values;
+        }
+      );
+      const whiteListNFTList = nftContractInfos.map((item) => item.data);
+      setWhiteListNFTList(whiteListNFTList);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+  useEffect(() => {
+    getWhiteList();
+  }, []);
 
   return (
     <St.Container>
@@ -119,11 +164,11 @@ const Borrow = () => {
         <St.Th3>floor price</St.Th3>
       </St.ContentViewHeaderContainer>
       <St.ContentViewContainer>
-        {DUMMY.map((e, index) => {
+        {/* {DUMMY.map((e, index) => {
           if (index >= (pageN - 1) * 5 && index < 5 * pageN) {
             return (
               <Asset
-                key={index}
+                key={`asstes-${index}`}
                 imgProps={e.imgProps}
                 titleProps={e.titleProps}
                 ltvProps={e.ltvProps}
@@ -134,6 +179,21 @@ const Borrow = () => {
               />
             );
           }
+        })} */}
+
+        {whiteListNFTList?.map((e, index) => {
+          return (
+            <Asset
+              key={`asstes-${index}`}
+              imgProps={{ src: '', alt: '' }}
+              titleProps={{ title: e.name }}
+              ltvProps={{ ltv: '' }}
+              priceProps={{ price: '' }}
+              buttonProps={{
+                handleOnClick: handleMoveStakeNFT
+              }}
+            />
+          );
         })}
       </St.ContentViewContainer>
       <St.PaginationContainer>{renderPagination()}</St.PaginationContainer>
