@@ -1,11 +1,8 @@
-/**
- * Token없이 일반적으로 사용하는 axios
- * Token이 필요한 경우 tokenAxios를 사용한다
- */
-
 import Axios from 'axios';
-const accessKeyId = 'KASK3NQ3ERGRBNS9ZZICZ0PU';
-const secretAccessKey = 'wljVxgvEufPjif_1mDgqFI9VTVDyzUGbOQG3109Y';
+
+/* 테스트 용 accsee, secret */
+const accessKeyId = process.env.REACT_APP_ACCESS_KEY_ID;
+const secretAccessKey = process.env.REACT_APP_SECRET_ACCESS_KEY;
 const authorization =
   'Basic ' +
   Buffer.from(accessKeyId + ':' + secretAccessKey).toString('base64');

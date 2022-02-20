@@ -108,7 +108,6 @@ const Borrow = () => {
     return result;
   };
 
-  const [blockNumber, setBlockNumber] = useState(0);
   const handleMoveStakeNFT = (title) => {
     navigate(`/borrow/${title}`);
   };
@@ -129,7 +128,6 @@ const Borrow = () => {
 
       const whiteListNFT = await contract.methods.getWhiteListNftList().call();
 
-      console.log('whiteListNFT = ', whiteListNFT);
       const nftContractPromise = whiteListNFT.map((item) =>
         getNftContract(item)
       );
@@ -145,6 +143,7 @@ const Borrow = () => {
       console.log(e);
     }
   };
+
   useEffect(() => {
     getWhiteList();
   }, []);
