@@ -222,6 +222,23 @@ const TestPage = ({ from }) => {
     }
   };
 
+  const getNftData = async () => {
+    try {
+      const caver = new caverTest(window.klaytn);
+      const contract = caver.contract.create(
+        DATAHOLDER_ABI,
+        DATA_HOLDER_ADDRESS
+      );
+      console.log('contract = ', contract);
+      const nftData = await contract.methods.getNftData(MK_ADDRESS).call();
+      // );
+      console.log('nftData ', nftData);
+      // const res = await getTokenInfo(MK_ADDRESS, 'MK');
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   return (
     <div>
       <button onClick={getCount}>getCount</button>
@@ -229,6 +246,7 @@ const TestPage = ({ from }) => {
       <button onClick={getMyNFT}>getMyNFT</button>
       <button onClick={getTest}>getTokens</button>
       <button onClick={setPlus}>setplus</button>
+      <button onClick={getNftData}>getNftData</button>
       <div>{countContractInfo?.count}</div>
       {/* <div>{countContractInfo?.lastParticipant}</div> */}
     </div>

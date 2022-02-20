@@ -6,7 +6,7 @@ import { NFT_TOKEN_ARRAY } from 'lib/staticData';
 import { useLocation } from 'react-router-dom';
 import { getPathName } from 'lib/helpers';
 
-const CommonTestPage = () => {
+const CommonTestPage = ({ whiteListNFTList }) => {
   const [nftInfo, setNftInfo] = useState({
     nftTitle: '',
     floorPrice: ''
@@ -46,6 +46,7 @@ const CommonTestPage = () => {
         nftTitle={nftInfo?.nftTitle}
         handleOnClickNFT={handleOnClickNFT}
         selectedNftTokendId={selectedNftTokendId}
+        whiteListNFTList={whiteListNFTList}
       />
       <NFTDescriptionContainer
         selectedNft={selectedNft}

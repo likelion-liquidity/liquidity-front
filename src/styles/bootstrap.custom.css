@@ -1,0 +1,18 @@
+@media (min-width: 768px) {
+  .container {
+    min-width: 768px;
+  }
+}
+
+@media (min-width: 992px) {
+  .container {
+    min-width: 992px;
+  }
+}
+
+/*사실 이 블럭은 없어도 된다*/
+@media (min-width: 1200px) {
+  .container {
+    min-width: 1200px;
+  }
+}
