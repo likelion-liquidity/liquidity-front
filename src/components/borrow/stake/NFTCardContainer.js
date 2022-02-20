@@ -1,8 +1,15 @@
 import NFTCard from 'components/common/NftCard';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import { NFT_TOKEN_ARRAY, NFT_STAKED_LIST } from 'lib/staticData';
+
 import styled from 'styled-components';
+import {
+  getTokenInfo,
+  getEosTokenAddress,
+  getNftContract
+} from 'lib/api/UseTokenApi';
+
 const St = {
   CardContainer: styled.div`
     width: 100%;
@@ -21,17 +28,38 @@ const St = {
 //     updatedAt: 1599110780
 // }
 /* test */
-
+const MK_ADDRESS = '0x629cB3144C8F76C06Bb0f18baD90e4af32284E2C';
 const NFTCardContainer = ({
+  nftTitle,
   selectedNftTokendId,
   handleOnClickNFT,
   isDisplayStaked = false
 }) => {
+  const [nftTokenArray, setNftTokenArray] = useState();
+
+  const getTokens = async () => {
+    try {
+      const [address] = await window.klaytn.enable();
+
+      const res = await getEosTokenAddress(MK_ADDRESS, address);
+      console.log('res = ', res.data);
+      const { items } = res.data;
+      setNftTokenArray(items);
+      // const res = await getTokenInfo(MK_ADDRESS, 'MK');
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  useEffect(() => {
+    getTokens();
+  }, []);
+
   return (
     <St.CardContainer>
       <Container>
         <Row>
-          {NFT_TOKEN_ARRAY?.map((nft, index) => {
+          {nftTokenArray?.map((nft, index) => {
             const isStaked = NFT_STAKED_LIST.find(
               (nftStaked) => nftStaked.tokenId === nft.tokenId
             );
@@ -40,9 +68,9 @@ const NFTCardContainer = ({
                 return (
                   <Col xs={12} md={4} lg={3} key={`nft-card-${index}`}>
                     <NFTCard
-                      title={nft?.title}
+                      title={nftTitle}
                       nftTokenId={nft?.tokenId}
-                      imageSrc={nft?.imageSrc}
+                      imageSrc={nft?.tokenUri}
                       selectedNftTokendId={selectedNftTokendId}
                       handleOnClickNFT={handleOnClickNFT}
                       isStaked={isStaked}
@@ -55,9 +83,9 @@ const NFTCardContainer = ({
             return (
               <Col xs={12} md={4} lg={3} key={`nft-card-${index}`}>
                 <NFTCard
-                  title={nft?.title}
+                  title={nftTitle}
                   nftTokenId={nft?.tokenId}
-                  imageSrc={nft?.imageSrc}
+                  imageSrc={nft?.tokenUri}
                   selectedNftTokendId={selectedNftTokendId}
                   handleOnClickNFT={handleOnClickNFT}
                   isStaked={isStaked}

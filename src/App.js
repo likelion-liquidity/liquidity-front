@@ -13,6 +13,7 @@ import Borrow from 'pages/Borrow';
 import Header from 'components/base/Header';
 import Common from 'pages/Common';
 import Total from 'pages/Total';
+import Test from 'pages/Test';
 import Footer from 'components/base/Footer';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-toastify/dist/ReactToastify.css';
@@ -59,6 +60,7 @@ function App() {
               <Route path="/borrow" element={<Borrow />} />
               <Route path="borrow/:nftname" element={<Common />} />
               <Route path="manage/:nftname" element={<Total />} />
+              <Route path="test" element={<Test from={account.account} />} />
             </Routes>
           </St.ContentView>
           <ToastContainer />

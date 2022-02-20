@@ -63,3 +63,20 @@ export const NFT_STAKED_LIST = [
       'https://lh3.googleusercontent.com/BOBPGFOEhkID4BRH_v2IY-XLGqL8rnSK9LuUwDAgR_blgSg5Syfcv8PdQdsLWQfJSTS54CuDbkuvBjn-dt1I_gTV8gQq3ECI-Ih5=w426'
   }
 ];
+// Lending.sol;
+// 0xaba0111c2c6dd22a024608e302f9026958db0688;
+
+// DataHolder;
+// 0x924965ffd912544aeec612812f4aabd124278c1c;
+
+// KIP7(stable);
+// 0x930fa4d81eb0309bd36acb9f0e816e2938151dba;
+
+// KIP17(KL);
+// 0xd11da04cc151cd54f046ce1f3ea12afff2006757;
+
+// KIP17(MB);
+// 0xe402f3af25a3c5b7663bf0562764fd63f33d1794;
+
+// KIP17(MK);
+// 0x629cb3144c8f76c06bb0f18bad90e4af32284e2c;

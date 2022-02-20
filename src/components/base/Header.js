@@ -35,6 +35,9 @@ const St = {
     display: flex;
     flex-direction: row;
     align-items: center;
+    button {
+      margin-right: 5px;
+    }
   `,
 
   HeaderLinkWrapper: styled.ul`
@@ -74,20 +77,19 @@ const St = {
 const Appbar = ({ account, setAccount }) => {
   const { openModal, ModalPortal, closeModal } = useModal();
   const [isConnected, setIsConnected] = useState(false);
-  
 
   const loadAccountInfo = async () => {
     const klaytn = getKlaytnProvider();
-    if(isConnected){
+    if (isConnected) {
       clearAccountInfo(setAccount);
       setIsConnected(false);
-      toast.info("Your wallet is disconnected", {
-        autoClose:1500,
-        position:toast.POSITION.BOTTOM_CENTER
+      toast.info('Your wallet is disconnected', {
+        autoClose: 1500,
+        position: toast.POSITION.BOTTOM_CENTER
       });
       return;
     }
-    
+
     if (klaytn) {
       try {
         const res = await getKaikasAccts();
@@ -95,9 +97,9 @@ const Appbar = ({ account, setAccount }) => {
         setAccountInfo(klaytn);
         setIsConnected(true);
         klaytn.on('accountsChanged', () => setAccountInfo(klaytn));
-        toast.success("Your wallet is connected!!", {
-          autoClose:1500,
-          position:toast.POSITION.BOTTOM_CENTER
+        toast.success('Your wallet is connected!!', {
+          autoClose: 1500,
+          position: toast.POSITION.BOTTOM_CENTER
         });
       } catch (error) {
         console.log('User denied account access');
@@ -108,7 +110,7 @@ const Appbar = ({ account, setAccount }) => {
       );
     }
   };
-  
+
   console.log('account = ', account);
 
   const setAccountInfo = async () => {
@@ -168,6 +170,16 @@ const Appbar = ({ account, setAccount }) => {
             </NavLink>
           ))}
         </St.HeaderLinkWrapper>
+
+        {account?.account && (
+          <Button onClick={handleConnectWallet} color="blue_3">
+            {`${account.account.slice(0, 4)}...${account.account.slice(
+              account.account.length - 4,
+              account.account.length
+            )}`}
+          </Button>
+        )}
+
         <Button onClick={handleConnectWallet} color="blue_6">
           {isConnected ? 'disconnect wallet' : 'connect wallet'}
         </Button>

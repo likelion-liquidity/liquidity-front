@@ -3,12 +3,24 @@ import NFTCardContainer from 'components/borrow/stake/NFTCardContainer';
 import NFTInfoHeader from 'components/borrow/stake/NFTInfoHeader';
 import NFTDescriptionContainer from 'components/borrow/stake/NFTDescriptionContainer';
 import { NFT_TOKEN_ARRAY } from 'lib/staticData';
+import { useLocation } from 'react-router-dom';
+import { getPathName } from 'lib/helpers';
 
 const CommonTestPage = () => {
+  const [nftInfo, setNftInfo] = useState({
+    nftTitle: '',
+    floorPrice: ''
+  });
   const [isOpenDescriptionContainer, setIsOpenDescriptionContainer] =
     useState(false);
   const [selectedNftTokendId, setSelectedNftTokendId] = useState('');
   const [selectedNft, setSelectedNft] = useState(null);
+  const location = useLocation();
+
+  useEffect(() => {
+    const nftTitle = getPathName(location.pathname);
+    setNftInfo({ nftTitle: nftTitle });
+  }, []);
 
   const handleOnClickNFT = (nftTokenId) => {
     setSelectedNftTokendId(nftTokenId);
@@ -29,8 +41,9 @@ const CommonTestPage = () => {
 
   return (
     <div>
-      <NFTInfoHeader />
+      <NFTInfoHeader nftTitle={nftInfo?.nftTitle} />
       <NFTCardContainer
+        nftTitle={nftInfo?.nftTitle}
         handleOnClickNFT={handleOnClickNFT}
         selectedNftTokendId={selectedNftTokendId}
       />

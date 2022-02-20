@@ -5,7 +5,7 @@ export const getKlaytnProvider = () => {
   Error('failed connecting to Kaikas');
 };
 
-export const clearAccountInfo = setAccount => {
+export const clearAccountInfo = (setAccount) => {
   setAccount({
     txType: null,
     account: '',
@@ -36,4 +36,10 @@ export const handleScrollTop = (smooth = false) => {
     return;
   }
   if (document) window.scroll(0, 0);
+};
+
+export const getPathName = (pathname) => {
+  if (!pathname) return;
+  const paths = pathname.split('/');
+  return paths[paths.length - 1];
 };

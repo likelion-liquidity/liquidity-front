@@ -1,11 +1,11 @@
 import caver from 'caver-js';
 import KIP17ABI from '../abi/KIP17TokenABI.json';
-// import {
-//     ACCESS_KEY_ID,
-//     SECRET_ACCESS_KEY,
-//     CHAIN_ID,
-//     NFT_CONTRACT_ADDRESS
-// } from "../constants";
+import {
+  ACCESS_KEY_ID,
+  SECRET_ACCESS_KEY,
+  CHAIN_ID,
+  NFT_CONTRACT_ADDRESS
+} from '../constants';
 
 // const option = {
 //   headers: [
