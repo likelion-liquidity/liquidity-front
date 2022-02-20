@@ -1,18 +1,5 @@
 # Liquidity Front
 
-## Pages
-
-- [x] Borrow
-- [ ] Stake
-- [ ] Repay
-
-## Components
-
-- [x] Button
-- [x] Card
-- [x] Common modal
-- [x] asset
-
 ## LIQUDITY SMART CONTRACT(KAS:KIP-17, KIP-7)
 
 Go to [KAS docs](https://docs.klaytnapi.com/)

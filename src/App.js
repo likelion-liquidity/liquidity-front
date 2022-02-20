@@ -109,7 +109,7 @@ function App() {
           <Header account={account} setAccount={setAccount} />
           <St.ContentView>
             <Routes>
-              <Route path="/borrow" element={<Borrow />} />
+              <Route path="/borrow" element={<Borrow whiteListNFTList={whiteListNFTList} />} />
               <Route
                 path="borrow/:nftname"
                 element={<Common whiteListNFTList={whiteListNFTList} />}
