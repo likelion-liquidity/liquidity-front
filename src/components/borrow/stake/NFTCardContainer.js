@@ -28,8 +28,10 @@ const St = {
 //     updatedAt: 1599110780
 // }
 /* test */
-const MK_ADDRESS = '0x629cB3144C8F76C06Bb0f18baD90e4af32284E2C';
+// const MK_ADDRESS = '0x629cB3144C8F76C06Bb0f18baD90e4af32284E2C';
+
 const NFTCardContainer = ({
+  whiteListNFTList,
   nftTitle,
   selectedNftTokendId,
   handleOnClickNFT,
@@ -40,8 +42,13 @@ const NFTCardContainer = ({
   const getTokens = async () => {
     try {
       const [address] = await window.klaytn.enable();
-
-      const res = await getEosTokenAddress(MK_ADDRESS, address);
+      const selectedWhiteList = whiteListNFTList.find(
+        (item) => item.name === nftTitle
+      );
+      console.log(selectedWhiteList);
+      if (!selectedWhiteList) return;
+      console.log(selectedWhiteList);
+      const res = await getEosTokenAddress(selectedWhiteList.address, address);
       console.log('res = ', res.data);
       const { items } = res.data;
       setNftTokenArray(items);
@@ -52,8 +59,10 @@ const NFTCardContainer = ({
   };
 
   useEffect(() => {
+    if (whiteListNFTList?.length === 0) return;
+
     getTokens();
-  }, []);
+  }, [whiteListNFTList, nftTitle]);
 
   return (
     <St.CardContainer>
