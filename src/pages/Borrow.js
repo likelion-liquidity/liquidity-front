@@ -57,6 +57,9 @@ const St = {
 const Borrow = ({ whiteListNFTList }) => {
   const [checkStatus, setCheckStatus] = useState(false);
   const [pageN, setPageN] = useState(1);
+  
+  let skipCount = 0;
+
   const navigate = useNavigate();
   const onClickPaginationBtn = (num) => {
     if (num < 1 || num > whiteListNFTList.length / 5 + 1) return;
@@ -103,13 +106,19 @@ const Borrow = ({ whiteListNFTList }) => {
     navigate(`/borrow/${title}`);
   };
 
+  const onClickCheckBox = () => {
+    setCheckStatus(!checkStatus);
+    setPageN(1);
+    skipCount = 0;
+  };
+
   return (
     <St.Container>
       <div style={{ display: 'flex', justifyContent: 'center' }}>
         <h1>Borrow</h1>
       </div>
       <St.FilterContainer>
-        <St.ChkBox type="checkbox" onClick={() => setCheckStatus(true)} />
+        <St.ChkBox type="checkbox" onClick={() => onClickCheckBox()} />
         <St.Text>My Assets</St.Text>
       </St.FilterContainer>
       <St.ContentViewHeaderContainer>
@@ -119,7 +128,11 @@ const Borrow = ({ whiteListNFTList }) => {
       </St.ContentViewHeaderContainer>
       <St.ContentViewContainer>
         {whiteListNFTList?.map((e, index) => {
-          if (index >= (pageN - 1) * 5 && index < 5 * pageN) {
+          if(checkStatus && !e.isOwned){
+            skipCount++;
+            return;
+          }
+          if ((index - skipCount) >= (pageN - 1) * 5 && (index - skipCount) < 5 * pageN) {
             return (
               <Asset
                 key={`asstes-${index}`}
@@ -128,7 +141,8 @@ const Borrow = ({ whiteListNFTList }) => {
                 ltvProps={{ ltv: `${e.liqLtv}%` }}
                 priceProps={{ price: `${e.floorPrice} KLAY` }}
                 buttonProps={{
-                  handleOnClick: handleMoveStakeNFT
+                  handleOnClick: handleMoveStakeNFT,
+                  title:e.isStaked ? "Open Manage" : null
                 }}
               />
             );
