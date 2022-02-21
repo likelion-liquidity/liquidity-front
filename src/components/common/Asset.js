@@ -39,10 +39,8 @@ const St = {
     align-items: center;
     height: 48px;
     padding: 3px 25px;
-    //border-radius: 8px;
     font-size: 15px;
     font-weight: 500;
-    // margin-bottom: 15px;
     box-shadow: rgb(0 0 0 / 12%) 11px 13px 30px -8px;
     width: ${(props) => props.width};
     ${(props) => getAssetColor(props.color || '', props.colorReverse)};
@@ -53,7 +51,7 @@ const St = {
     width: 18%;
   `,
   TitleContainer: styled.div`
-    width: 32%;
+    width: 27%;
   `,
   LtvContainer: styled.div`
     width: 17%;
@@ -62,7 +60,7 @@ const St = {
     width: 17%;
   `,
   ButtonContainer: styled.div`
-    width: 16%;
+    width: 21%;
   `
 };
 
@@ -75,7 +73,7 @@ const Image = styled.img`
 const Asset = ({
   color,
   size,
-  width = '780px',
+  width = '850px',
   colorReverse = true,
   imgProps = null,
   titleProps = null,
@@ -108,7 +106,7 @@ const Asset = ({
             color="blue_4"
             onClick={() => buttonProps.handleOnClick(titleProps?.title)}
           >
-            {buttonProps.title ? buttonProps.title : 'Borrow'}
+            {buttonProps.title ? buttonProps.title : 'Stake & Borrow'}
           </Button>
         )}
       </St.ButtonContainer>

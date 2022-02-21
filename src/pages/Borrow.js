@@ -1,19 +1,9 @@
 import Asset from 'components/common/Asset';
 import Button from 'components/common/Button';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import { DUMMY } from './Dummy';
 import palette from 'styles/palette';
-import DATAHOLDER_ABI from 'abi/DataHolderABI.json';
-import { caver } from 'lib/api/UseKaikas';
-import {
-  getTokenInfo,
-  getEosTokenAddress,
-  getNftContract
-} from 'lib/api/UseTokenApi';
-
-const DATA_HOLDER_ADDRESS = '0x924965fFD912544AeeC612812F4aABD124278C1C';
 
 const St = {
   Container: styled.div``,
@@ -41,14 +31,14 @@ const St = {
     font-weight: 500;
   `,
   Th1: styled.div`
-    width: 50%;
+    width: 45%;
     text-align: center;
   `,
   Th2: styled.div`
-    width: 17%;
+    width: 16%;
   `,
   Th3: styled.div`
-    width: 33%;
+    width: 39%;
   `,
   PaginationContainer: styled.div`
     display: flex;
@@ -128,23 +118,6 @@ const Borrow = ({ whiteListNFTList }) => {
         <St.Th3>floor price</St.Th3>
       </St.ContentViewHeaderContainer>
       <St.ContentViewContainer>
-        {/* {DUMMY.map((e, index) => {
-          if (index >= (pageN - 1) * 5 && index < 5 * pageN) {
-            return (
-              <Asset
-                key={`asstes-${index}`}
-                imgProps={e.imgProps}
-                titleProps={e.titleProps}
-                ltvProps={e.ltvProps}
-                priceProps={e.priceProps}
-                buttonProps={{
-                  handleOnClick: handleMoveStakeNFT
-                }}
-              />
-            );
-          }
-        })} */}
-
         {whiteListNFTList?.map((e, index) => {
           if (index >= (pageN - 1) * 5 && index < 5 * pageN) {
             return (
