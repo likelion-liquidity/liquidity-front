@@ -1,8 +1,8 @@
-import NFTCard from 'components/common/NftCard';
+import { NFTCard, Loading, EmptyCard } from 'components/common';
 import { useState, useEffect } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import { NFT_TOKEN_ARRAY, NFT_STAKED_LIST } from 'lib/staticData';
-
+//import useFetch from 'hooks/useFetch';
 import styled from 'styled-components';
 import {
   getTokenInfo,
@@ -37,7 +37,8 @@ const NFTCardContainer = ({
   handleOnClickNFT,
   isDisplayStaked = false
 }) => {
-  const [nftTokenArray, setNftTokenArray] = useState();
+  const [isLoading, setIsLoading] = useState(null);
+  const [nftTokenArray, setNftTokenArray] = useState(null);
 
   const getTokens = async () => {
     try {
@@ -48,10 +49,14 @@ const NFTCardContainer = ({
       console.log(selectedWhiteList);
       if (!selectedWhiteList) return;
       console.log(selectedWhiteList);
+
+      setIsLoading(true);
       const res = await getEosTokenAddress(selectedWhiteList.address, address);
+
       console.log('res = ', res.data);
       const { items } = res.data;
       setNftTokenArray(items);
+      setIsLoading(false);
       // const res = await getTokenInfo(MK_ADDRESS, 'MK');
     } catch (e) {
       console.log(e);
@@ -64,6 +69,13 @@ const NFTCardContainer = ({
     getTokens();
   }, [whiteListNFTList, nftTitle]);
 
+  if (nftTokenArray?.length === 0 && isLoading === false) {
+    return (
+      <Container>
+        <EmptyCard />
+      </Container>
+    );
+  }
   return (
     <St.CardContainer>
       <Container>

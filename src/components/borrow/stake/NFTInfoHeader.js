@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-
+import useGetImage from 'hooks/useGetImage';
 const St = {
   NFTDescriptionImageContainer: styled.div`
     height: 200px;
@@ -86,23 +86,19 @@ const St = {
 };
 
 const NFTInfoHeader = ({ nftTitle = '', floorPrice = 0 }) => {
+  const { logoImage, bannerImage } = useGetImage(nftTitle);
+
   return (
     <div>
       <St.NFTDescriptionImageContainer>
         <div style={{ width: 'inherit', height: 'inherit' }} id="banner">
-          <img
-            src="https://lh3.googleusercontent.com/LkkMZIONLcKnqkzI-J17FZlXBkmnmDH2unCJ6o_blsjrRvINYJ7XySH7wg3xsJ78WTyQpGhgqWSCt5ytQkfE67M-Cyfy4xlXuqjQW4Y=h600"
-            alt=""
-          />
+          <img src={bannerImage} alt="" />
         </div>
       </St.NFTDescriptionImageContainer>
       <St.NFTDescriptionContainer>
         <St.NFTLogoContainer>
           <St.NFTLogo>
-            <img
-              src="https://lh3.googleusercontent.com/AX_uuKN-OFhtHXtzw5PJ3K-bGW5tg2svacBEv8xO_ii3UCEo6UTjqec4MiXFGP3gsxPD-p-W0d315pEvIOxG3pKNWfT3G8KvAgIl=s130"
-              alt=""
-            />
+            <img src={logoImage} alt="" />
           </St.NFTLogo>
         </St.NFTLogoContainer>
         <St.NFTTitleCotainer>
