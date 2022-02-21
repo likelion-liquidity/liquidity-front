@@ -22,6 +22,7 @@ import { getKlaytnProvider } from 'lib/helpers';
 import { caver } from 'lib/api/UseKaikas';
 import DATAHOLDER_ABI from 'abi/DataHolderABI.json';
 import { getNftContract } from 'lib/api/UseTokenApi';
+
 const DATA_HOLDER_ADDRESS = '0x924965fFD912544AeeC612812F4aABD124278C1C';
 
 const St = {
@@ -86,6 +87,8 @@ function App() {
         return { ...nftContractInfo.data, ...finddata };
       });
       setWhiteListNFTList(whiteListNFTList);
+      const owner = await contract.methods.owner().call();
+      console.log(owner);
     } catch (e) {
       console.log(e);
     }
@@ -109,7 +112,7 @@ function App() {
           <Header account={account} setAccount={setAccount} />
           <St.ContentView>
             <Routes>
-              <Route path="/borrow" element={<Borrow whiteListNFTList={whiteListNFTList} />} />
+              <Route path="/" element={<Borrow whiteListNFTList={whiteListNFTList} />} />
               <Route
                 path="borrow/:nftname"
                 element={<Common whiteListNFTList={whiteListNFTList} />}
