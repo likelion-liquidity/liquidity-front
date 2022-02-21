@@ -2,6 +2,7 @@ import React from 'react';
 import styled, { css } from 'styled-components';
 import palette from 'styles/palette';
 import Button from './Button';
+import useGetImage from 'hooks/useGetImage';
 
 const getAssetColor = (color, colorReverse) => {
   if (colorReverse) {
@@ -81,6 +82,8 @@ const Asset = ({
   buttonProps = null,
   ...props
 }) => {
+  const { logoImage } = useGetImage(titleProps.title);
+
   return (
     <St.Container
       {...props}
@@ -89,9 +92,9 @@ const Asset = ({
       width={width}
       colorReverse={colorReverse}
     >
-      {imgProps && (
+      {logoImage && (
         <St.ImageContainer>
-          <Image src={imgProps.src} alt={imgProps.alt} />
+          <Image src={logoImage} alt={''} />
         </St.ImageContainer>
       )}
       {titleProps && <St.TitleContainer>{titleProps.title}</St.TitleContainer>}
