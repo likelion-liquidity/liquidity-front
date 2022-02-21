@@ -25,6 +25,7 @@ const St = {
 
   HeaderContainerLeft: styled.div``,
   HeaderContainerLogoWrapper: styled.div`
+    min-width: 200px;
     height: 50px;
     img {
       height: 100%;

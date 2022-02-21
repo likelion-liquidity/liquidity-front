@@ -80,3 +80,30 @@ export const NFT_STAKED_LIST = [
 
 // KIP17(MK);
 // 0x629cb3144c8f76c06bb0f18bad90e4af32284e2c;
+
+export const NFT_LIST = [
+  {
+    title: 'Metabumz',
+    symbol: 'BM',
+    logo_image:
+      'https://lh3.googleusercontent.com/nfnONfp2XMHD9ub5vIqoYUFJw_R1j25I47QfNkvIZztEHqOnBksNdrnII_-AZFdlonlTFSBmnrJFVO3yPtEccpVkIWjSezs14P1U=s130',
+    banner_image:
+      'https://lh3.googleusercontent.com/TFP7iOG2IWdNNJ3PVVtAzFCwDiEm3q_2ZC9D4p2PV87lIPoJIcwtmJBv02-poHugY0mVOiC2ovaGeFxgl4n6crEn9vzylHKYlbEV7A=h600'
+  },
+  {
+    title: 'Metakongz',
+    symbol: 'MK',
+    logo_image:
+      'https://lh3.googleusercontent.com/AX_uuKN-OFhtHXtzw5PJ3K-bGW5tg2svacBEv8xO_ii3UCEo6UTjqec4MiXFGP3gsxPD-p-W0d315pEvIOxG3pKNWfT3G8KvAgIl=s130',
+
+    banner_image:
+      'https://lh3.googleusercontent.com/LkkMZIONLcKnqkzI-J17FZlXBkmnmDH2unCJ6o_blsjrRvINYJ7XySH7wg3xsJ78WTyQpGhgqWSCt5ytQkfE67M-Cyfy4xlXuqjQW4Y=h600'
+  },
+  {
+    title: 'KlayLion',
+    logo_image:
+      'https://lh3.googleusercontent.com/62sZVScyxqlvpNh6J0JhiudQFegqTvqx_11YZxWJnwZqbLbvYklFjtVHWKwDZkLxH3acnJMUEsZhmUqTPcB_NRk9uv0RR0fw61_B=s130',
+    banner_image: '',
+    symbol: 'KL'
+  }
+];
