@@ -30,7 +30,7 @@ import DATAHOLDER_ABI from 'abi/DataHolderABI.json';
 // 0x629cB3144C8F76C06Bb0f18baD90e4af32284E2C
 
 const DATA_HOLDER_ADDRESS = '0x924965fFD912544AeeC612812F4aABD124278C1C';
-const DEPLOYED_ADDRESS = '0x924965fFD912544AeeC612812F4aABD124278C1C';
+const DEPLOYED_ADDRESS = '0x9c1BD15D5a546b1E78B592Fa84c25E7E43201C2f';
 const KIP_ADDRESS = '0x930FA4d81eb0309bD36aCB9F0E816e2938151DBA';
 const MK_ADDRESS = '0x629cB3144C8F76C06Bb0f18baD90e4af32284E2C';
 // const countContract = new caver.Contract(DEPLOYED_ABI, DEPLOYED_ADDRESS);
@@ -83,6 +83,7 @@ const TestPage = ({ from }) => {
   }, [from]);
 
   const getCount = async () => {
+    console.log('countContract ', countContract);
     // ** 2. Call contract method (CALL) **
     // ex:) this.countContract.methods.methodName(arguments).call()
     // You can call contract method (CALL) like above.
@@ -132,9 +133,9 @@ const TestPage = ({ from }) => {
       caver.klay
         .sendTransaction({
           type: 'SMART_CONTRACT_EXECUTION',
-          from: accountInfo.from,
+          from: address,
           to: DEPLOYED_ADDRESS,
-          data: contract.methods.plus().encodeABI(),
+          data: contract.methods.plus_update(3).encodeABI(),
           value: '',
           gas: '800000'
         })
@@ -239,6 +240,43 @@ const TestPage = ({ from }) => {
     }
   };
 
+  const transferCoin = async () => {
+    // test.js
+    const Caver = require('caver-js');
+    const caver = new Caver('https://api.baobab.klaytn.net:8651/');
+
+    async function testFunction() {
+      const privateKey =
+        'e30f4cd76be11d8c718678ce8eb7f2435c202912112058f635c8209d9cdbcb6e';
+      // Add a keyring to caver.wallet
+      const keyring = caver.wallet.keyring.createFromPrivateKey(
+        `0x${privateKey}`
+      );
+      caver.wallet.add(keyring);
+
+      // Create value transfer transaction
+      const vt = new caver.transaction.valueTransfer({
+        from: keyring.address,
+        to: '0xe41bb1522972d7f1144eb3114bbc32a28b09ed8e',
+        value: caver.utils.toPeb(1, 'KLAY'),
+        gas: 25000
+      });
+
+      // Sign to the transaction
+      const signed = await caver.wallet.sign(keyring.address, vt);
+
+      // Send transaction to the Klaytn blockchain platform (Klaytn)
+      const receipt = await caver.rpc.klay.sendRawTransaction(signed);
+      const receipt2 = await caver.rpc.klay.getTransactionReceipt(
+        receipt.transactionHash
+      );
+      console.log(receipt2);
+      console.log(receipt);
+    }
+
+    testFunction();
+  };
+
   return (
     <div>
       <button onClick={getCount}>getCount</button>
@@ -247,6 +285,7 @@ const TestPage = ({ from }) => {
       <button onClick={getTest}>getTokens</button>
       <button onClick={setPlus}>setplus</button>
       <button onClick={getNftData}>getNftData</button>
+      <button onClick={transferCoin}>transferCoin</button>
       <div>{countContractInfo?.count}</div>
       {/* <div>{countContractInfo?.lastParticipant}</div> */}
     </div>

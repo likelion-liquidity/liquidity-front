@@ -8,23 +8,63 @@ import { getPathName } from 'lib/helpers';
 
 const CommonTestPage = ({ whiteListNFTList }) => {
   const [nftInfo, setNftInfo] = useState({
-    nftTitle: '',
-    floorPrice: ''
+    address: '',
+    availableLoanAmount: '',
+    floorPrice: '',
+    isOwned: '',
+    isStaked: '',
+    liqLtv: '',
+    maxLtv: '',
+    symbol: '',
+    nftKlayPrice: '',
+    nftTitle: ''
   });
   const [isOpenDescriptionContainer, setIsOpenDescriptionContainer] =
     useState(false);
   const [selectedNftTokendId, setSelectedNftTokendId] = useState('');
   const [selectedNft, setSelectedNft] = useState(null);
+  const [nftTokenArray, setNftTokenArray] = useState(null);
+
   const location = useLocation();
 
   useEffect(() => {
+    if (!whiteListNFTList) return;
     const nftTitle = getPathName(location.pathname);
-    setNftInfo({ nftTitle: nftTitle });
-  }, []);
+    const NFT = whiteListNFTList.find((nftInfo) => nftInfo.name === nftTitle);
+    if (!NFT) return;
+    console.log(NFT);
+    const {
+      address,
+      availableLoanAmount,
+      floorPrice,
+      isOwned,
+      isStaked,
+      liqLtv,
+      maxLtv,
+      name,
+      nftKlayPrice,
+      symbol
+    } = NFT;
+
+    setNftInfo({
+      ...nftInfo,
+      nftTitle: name,
+      address,
+      availableLoanAmount,
+      floorPrice,
+      isOwned,
+      isStaked,
+      liqLtv,
+      maxLtv,
+      name,
+      nftKlayPrice,
+      symbol
+    });
+  }, [location.pathname, whiteListNFTList]);
 
   const handleOnClickNFT = (nftTokenId) => {
     setSelectedNftTokendId(nftTokenId);
-    const selectedNFT = NFT_TOKEN_ARRAY.find(
+    const selectedNFT = nftTokenArray?.find(
       (token) => token.tokenId === nftTokenId
     );
     setSelectedNft(selectedNFT);
@@ -47,8 +87,11 @@ const CommonTestPage = ({ whiteListNFTList }) => {
         handleOnClickNFT={handleOnClickNFT}
         selectedNftTokendId={selectedNftTokendId}
         whiteListNFTList={whiteListNFTList}
+        nftTokenArray={nftTokenArray}
+        setNftTokenArray={setNftTokenArray}
       />
       <NFTDescriptionContainer
+        nftInfo={nftInfo}
         selectedNft={selectedNft}
         isOpenDescriptionContainer={isOpenDescriptionContainer}
       />

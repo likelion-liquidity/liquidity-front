@@ -35,10 +35,12 @@ const NFTCardContainer = ({
   nftTitle,
   selectedNftTokendId,
   handleOnClickNFT,
+  nftTokenArray,
+  setNftTokenArray,
   isDisplayStaked = false
 }) => {
   const [isLoading, setIsLoading] = useState(null);
-  const [nftTokenArray, setNftTokenArray] = useState(null);
+  //const [nftTokenArray, setNftTokenArray] = useState(null);
 
   const getTokens = async () => {
     try {
