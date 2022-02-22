@@ -18,12 +18,19 @@ import Footer from 'components/base/Footer';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'styles/bootstrap.custom.css';
 import 'react-toastify/dist/ReactToastify.css';
-import { getKlaytnProvider } from 'lib/helpers';
 import { caver } from 'lib/api/UseKaikas';
 import DATAHOLDER_ABI from 'abi/DataHolderABI.json';
+import LENDING_ABI from 'abi/LendingABI.json';
+// import KIP17_ABI from 'abi/KIP17TokenABI.json';
+import { getEosTokenAddress, getNftContract } from 'lib/api/UseTokenApi';
+import { getKlaytnProvider } from 'lib/helpers';
+
 import { getNftContract } from 'lib/api/UseTokenApi';
 
+
 const DATA_HOLDER_ADDRESS = '0x924965fFD912544AeeC612812F4aABD124278C1C';
+const LENDING_ADDRESS = '0xABa0111C2c6dd22A024608e302f9026958dB0688';
+// const KIP17_ADDRESS = '0xD11da04cC151CD54f046CE1F3Ea12afff2006757';
 
 const St = {
   BaseRoot: styled.div`
@@ -51,16 +58,32 @@ function App() {
 
   const getWhiteList = async () => {
     try {
-      const contract = caver.contract.create(
-        DATAHOLDER_ABI,
-        DATA_HOLDER_ADDRESS
-      );
+      const klaytn = getKlaytnProvider(); // klaytn obj
+      const contract = caver.contract.create(DATAHOLDER_ABI, DATA_HOLDER_ADDRESS); // Dataholder contract
+      const lendingContract = caver.contract.create(LENDING_ABI, LENDING_ADDRESS); // Lendinng contract
+      
       /* 화이트 리스트 어드레스 받아오기  */
       const whiteListNFT = await contract.methods.getWhiteListNftList().call();
-
       const getNftDataContractCall = async (nftAddress) => {
         const nftData = await contract.methods.getNftData(nftAddress).call();
-        return { ...nftData, address: nftAddress };
+        const { items : nfts } = (await getEosTokenAddress(nftAddress, klaytn.selectedAddress)).data;
+        
+        let isStaked = false;
+        let isOwned = false;
+
+        if(nfts.length !== 0){
+          for(let i = 0; i < nfts.length; i++){
+            // console.log(nfts[i].owner, nftAddress, nfts[i].tokenId);
+            if(nfts[i].owner === klaytn.selectedAddress){
+              isOwned = true;
+            }
+            
+            // const nftLendingStatus = await lendingContract.methods.stakedNft(nfts[i].owner, nftAddress, nfts[i].tokenId).call();
+
+            if(isStaked && isOwned) break;            
+          }
+        }
+        return { ...nftData, address: nftAddress, isStaked, isOwned };
       };
       /* 스마트 콘트렉트에 있는 nft 데이터 가져오기 */
       const nftDatas = await Promise.all(
@@ -93,7 +116,6 @@ function App() {
       console.log(e);
     }
   };
-  //
 
   useEffect(() => {
     getWhiteList();
