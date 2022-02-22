@@ -3,14 +3,42 @@
 		"constant": false,
 		"inputs": [
 			{
-				"name": "owner",
-				"type": "address"
+				"internalType": "uint256",
+				"name": "loanAmount",
+				"type": "uint256"
 			},
 			{
+				"internalType": "address",
 				"name": "nftAddress",
 				"type": "address"
 			},
 			{
+				"internalType": "uint256",
+				"name": "nftTokenId",
+				"type": "uint256"
+			}
+		],
+		"name": "borrow",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "owner",
+				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "nftAddress",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
 				"name": "nftTokenId",
 				"type": "uint256"
 			}
@@ -25,18 +53,22 @@
 		"constant": false,
 		"inputs": [
 			{
+				"internalType": "address",
 				"name": "operator",
 				"type": "address"
 			},
 			{
+				"internalType": "address",
 				"name": "from",
 				"type": "address"
 			},
 			{
+				"internalType": "uint256",
 				"name": "tokenId",
 				"type": "uint256"
 			},
 			{
+				"internalType": "bytes",
 				"name": "data",
 				"type": "bytes"
 			}
@@ -44,6 +76,7 @@
 		"name": "onKIP17Received",
 		"outputs": [
 			{
+				"internalType": "bytes4",
 				"name": "",
 				"type": "bytes4"
 			}
@@ -56,18 +89,22 @@
 		"constant": false,
 		"inputs": [
 			{
+				"internalType": "address",
 				"name": "sender",
 				"type": "address"
 			},
 			{
+				"internalType": "address",
 				"name": "recipient",
 				"type": "address"
 			},
 			{
+				"internalType": "uint256",
 				"name": "amount",
 				"type": "uint256"
 			},
 			{
+				"internalType": "bytes",
 				"name": "_data",
 				"type": "bytes"
 			}
@@ -75,6 +112,7 @@
 		"name": "onKIP7Received",
 		"outputs": [
 			{
+				"internalType": "bytes4",
 				"name": "",
 				"type": "bytes4"
 			}
@@ -82,6 +120,42 @@
 		"payable": false,
 		"stateMutability": "nonpayable",
 		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_dataHolderAddress",
+				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "_stableTokenAddress",
+				"type": "address"
+			}
+		],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "constructor"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"internalType": "address",
+				"name": "previousOwner",
+				"type": "address"
+			},
+			{
+				"indexed": true,
+				"internalType": "address",
+				"name": "newOwner",
+				"type": "address"
+			}
+		],
+		"name": "OwnershipTransferred",
+		"type": "event"
 	},
 	{
 		"constant": false,
@@ -96,14 +170,17 @@
 		"constant": false,
 		"inputs": [
 			{
+				"internalType": "uint256",
 				"name": "repayAmount",
 				"type": "uint256"
 			},
 			{
+				"internalType": "address",
 				"name": "targetNftAddress",
 				"type": "address"
 			},
 			{
+				"internalType": "uint256",
 				"name": "targetNftTokenId",
 				"type": "uint256"
 			}
@@ -118,19 +195,17 @@
 		"constant": false,
 		"inputs": [
 			{
-				"name": "loanAmount",
-				"type": "uint256"
-			},
-			{
-				"name": "stakeNftAddress",
+				"internalType": "address",
+				"name": "nftAddress",
 				"type": "address"
 			},
 			{
-				"name": "stakeNftId",
+				"internalType": "uint256",
+				"name": "nftTokenId",
 				"type": "uint256"
 			}
 		],
-		"name": "stakeAndBorrow",
+		"name": "stake",
 		"outputs": [],
 		"payable": false,
 		"stateMutability": "nonpayable",
@@ -149,6 +224,7 @@
 		"constant": false,
 		"inputs": [
 			{
+				"internalType": "address",
 				"name": "newOwner",
 				"type": "address"
 			}
@@ -160,45 +236,73 @@
 		"type": "function"
 	},
 	{
+		"constant": true,
 		"inputs": [
 			{
-				"name": "_dataHolderAddress",
+				"internalType": "address",
+				"name": "userAddress",
 				"type": "address"
 			},
 			{
-				"name": "_stableTokenAddress",
+				"internalType": "address",
+				"name": "nftAddress",
 				"type": "address"
+			}
+		],
+		"name": "getStakedNftList",
+		"outputs": [
+			{
+				"components": [
+					{
+						"internalType": "uint256",
+						"name": "nftTokenId",
+						"type": "uint256"
+					},
+					{
+						"internalType": "bool",
+						"name": "hasOwnership",
+						"type": "bool"
+					},
+					{
+						"internalType": "uint256",
+						"name": "loanAmount",
+						"type": "uint256"
+					}
+				],
+				"internalType": "struct Lending.NftLendingStatus[]",
+				"name": "",
+				"type": "tuple[]"
 			}
 		],
 		"payable": false,
-		"stateMutability": "nonpayable",
-		"type": "constructor"
+		"stateMutability": "view",
+		"type": "function"
 	},
 	{
-		"anonymous": false,
-		"inputs": [
+		"constant": true,
+		"inputs": [],
+		"name": "getUserList",
+		"outputs": [
 			{
-				"indexed": true,
-				"name": "previousOwner",
-				"type": "address"
-			},
-			{
-				"indexed": true,
-				"name": "newOwner",
-				"type": "address"
+				"internalType": "address[]",
+				"name": "",
+				"type": "address[]"
 			}
 		],
-		"name": "OwnershipTransferred",
-		"type": "event"
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
 	},
 	{
 		"constant": true,
 		"inputs": [
 			{
+				"internalType": "address",
 				"name": "nftAddress",
 				"type": "address"
 			},
 			{
+				"internalType": "uint256",
 				"name": "nftTokenId",
 				"type": "uint256"
 			}
@@ -206,6 +310,7 @@
 		"name": "isLiquidated",
 		"outputs": [
 			{
+				"internalType": "bool",
 				"name": "",
 				"type": "bool"
 			}
@@ -220,6 +325,7 @@
 		"name": "owner",
 		"outputs": [
 			{
+				"internalType": "address",
 				"name": "",
 				"type": "address"
 			}
@@ -232,14 +338,17 @@
 		"constant": true,
 		"inputs": [
 			{
+				"internalType": "address",
 				"name": "",
 				"type": "address"
 			},
 			{
+				"internalType": "address",
 				"name": "",
 				"type": "address"
 			},
 			{
+				"internalType": "uint256",
 				"name": "",
 				"type": "uint256"
 			}
@@ -247,14 +356,17 @@
 		"name": "stakedNft",
 		"outputs": [
 			{
+				"internalType": "uint256",
 				"name": "nftTokenId",
 				"type": "uint256"
 			},
 			{
+				"internalType": "bool",
 				"name": "hasOwnership",
 				"type": "bool"
 			},
 			{
+				"internalType": "uint256",
 				"name": "loanAmount",
 				"type": "uint256"
 			}
@@ -267,10 +379,12 @@
 		"constant": true,
 		"inputs": [
 			{
+				"internalType": "address",
 				"name": "",
 				"type": "address"
 			},
 			{
+				"internalType": "uint256",
 				"name": "",
 				"type": "uint256"
 			}
@@ -278,6 +392,7 @@
 		"name": "stakedNftCollection",
 		"outputs": [
 			{
+				"internalType": "address",
 				"name": "",
 				"type": "address"
 			}

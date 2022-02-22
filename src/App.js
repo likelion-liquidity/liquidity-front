@@ -25,6 +25,9 @@ import LENDING_ABI from 'abi/LendingABI.json';
 import { getEosTokenAddress, getNftContract } from 'lib/api/UseTokenApi';
 import { getKlaytnProvider } from 'lib/helpers';
 
+import { getNftContract } from 'lib/api/UseTokenApi';
+
+
 const DATA_HOLDER_ADDRESS = '0x924965fFD912544AeeC612812F4aABD124278C1C';
 const LENDING_ADDRESS = '0xABa0111C2c6dd22A024608e302f9026958dB0688';
 // const KIP17_ADDRESS = '0xD11da04cC151CD54f046CE1F3Ea12afff2006757';
@@ -107,6 +110,8 @@ function App() {
         return { ...nftContractInfo.data, ...finddata };
       });
       setWhiteListNFTList(whiteListNFTList);
+      const owner = await contract.methods.owner().call();
+      console.log(owner);
     } catch (e) {
       console.log(e);
     }
