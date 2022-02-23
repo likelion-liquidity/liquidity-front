@@ -356,39 +356,44 @@ const TestPage = ({ from }) => {
       console.log(e);
     }
   };
-  const mintToken = async () => {
-    try {
-      const [address] = await window.klaytn.enable();
+  const stakeData = async () => {
+    const [address] = await window.klaytn.enable();
+    const Caver = new caverTest(window.klaytn);
+    const contract = Caver.contract.create(LENDING_ABI, LENDING_ADDRESS);
 
-      const Caver = new caverTest('https://api.baobab.klaytn.net:8651/');
-      // let keyring = Caver.wallet.keyring.generate();
-      // let walletKey = keyring.getKlaytnWalletKey();
-      // const walletKeyring =
-      //   Caver.wallet.keyring.createFromKlaytnWalletKey(walletKey);
-      // Caver.wallet.add(walletKeyring);
-      const keyring = caver.wallet.keyring.createFromPrivateKey(
-        '0xe30f4cd76be11d8c718678ce8eb7f2435c202912112058f635c8209d9cdbcb6e'
-      );
-      Caver.wallet.add(keyring);
+    console.log('address-', address);
 
-      const kip17 = new Caver.kct.kip17(KIP17_MK);
-      const kip17Res = await kip17.approve(LENDING_ADDRESS, 0, {
-        from: keyring.address
+    Caver.klay
+      .sendTransaction({
+        type: 'SMART_CONTRACT_EXECUTION',
+        from: '0x34910aabdc57937666c1d0ec87ce9337b171fdbb',
+        to: LENDING_ADDRESS,
+        data: contract.methods.stake(KIP17_MK, 2).encodeABI(),
+        value: '',
+        gas: '800000'
+      })
+      .on('transactionHash', (hash) => {
+        console.log('transactionHash', hash);
+      })
+      .on('receipt', (receipt) => {
+        // success
+        console.log('receipt', receipt);
+      })
+      .on('error', (e) => {
+        // failed
+        console.log('error ', e);
       });
-      console.log('Caver =', Caver);
-      console.log('kip17 =', kip17Res);
-    } catch (e) {
-      console.log(e);
-    }
   };
-  const approveUser = async () => {
+
+  const approve = async () => {
     try {
       const caver = new caverTest(window.klaytn);
       const [address] = await window.klaytn.enable();
       const testKIP17 = new caver.klay.KIP17(KIP17_MK);
+      const TEST_FROM_ADDRESS = address; //카이카스지갑주소
 
-      const res = await testKIP17.approve(LENDING_ADDRESS, 1, {
-        from: address
+      const res = await testKIP17.approve(LENDING_ADDRESS, 2, {
+        from: TEST_FROM_ADDRESS
       });
       console.log(' res = ', res);
     } catch (e) {
@@ -407,8 +412,9 @@ const TestPage = ({ from }) => {
       <button onClick={transferCoin}>transferCoin</button>
       <button onClick={stakeCoin}>stakeCoin</button>
       <button onClick={getTokenInfodata}>getTokenInfodata</button>{' '}
-      <button onClick={mintToken}>mintToken</button>{' '}
-      <button onClick={approveUser}>approveUser</button>
+      {/* !test! */}
+      <button onClick={stakeData}>stakeData</button>
+      <button onClick={approve}>approveUser</button>
       <div>{countContractInfo?.count}</div>
       {/* <div>{countContractInfo?.lastParticipant}</div> */}
     </div>
