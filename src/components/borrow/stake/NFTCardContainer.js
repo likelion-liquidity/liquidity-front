@@ -1,7 +1,12 @@
 import { NFTCard, Loading, EmptyCard } from 'components/common';
 import { useState, useEffect } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
-import { NFT_TOKEN_ARRAY, NFT_STAKED_LIST } from 'lib/staticData';
+import { getStakedNftList } from 'lib/api/useLending';
+import {
+  NFT_TOKEN_ARRAY,
+  NFT_STAKED_LIST,
+  LENDING_ADDRESS
+} from 'lib/staticData';
 //import useFetch from 'hooks/useFetch';
 import styled from 'styled-components';
 import {
@@ -31,31 +36,47 @@ const St = {
 // const MK_ADDRESS = '0x629cB3144C8F76C06Bb0f18baD90e4af32284E2C';
 
 const NFTCardContainer = ({
+  stakedNftList,
   whiteListNFTList,
   nftTitle,
   selectedNftTokendId,
   handleOnClickNFT,
+  nftTokenArray,
+  setNftTokenArray,
   isDisplayStaked = false
 }) => {
   const [isLoading, setIsLoading] = useState(null);
-  const [nftTokenArray, setNftTokenArray] = useState(null);
+  //const [nftTokenArray, setNftTokenArray] = useState(null);
 
   const getTokens = async () => {
     try {
+      console.log('whiteListNFTList = ', whiteListNFTList);
       const [address] = await window.klaytn.enable();
       const selectedWhiteList = whiteListNFTList.find(
         (item) => item.name === nftTitle
       );
-      console.log(selectedWhiteList);
+      console.log('selectedWhiteList ', selectedWhiteList);
       if (!selectedWhiteList) return;
       console.log(selectedWhiteList);
 
       setIsLoading(true);
-      const res = await getEosTokenAddress(selectedWhiteList.address, address);
+      /* 내 어드레스 nft */
+      const myAddressNftRes = await getEosTokenAddress(
+        selectedWhiteList.address,
+        address
+      );
+      /* lending nft */
+      const lendingStakedNftListRes = await getEosTokenAddress(
+        selectedWhiteList.address,
+        LENDING_ADDRESS
+      );
 
-      console.log('res = ', res.data);
-      const { items } = res.data;
-      setNftTokenArray(items);
+      const nftTokenArray = [
+        ...myAddressNftRes.data.items,
+        ...lendingStakedNftListRes.data.items
+      ];
+
+      setNftTokenArray(nftTokenArray);
       setIsLoading(false);
       // const res = await getTokenInfo(MK_ADDRESS, 'MK');
     } catch (e) {
@@ -76,14 +97,18 @@ const NFTCardContainer = ({
       </Container>
     );
   }
+  console.log('isDisplayStaked= ', isDisplayStaked);
   return (
     <St.CardContainer>
       <Container>
         <Row>
           {nftTokenArray?.map((nft, index) => {
-            const isStaked = NFT_STAKED_LIST.find(
-              (nftStaked) => nftStaked.tokenId === nft.tokenId
-            );
+            const isStaked = stakedNftList?.find((nftStaked) => {
+              const tokenId = parseInt(nft.tokenId, 16).toString();
+              console.log('tokenId = ', tokenId);
+
+              return nftStaked.nftTokenId === tokenId;
+            });
             if (isDisplayStaked) {
               if (isStaked) {
                 return (

@@ -41,5 +41,6 @@ export const handleScrollTop = (smooth = false) => {
 export const getPathName = (pathname) => {
   if (!pathname) return;
   const paths = pathname.split('/');
+  console.log('paths  = ', paths);
   return paths[paths.length - 1];
 };

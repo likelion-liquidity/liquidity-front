@@ -1,9 +1,10 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import BorrowRepayModal from 'components/modal/BorrowRepayModal';
 import { LTVBar, Button } from 'components/common';
 import palette from 'styles/palette';
 import useModal from 'hooks/useModal';
+import { addComma } from 'lib/helpers';
 
 const St = {
   Wrapper: styled.div`
@@ -60,7 +61,7 @@ const DisplayAssetCotainer = ({ title, value }) => {
     </St.AssetsContainer>
   );
 };
-const TotalAssetsContainer = () => {
+const TotalAssetsContainer = ({ stakedNftList, floorPrice }) => {
   const { openModal, closeModal, ModalPortal } = useModal();
   const [collateralValue, setCollateralValue] = useState(72295.904);
   const [borrowedValue, setBorrowedValue] = useState(28685.902);
@@ -89,15 +90,31 @@ const TotalAssetsContainer = () => {
     openModal();
   };
 
+  useEffect(() => {
+    if (!stakedNftList) return;
+    let borrowedValue = 0;
+    const hasOwnershipList = stakedNftList.filter((stakedNftInfo) => {
+      if (stakedNftInfo.hasOwnership) {
+        borrowedValue += stakedNftInfo.loanAmount;
+      }
+      return stakedNftInfo.hasOwnership;
+    });
+    setCollateralValue(hasOwnershipList.length * floorPrice);
+    setBorrowedValue(borrowedValue);
+  }, [stakedNftList, floorPrice]);
+
   return (
     <>
       <St.Wrapper>
         <St.AssetsWrapper>
           <DisplayAssetCotainer
             title={'COLLATERAL VALUE'}
-            value={'72,295.904'}
+            value={addComma(collateralValue)}
           />
-          <DisplayAssetCotainer title={'Borrowed VALUE'} value={'28,686'} />
+          <DisplayAssetCotainer
+            title={'Borrowed VALUE'}
+            value={addComma(borrowedValue)}
+          />
         </St.AssetsWrapper>
 
         <St.LTVBarContainer>

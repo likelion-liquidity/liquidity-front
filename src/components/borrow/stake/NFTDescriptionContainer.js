@@ -4,6 +4,9 @@ import palette from 'styles/palette';
 import { addComma } from 'lib/helpers';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import Caver from 'caver-js';
+import { LENDING_ADDRESS } from 'lib/staticData';
+import LENDING_ABI from 'abi/LendingABI.json';
 
 const St = {
   DescriptionContainer: styled.div`
@@ -44,9 +47,11 @@ const St = {
 };
 
 const NFTDescriptionContainer = ({
+  nftInfo,
   isOpenDescriptionContainer,
   selectedNft,
   isStakedSelectedNft,
+
   depositValue = 8000 * 1.2, //floor price
   collateralValue = 50000, //test
   borrowedValue = 20004 //test
@@ -58,19 +63,54 @@ const NFTDescriptionContainer = ({
   };
 
   const handleStake = async () => {
-    const resolveAfter3Sec = new Promise((resolve) =>
-      setTimeout(resolve, 3000)
-    );
-    toast.promise(resolveAfter3Sec, {
-      pending: 'Promise is pending',
-      success: 'Promise resolved 👌',
-      error: 'Promise rejected 🤯'
-    });
+    try {
+      const [address] = await window.klaytn.enable();
 
-    await resolveAfter3Sec;
-    handleMoveStakeNFT();
+      const caver = new Caver(window.klaytn);
+      const contract = caver.contract.create(LENDING_ABI, LENDING_ADDRESS);
+      let num = parseInt(selectedNft.tokenId, 2); // n 속의 숫자를 2진수로 취급하여, 10진수 숫자로 변환
+      // 10진수화된 2진수를, 16진수로 변환
+      num = num.toString(16);
+
+      caver.klay
+        .sendTransaction({
+          type: 'SMART_CONTRACT_EXECUTION',
+          from: address,
+          to: LENDING_ADDRESS,
+          data: contract.methods
+            .stake('0x629cB3144C8F76C06Bb0f18baD90e4af32284E2C', num)
+            .encodeABI(),
+          value: '',
+          gas: '800000'
+        })
+        .on('transactionHash', (hash) => {
+          console.log('transactionHash', hash);
+        })
+        .on('receipt', (receipt) => {
+          // success
+          console.log('receipt', receipt);
+        })
+        .on('error', (e) => {
+          // failed
+          console.log('error ', e);
+        });
+    } catch (e) {
+      console.log(e);
+    }
+
+    // const resolveAfter3Sec = new Promise((resolve) =>
+    //   setTimeout(resolve, 3000)
+    // );
+    // toast.promise(resolveAfter3Sec, {
+    //   pending: 'Promise is pending',
+    //   success: 'Promise resolved 👌',
+    //   error: 'Promise rejected 🤯'
+    // });
+
+    // await resolveAfter3Sec;
+    // handleMoveStakeNFT();
   };
-
+  console.log('selectedNft ', selectedNft);
   const handleRepay = async () => {
     const resolveAfter3Sec = new Promise((resolve) =>
       setTimeout(resolve, 3000)

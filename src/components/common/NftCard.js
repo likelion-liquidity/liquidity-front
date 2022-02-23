@@ -109,10 +109,10 @@ const NFTCard = ({
 
   const cardSelect = () => {
     if (isSelected) {
-      handleOnClickNFT('', isStaked);
+      handleOnClickNFT('');
       return;
     }
-    handleOnClickNFT(nftTokenId, isStaked);
+    handleOnClickNFT(nftTokenId);
   };
 
   return (
