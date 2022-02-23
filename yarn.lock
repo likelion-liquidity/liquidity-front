@@ -4449,7 +4449,7 @@ catharsis@^0.9.0:
   dependencies:
     lodash "^4.17.15"
 
-caver-js@^1.6.8:
+caver-js@^1.4.1:
   version "1.6.8"
   resolved "https://registry.yarnpkg.com/caver-js/-/caver-js-1.6.8.tgz#c25c249b4871f1e5e8ed380d3a0522a6db079d89"
   integrity sha512-0LCHk+8AusJe6pJHxaqqlwtDkB8DjuPgC27N9eGJbqe+4m81NSfLZf9i3HmAQ3vV6R5acIUm0LB499AXSs1F3Q==

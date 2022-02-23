@@ -31,6 +31,7 @@ const St = {
     padding: 5px 15px;
     font-size: 18px;
     font-weight: 500;
+    width:850px
   `,
   Th1: styled.div`
     width: 45%;
@@ -104,8 +105,8 @@ const Borrow = ({ whiteListNFTList }) => {
     return result;
   };
 
-  const handleMoveStakeNFT = (title) => {
-    navigate(`/borrow/${title}`);
+  const handleMoveStakeNFT = (title, isStaked) => {
+    isStaked ? navigate(`/manage/${title}`) : navigate(`/borrow/${title}`);
   };
 
   const onClickCheckBox = () => {
@@ -134,7 +135,7 @@ const Borrow = ({ whiteListNFTList }) => {
       </St.ContentViewHeaderContainer>
       <St.ContentViewContainer>
         {whiteListNFTList?.map((e, index) => {
-          if (checkStatus && !e.isOwned) {
+          if (checkStatus && (!e.isOwned && !e.isStaked)) {
             skipCount++;
             return;
           }
@@ -150,7 +151,7 @@ const Borrow = ({ whiteListNFTList }) => {
                 ltvProps={{ ltv: `${e.liqLtv}%` }}
                 priceProps={{ price: `${e.floorPrice} KLAY` }}
                 buttonProps={{
-                  handleOnClick: handleMoveStakeNFT,
+                  handleOnClick: ()=>handleMoveStakeNFT(e.name, e.isStaked),
                   title: e.isStaked ? 'Open Manage' : null
                 }}
               />
