@@ -125,6 +125,7 @@ const Appbar = ({ account, setAccount }) => {
       account,
       balance: caver.utils.fromPeb(balance, 'KLAY')
     });
+    localStorage.setItem('address', account.account);
   };
 
   const setNetworkInfo = () => {

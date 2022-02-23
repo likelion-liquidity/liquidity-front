@@ -23,10 +23,15 @@ const St = {
 };
 
 const NFTStakeListContainer = ({
+  nftInfo,
   handleOnClickNFT,
   selectedNftTokendId,
   isDisplayStaked,
-  handleStakedCheckButton
+  handleStakedCheckButton,
+  stakedNftList,
+  whiteListNFTList,
+  nftTokenArray,
+  setNftTokenArray
 }) => {
   const [isDiaplayCardContainer, setIsDisplayCardContainer] = useState(false);
 
@@ -37,10 +42,10 @@ const NFTStakeListContainer = ({
   return (
     <div>
       <Asset
-        imgProps={DUMMY[0].imgProps}
-        titleProps={{ title: 'meta-kongs' }}
-        ltvProps={DUMMY[0].ltvProps}
-        priceProps={DUMMY[0].priceProps}
+        imgProps={{ src: '', alt: '' }}
+        titleProps={{ title: nftInfo.nftTitle }}
+        ltvProps={{ ltv: nftInfo.maxLtv }}
+        priceProps={{ price: nftInfo.floorPrice }}
         buttonProps={{ title: 'manage', handleOnClick: handleManageButton }}
         width="100%"
         // handleOnClick={handleMoveStakeNFT}
@@ -52,9 +57,14 @@ const NFTStakeListContainer = ({
             <St.Text>Staked</St.Text>
           </St.FilterContainer>
           <NFTCardContainer
+            nftTitle={nftInfo.nftTitle}
+            whiteListNFTList={whiteListNFTList}
+            stakedNftList={stakedNftList}
             selectedNftTokendId={selectedNftTokendId}
             handleOnClickNFT={handleOnClickNFT}
             isDisplayStaked={isDisplayStaked}
+            nftTokenArray={nftTokenArray}
+            setNftTokenArray={setNftTokenArray}
           />
         </>
       )}

@@ -147,7 +147,10 @@ function App() {
                 path="borrow/:nftname"
                 element={<Common whiteListNFTList={whiteListNFTList} />}
               />
-              <Route path="manage/:nftname" element={<Total />} />
+              <Route
+                path="manage/:nftname"
+                element={<Total whiteListNFTList={whiteListNFTList} />}
+              />
               <Route path="test" element={<Test from={account.account} />} />
             </Routes>
           </St.ContentView>

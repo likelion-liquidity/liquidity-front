@@ -5,6 +5,7 @@ import NFTDescriptionContainer from 'components/borrow/stake/NFTDescriptionConta
 import { NFT_TOKEN_ARRAY } from 'lib/staticData';
 import { useLocation } from 'react-router-dom';
 import { getPathName } from 'lib/helpers';
+import { getStakedNftList } from 'lib/api/useLending';
 
 const CommonTestPage = ({ whiteListNFTList }) => {
   const [nftInfo, setNftInfo] = useState({

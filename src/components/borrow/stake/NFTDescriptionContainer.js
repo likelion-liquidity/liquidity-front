@@ -68,16 +68,17 @@ const NFTDescriptionContainer = ({
 
       const caver = new Caver(window.klaytn);
       const contract = caver.contract.create(LENDING_ABI, LENDING_ADDRESS);
+      let num = parseInt(selectedNft.tokenId, 2); // n 속의 숫자를 2진수로 취급하여, 10진수 숫자로 변환
+      // 10진수화된 2진수를, 16진수로 변환
+      num = num.toString(16);
 
-      console.log(contract);
-      console.log(nftInfo.address, selectedNft.tokenId);
       caver.klay
         .sendTransaction({
           type: 'SMART_CONTRACT_EXECUTION',
           from: address,
           to: LENDING_ADDRESS,
           data: contract.methods
-            .stake(nftInfo.address, selectedNft.tokenId)
+            .stake('0x629cB3144C8F76C06Bb0f18baD90e4af32284E2C', num)
             .encodeABI(),
           value: '',
           gas: '800000'

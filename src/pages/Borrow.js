@@ -2,6 +2,8 @@ import Asset from 'components/common/Asset';
 import Button from 'components/common/Button';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { getStakedNftList } from 'lib/api/useLending';
+import { KIP17_MK } from 'lib/staticData';
 import styled from 'styled-components';
 import palette from 'styles/palette';
 
@@ -57,7 +59,7 @@ const St = {
 const Borrow = ({ whiteListNFTList }) => {
   const [checkStatus, setCheckStatus] = useState(false);
   const [pageN, setPageN] = useState(1);
-  
+
   let skipCount = 0;
 
   const navigate = useNavigate();
@@ -67,7 +69,7 @@ const Borrow = ({ whiteListNFTList }) => {
   };
 
   const renderPagination = () => {
-    if(whiteListNFTList.length === 0) return;
+    if (whiteListNFTList.length === 0) return;
     const result = [];
     result.push(
       <Button
@@ -112,6 +114,10 @@ const Borrow = ({ whiteListNFTList }) => {
     skipCount = 0;
   };
 
+  const getNftToken = async () => {
+    const [address] = await window.klaytn.enable();
+    const stakedNftList = await getStakedNftList(address, KIP17_MK);
+  };
   return (
     <St.Container>
       <div style={{ display: 'flex', justifyContent: 'center' }}>
@@ -128,11 +134,14 @@ const Borrow = ({ whiteListNFTList }) => {
       </St.ContentViewHeaderContainer>
       <St.ContentViewContainer>
         {whiteListNFTList?.map((e, index) => {
-          if(checkStatus && !e.isOwned){
+          if (checkStatus && !e.isOwned) {
             skipCount++;
             return;
           }
-          if ((index - skipCount) >= (pageN - 1) * 5 && (index - skipCount) < 5 * pageN) {
+          if (
+            index - skipCount >= (pageN - 1) * 5 &&
+            index - skipCount < 5 * pageN
+          ) {
             return (
               <Asset
                 key={`asstes-${index}`}
@@ -142,14 +151,16 @@ const Borrow = ({ whiteListNFTList }) => {
                 priceProps={{ price: `${e.floorPrice} KLAY` }}
                 buttonProps={{
                   handleOnClick: handleMoveStakeNFT,
-                  title:e.isStaked ? "Open Manage" : null
+                  title: e.isStaked ? 'Open Manage' : null
                 }}
               />
             );
           }
         })}
       </St.ContentViewContainer>
-      {whiteListNFTList ? <St.PaginationContainer>{renderPagination()}</St.PaginationContainer> : null}
+      {whiteListNFTList ? (
+        <St.PaginationContainer>{renderPagination()}</St.PaginationContainer>
+      ) : null}
     </St.Container>
   );
 };
