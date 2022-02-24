@@ -1,4 +1,3 @@
-import React from 'react';
 import styled from 'styled-components';
 import { Button, Input, LTVBar } from 'components/common';
 
@@ -52,6 +51,9 @@ const CommonModal = ({ modal }) => {
   const handleCancel = () => {
     modal.cancelFunction();
   };
+  const onChangeInput = (e) => {
+    modal.inputValue = e.target.value;
+  };
 
   return (
     <>
@@ -63,7 +65,7 @@ const CommonModal = ({ modal }) => {
             <br />
             {modal.subMessage}
           </p>
-          <Input placeholder="Borrow Amount" lcon="$" />
+          <Input placeholder={modal.inputPlaceholder} lcon="$" onChange={onChangeInput}/>
           <LTVBar />
         </St.PopPanelContainer>
 

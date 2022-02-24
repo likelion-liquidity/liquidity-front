@@ -24,10 +24,7 @@ import LENDING_ABI from 'abi/LendingABI.json';
 // import KIP17_ABI from 'abi/KIP17TokenABI.json';
 import { getEosTokenAddress, getNftContract } from 'lib/api/UseTokenApi';
 import { getKlaytnProvider } from 'lib/helpers';
-
-const DATA_HOLDER_ADDRESS = '0x924965fFD912544AeeC612812F4aABD124278C1C';
-const LENDING_ADDRESS = '0xABa0111C2c6dd22A024608e302f9026958dB0688';
-// const KIP17_ADDRESS = '0xD11da04cC151CD54f046CE1F3Ea12afff2006757';
+import { DATA_HOLDER_ADDRESS, LENDING_ADDRESS } from 'lib/staticData';
 
 const St = {
   BaseRoot: styled.div`
@@ -69,25 +66,25 @@ function App() {
       const whiteListNFT = await contract.methods.getWhiteListNftList().call();
       const getNftDataContractCall = async (nftAddress) => {
         const nftData = await contract.methods.getNftData(nftAddress).call();
+        
+        let isOwned = false, isStaked = false;
+        
         const { items: nfts } = (
           await getEosTokenAddress(nftAddress, klaytn.selectedAddress)
         ).data;
 
-        let isStaked = false;
-        let isOwned = false;
-
         if (nfts.length !== 0) {
           for (let i = 0; i < nfts.length; i++) {
-            // console.log(nfts[i].owner, nftAddress, nfts[i].tokenId);
             if (nfts[i].owner === klaytn.selectedAddress) {
               isOwned = true;
+              break;
             }
-
-            // const nftLendingStatus = await lendingContract.methods.stakedNft(nfts[i].owner, nftAddress, nfts[i].tokenId).call();
-
-            if (isStaked && isOwned) break;
           }
         }
+        
+        const stakedNftList = await lendingContract.methods.getStakedNftList(klaytn.selectedAddress, nftAddress).call();
+        if(stakedNftList.length !== 0) isStaked = true;
+
         return { ...nftData, address: nftAddress, isStaked, isOwned };
       };
       /* 스마트 콘트렉트에 있는 nft 데이터 가져오기 */
@@ -115,8 +112,7 @@ function App() {
         return { ...nftContractInfo.data, ...finddata };
       });
       setWhiteListNFTList(whiteListNFTList);
-      const owner = await contract.methods.owner().call();
-      console.log(owner);
+      
     } catch (e) {
       console.log(e);
     }
