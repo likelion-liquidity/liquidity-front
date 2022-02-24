@@ -46,9 +46,10 @@ export const getPathName = (pathname) => {
 };
 
 export const tenTo18Squares = (v) => {
-  return v * (10 ** 18);
+  return v * 10 ** 18;
 };
 
 export const divideByTenTo18Squares = (v) => {
-  return v / (10 ** 18);
+  if (!v) return 0;
+  return v / 10 ** 18;
 };

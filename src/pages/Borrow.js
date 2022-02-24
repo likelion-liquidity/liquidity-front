@@ -6,6 +6,7 @@ import { getStakedNftList } from 'lib/api/useLending';
 import { KIP17_MK } from 'lib/staticData';
 import styled from 'styled-components';
 import palette from 'styles/palette';
+import { divideByTenTo18Squares } from 'lib/helpers';
 
 const St = {
   Container: styled.div``,
@@ -31,7 +32,7 @@ const St = {
     padding: 5px 15px;
     font-size: 18px;
     font-weight: 500;
-    width:850px
+    width: 850px;
   `,
   Th1: styled.div`
     width: 45%;
@@ -115,10 +116,6 @@ const Borrow = ({ whiteListNFTList }) => {
     skipCount = 0;
   };
 
-  const getNftToken = async () => {
-    const [address] = await window.klaytn.enable();
-    const stakedNftList = await getStakedNftList(address, KIP17_MK);
-  };
   return (
     <St.Container>
       <div style={{ display: 'flex', justifyContent: 'center' }}>
@@ -135,7 +132,7 @@ const Borrow = ({ whiteListNFTList }) => {
       </St.ContentViewHeaderContainer>
       <St.ContentViewContainer>
         {whiteListNFTList?.map((e, index) => {
-          if (checkStatus && (!e.isOwned && !e.isStaked)) {
+          if (checkStatus && !e.isOwned && !e.isStaked) {
             skipCount++;
             return;
           }
@@ -149,9 +146,11 @@ const Borrow = ({ whiteListNFTList }) => {
                 imgProps={{ src: '', alt: '' }}
                 titleProps={{ title: e.name }}
                 ltvProps={{ ltv: `${e.liqLtv}%` }}
-                priceProps={{ price: `${e.floorPrice} KLAY` }}
+                priceProps={{
+                  price: `${e.floorPrice}`
+                }}
                 buttonProps={{
-                  handleOnClick: ()=>handleMoveStakeNFT(e.name, e.isStaked),
+                  handleOnClick: () => handleMoveStakeNFT(e.name, e.isStaked),
                   title: e.isStaked ? 'Open Manage' : null
                 }}
               />

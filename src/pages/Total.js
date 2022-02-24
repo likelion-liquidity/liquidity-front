@@ -5,10 +5,8 @@ import NFTStakeListContainer from 'components/borrow/total/NFTStakeListContainer
 import NFTDescriptionContainer from 'components/borrow/stake/NFTDescriptionContainer';
 import NFTInfoContainer from 'components/borrow/stake/NFTInfoHeader';
 import { handleScrollTop } from 'lib/helpers';
-import { getPathName } from 'lib/helpers';
-import { useLocation } from 'react-router-dom';
 import { getStakedNftList } from 'lib/api/useLending';
-import { NFT_TOKEN_ARRAY, NFT_STAKED_LIST } from 'lib/staticData';
+import useNftInfo from 'hooks/useNftInfo';
 
 const St = {
   TotalAssetWrapper: styled.div`
@@ -23,57 +21,10 @@ const Total = ({ whiteListNFTList }) => {
   const [selectedNft, setSelectedNft] = useState(null);
   const [isStakedSelectedNft, setIsStakedSelectedNft] = useState(false);
   const [isDisplayStaked, setIsDisplayStaked] = useState(false);
-  const [nftInfo, setNftInfo] = useState({
-    address: '',
-    availableLoanAmount: '',
-    floorPrice: '',
-    isOwned: '',
-    isStaked: '',
-    liqLtv: '',
-    maxLtv: '',
-    symbol: '',
-    nftKlayPrice: '',
-    nftTitle: ''
-  });
+
+  const { nftInfo, setNftInfo } = useNftInfo({ whiteListNFTList });
   const [stakedNftList, setStakedNftList] = useState();
   const [nftTokenArray, setNftTokenArray] = useState(null);
-
-  const location = useLocation();
-
-  useEffect(() => {
-    if (!whiteListNFTList) return;
-    const nftTitle = getPathName(location.pathname);
-    const NFT = whiteListNFTList.find((nftInfo) => nftInfo.name === nftTitle);
-    if (!NFT) return;
-    console.log(NFT);
-    const {
-      address,
-      availableLoanAmount,
-      floorPrice,
-      isOwned,
-      isStaked,
-      liqLtv,
-      maxLtv,
-      name,
-      nftKlayPrice,
-      symbol
-    } = NFT;
-
-    setNftInfo({
-      ...nftInfo,
-      nftTitle: name,
-      address,
-      availableLoanAmount,
-      floorPrice,
-      isOwned,
-      isStaked,
-      liqLtv,
-      maxLtv,
-      name,
-      nftKlayPrice,
-      symbol
-    });
-  }, [location.pathname, whiteListNFTList]);
 
   const handleStakedCheckButton = () => {
     setIsDisplayStaked((prev) => !prev);

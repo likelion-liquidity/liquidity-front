@@ -3,6 +3,7 @@ import styled, { css } from 'styled-components';
 import palette from 'styles/palette';
 import Button from './Button';
 import useGetImage from 'hooks/useGetImage';
+import { divideByTenTo18Squares } from 'lib/helpers';
 
 const getAssetColor = (color, colorReverse) => {
   if (colorReverse) {
@@ -99,7 +100,11 @@ const Asset = ({
       )}
       {titleProps && <St.TitleContainer>{titleProps.title}</St.TitleContainer>}
       {ltvProps && <St.LtvContainer>{ltvProps.ltv}</St.LtvContainer>}
-      {priceProps && <St.PriceContainer>{priceProps.price}</St.PriceContainer>}
+      {priceProps && (
+        <St.PriceContainer>
+          {divideByTenTo18Squares(priceProps.price)} KLAY
+        </St.PriceContainer>
+      )}
       <St.ButtonContainer>
         {buttonProps && (
           <Button
