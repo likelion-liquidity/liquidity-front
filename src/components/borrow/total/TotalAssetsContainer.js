@@ -68,21 +68,21 @@ const TotalAssetsContainer = ({ stakedNftList, floorPrice }) => {
   const { openModal, closeModal, ModalPortal } = useModal();
   const [collateralValue, setCollateralValue] = useState(0);
   const [borrowedValue, setBorrowedValue] = useState(0);
+  
   const proceed = async () => {
     const [address] = await window.klaytn.enable();
     const caver = new Caver(window.klaytn);
     const contract = caver.contract.create(LENDING_ABI, LENDING_ADDRESS); // Lendinng contract
 
     let num = parseInt('0x00', 2).toString(16);
-    let amount = parseInt(1, 2).toString(16);
-    // let amount = parseInt(1*(10**18), 2).toString(16);
+    const amount = modalState.inputValue * (10 ** 18);
+    console.log(amount);
     let data = null;
     if (modalState.title === 'Borrow') {
       data = contract.methods
         .borrow(amount, '0x629cB3144C8F76C06Bb0f18baD90e4af32284E2C', num)
         .encodeABI();
     } else {
-      //const kip7 = new caver.kct.kip7(address);
       const kip7 = new caver.klay.KIP7(KIP7_ADDRESS);
       const res = await kip7.approve(LENDING_ADDRESS, amount, {
         from: address

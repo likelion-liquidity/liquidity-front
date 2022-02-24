@@ -44,3 +44,11 @@ export const getPathName = (pathname) => {
   console.log('paths  = ', paths);
   return paths[paths.length - 1];
 };
+
+export const tenTo18Squares = (v) => {
+  return v * (10 ** 18);
+};
+
+export const divideByTenTo18Squares = (v) => {
+  return v / (10 ** 18);
+};
