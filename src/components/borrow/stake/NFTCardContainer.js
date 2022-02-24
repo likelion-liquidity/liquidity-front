@@ -1,12 +1,7 @@
 import { NFTCard, Loading, EmptyCard } from 'components/common';
 import { useState, useEffect } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
-import { getStakedNftList } from 'lib/api/useLending';
-import {
-  NFT_TOKEN_ARRAY,
-  NFT_STAKED_LIST,
-  LENDING_ADDRESS
-} from 'lib/staticData';
+import { LENDING_ADDRESS } from 'lib/staticData';
 //import useFetch from 'hooks/useFetch';
 import styled from 'styled-components';
 import {

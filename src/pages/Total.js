@@ -84,9 +84,13 @@ const Total = ({ whiteListNFTList }) => {
 
   const handleOnClickNFT = (nftTokenId, isStaked) => {
     setSelectedNftTokendId(nftTokenId);
-    const selectedNFT = NFT_TOKEN_ARRAY.find(
-      (token) => token.tokenId === nftTokenId
-    );
+    // console.log('[seo] nftTokenArray= ', nftTokenArray);
+    // console.log('[seo] nftTokenId= ', nftTokenId);
+    const selectedNFT = nftTokenArray.find((nft) => {
+      //const tokenId = parseInt(nft.tokenId, 16).toString();
+      return nft.tokenId === nftTokenId;
+    });
+    //console.log('[seo] selectedNFT = ', selectedNFT);
     setIsStakedSelectedNft(isStaked);
     setSelectedNft(selectedNFT);
   };
@@ -158,6 +162,7 @@ const Total = ({ whiteListNFTList }) => {
         setNftTokenArray={setNftTokenArray}
       />
       <NFTDescriptionContainer
+        nftInfo={nftInfo}
         selectedNft={selectedNft}
         isOpenDescriptionContainer={isOpenDescriptionContainer}
         isStakedSelectedNft={isStakedSelectedNft}

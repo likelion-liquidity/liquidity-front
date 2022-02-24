@@ -33,7 +33,7 @@ const NFTStakeListContainer = ({
   nftTokenArray,
   setNftTokenArray
 }) => {
-  const [isDiaplayCardContainer, setIsDisplayCardContainer] = useState(false);
+  const [isDiaplayCardContainer, setIsDisplayCardContainer] = useState(true);
 
   const handleManageButton = () => {
     setIsDisplayCardContainer((prev) => !prev);

@@ -6,7 +6,7 @@ import palette from 'styles/palette';
 import useModal from 'hooks/useModal';
 import { addComma } from 'lib/helpers';
 import LENDING_ABI from 'abi/LendingABI.json';
-import { LENDING_ADDRESS, KIP7_ADDRESS } from 'lib/staticData';
+import { LENDING_ADDRESS, KIP7_ADDRESS, KIP17_MK } from 'lib/staticData';
 import Caver from 'caver-js';
 
 const St = {
@@ -169,14 +169,14 @@ const TotalAssetsContainer = ({ stakedNftList, floorPrice }) => {
           />
         </St.AssetsWrapper>
 
-        <St.LTVBarContainer>
+        {/* <St.LTVBarContainer>
           <LTVBar
             collateralValue={collateralValue}
             borrowedValue={borrowedValue}
           />
-        </St.LTVBarContainer>
+        </St.LTVBarContainer> */}
 
-        <St.ButtonContainer>
+        {/* <St.ButtonContainer>
           <Button
             id="borrow"
             onClick={handleOnClick}
@@ -193,7 +193,7 @@ const TotalAssetsContainer = ({ stakedNftList, floorPrice }) => {
           >
             Repay
           </Button>
-        </St.ButtonContainer>
+        </St.ButtonContainer> */}
       </St.Wrapper>
 
       <ModalPortal>
