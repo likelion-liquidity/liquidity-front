@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Button, LTVBar } from 'components/common';
 import styled from 'styled-components';
 import palette from 'styles/palette';
-import { addComma, divideByTenTo18Squares } from 'lib/helpers';
+import { addComma, divideByTenTo18Squares, tenTo18Squares } from 'lib/helpers';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import Caver from 'caver-js';
@@ -64,7 +64,8 @@ const NFTDescriptionContainer = ({
   isStakedSelectedNft,
   depositValue = 0, //floor price
   collateralValue = 0, //test
-  borrowedValue = 0 //test
+  borrowedValue = 0, //test
+  nftCollectionAddress
 }) => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -155,23 +156,24 @@ const NFTDescriptionContainer = ({
     const caver = new Caver(window.klaytn);
     const contract = caver.contract.create(LENDING_ABI, LENDING_ADDRESS); // Lendinng contract
 
-    let num = parseInt('0x00', 2).toString(16);
-    let amount = parseInt(1, 2).toString(16);
-    // let amount = parseInt(1*(10**18), 2).toString(16);
+    // let num = parseInt(modalState.selectedNft.tokenId, 2).toString(16);
+    let num = parseInt(modalState.selectedNft.tokenId);
+    let amount = modalState.inputValue;
+    
     let data = null;
+
     if (modalState.title === 'Borrow') {
       data = contract.methods
-        .borrow(amount, '0x629cB3144C8F76C06Bb0f18baD90e4af32284E2C', num)
+        .borrow(amount, modalState.nftCollectionAddress, num)
         .encodeABI();
     } else {
-      //const kip7 = new caver.kct.kip7(address);
       const kip7 = new caver.klay.KIP7(KIP7_ADDRESS);
       const res = await kip7.approve(LENDING_ADDRESS, amount, {
         from: address
       });
       console.log('kip7 res = ' + res);
       data = await contract.methods
-        .repay(amount, '0x629cB3144C8F76C06Bb0f18baD90e4af32284E2C', num)
+        .repay(amount, modalState.nftCollectionAddress, num)
         .encodeABI();
     }
     caver.klay
@@ -205,12 +207,16 @@ const NFTDescriptionContainer = ({
     isNeedBackgroundClickBlock: false,
     inputPlaceholder: 'Borrow Amount',
     inputValue: '',
+    selectedNft,
+    nftCollectionAddress,
     confirmFunction: proceed,
     cancelFunction: closeModal
   });
 
   const handleOnClick = (e) => {
     const nextState = modalState;
+    nextState.selectedNft = selectedNft;
+    nextState.nftCollectionAddress = nftCollectionAddress;
     console.log(e.target.id);
     if (e.target.id === 'borrow') {
       nextState.title = 'Borrow';

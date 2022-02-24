@@ -7,6 +7,7 @@ import NFTInfoContainer from 'components/borrow/stake/NFTInfoHeader';
 import { handleScrollTop } from 'lib/helpers';
 import { getStakedNftList } from 'lib/api/useLending';
 import useNftInfo from 'hooks/useNftInfo';
+import { useLocation } from 'react-router-dom';
 
 const St = {
   TotalAssetWrapper: styled.div`
@@ -15,6 +16,7 @@ const St = {
   `
 };
 const Total = ({ whiteListNFTList }) => {
+  const nftCollectionName = useLocation().pathname.split('/')[2];
   const [isOpenDescriptionContainer, setIsOpenDescriptionContainer] =
     useState(false);
   const [selectedNftTokendId, setSelectedNftTokendId] = useState('');
@@ -26,6 +28,14 @@ const Total = ({ whiteListNFTList }) => {
   const [stakedNftList, setStakedNftList] = useState();
   const [nftTokenArray, setNftTokenArray] = useState(null);
 
+  const getNftCollectionAddress = () => {
+    for (let i = 0; i < whiteListNFTList.length; i++){
+      if (whiteListNFTList[i].name === nftCollectionName) {
+        return whiteListNFTList[i].address;
+      }
+    }
+  };
+  
   const handleStakedCheckButton = () => {
     setIsDisplayStaked((prev) => !prev);
 
@@ -117,6 +127,7 @@ const Total = ({ whiteListNFTList }) => {
         selectedNft={selectedNft}
         isOpenDescriptionContainer={isOpenDescriptionContainer}
         isStakedSelectedNft={isStakedSelectedNft}
+        nftCollectionAddress={getNftCollectionAddress()}
       />
     </St.TotalAssetWrapper>
   );
