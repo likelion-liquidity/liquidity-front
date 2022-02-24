@@ -4,9 +4,9 @@ import BorrowRepayModal from 'components/modal/BorrowRepayModal';
 import { LTVBar, Button } from 'components/common';
 import palette from 'styles/palette';
 import useModal from 'hooks/useModal';
-import { addComma } from 'lib/helpers'
+import { addComma } from 'lib/helpers';
 import LENDING_ABI from 'abi/LendingABI.json';
-import { LENDING_ADDRESS } from 'lib/staticData';
+import { LENDING_ADDRESS, KIP7_ADDRESS } from 'lib/staticData';
 import Caver from 'caver-js';
 
 const St = {
@@ -66,43 +66,52 @@ const DisplayAssetCotainer = ({ title, value }) => {
 };
 const TotalAssetsContainer = ({ stakedNftList, floorPrice }) => {
   const { openModal, closeModal, ModalPortal } = useModal();
-  const [collateralValue, setCollateralValue] = useState(72295.904);
-  const [borrowedValue, setBorrowedValue] = useState(28685.902);
+  const [collateralValue, setCollateralValue] = useState(0);
+  const [borrowedValue, setBorrowedValue] = useState(0);
   const proceed = async () => {
     const [address] = await window.klaytn.enable();
     const caver = new Caver(window.klaytn);
-    const contract = caver.contract.create(LENDING_ABI,LENDING_ADDRESS); // Lendinng contract
-    
-    let num = parseInt('0x00', 2).toString(16); 
-    let amount = parseInt(1, 2).toString(16); 
+    const contract = caver.contract.create(LENDING_ABI, LENDING_ADDRESS); // Lendinng contract
+
+    let num = parseInt('0x00', 2).toString(16);
+    let amount = parseInt(1, 2).toString(16);
     // let amount = parseInt(1*(10**18), 2).toString(16);
     let data = null;
-    if(modalState.title === "Borrow"){  
-      data = contract.methods.borrow(amount,'0x629cB3144C8F76C06Bb0f18baD90e4af32284E2C', num).encodeABI();
-    }else{
-      const kip7 = new caver.kct.kip7(address);
-      const res = await kip7.approve(LENDING_ADDRESS, amount, {from:address});
-      console.log("kip7 res = " + res);
-      data = await contract.methods.repay(amount,'0x629cB3144C8F76C06Bb0f18baD90e4af32284E2C', num).encodeABI();
+    if (modalState.title === 'Borrow') {
+      data = contract.methods
+        .borrow(amount, '0x629cB3144C8F76C06Bb0f18baD90e4af32284E2C', num)
+        .encodeABI();
+    } else {
+      //const kip7 = new caver.kct.kip7(address);
+      const kip7 = new caver.klay.KIP7(KIP7_ADDRESS);
+      const res = await kip7.approve(LENDING_ADDRESS, amount, {
+        from: address
+      });
+      console.log('kip7 res = ' + res);
+      data = await contract.methods
+        .repay(amount, '0x629cB3144C8F76C06Bb0f18baD90e4af32284E2C', num)
+        .encodeABI();
     }
     caver.klay
-    .sendTransaction({
-      type: 'SMART_CONTRACT_EXECUTION',
-      from: address,
-      to: LENDING_ADDRESS,
-      data,
-      value: '',
-      gas: '800000'
-    })
-    .on('transactionHash', (hash) => {
-      console.log('transactionHash', hash);
-    })
-    .on('receipt', (receipt) => { // success
-      console.log('receipt', receipt);
-    })
-    .on('error', (e) => { // failed
-      console.log('error ', e);
-    });
+      .sendTransaction({
+        type: 'SMART_CONTRACT_EXECUTION',
+        from: address,
+        to: LENDING_ADDRESS,
+        data,
+        value: '',
+        gas: '800000'
+      })
+      .on('transactionHash', (hash) => {
+        console.log('transactionHash', hash);
+      })
+      .on('receipt', (receipt) => {
+        // success
+        console.log('receipt', receipt);
+      })
+      .on('error', (e) => {
+        // failed
+        console.log('error ', e);
+      });
   };
   const [modalState, setModalState] = useState({
     title: 'Borrow',
@@ -111,8 +120,8 @@ const TotalAssetsContainer = ({ stakedNftList, floorPrice }) => {
     confirmButtonMessage: 'Proceed',
     cancelButttonMessage: 'Cancel',
     isNeedBackgroundClickBlock: false,
-    inputPlaceholder:"Borrow Amount",
-    inputValue:'',
+    inputPlaceholder: 'Borrow Amount',
+    inputValue: '',
     confirmFunction: proceed,
     cancelFunction: closeModal
   });
@@ -121,12 +130,12 @@ const TotalAssetsContainer = ({ stakedNftList, floorPrice }) => {
     const nextState = modalState;
     console.log(e.target.id);
     if (e.target.id === 'borrow') {
-      nextState.title = "Borrow";
-      nextState.inputPlaceholder = "Borrow Amount";
+      nextState.title = 'Borrow';
+      nextState.inputPlaceholder = 'Borrow Amount';
       setModalState(nextState);
     } else {
-      nextState.title = "Repay";
-      nextState.inputPlaceholder = "Repay Amount";
+      nextState.title = 'Repay';
+      nextState.inputPlaceholder = 'Repay Amount';
       setModalState(nextState);
     }
 
