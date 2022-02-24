@@ -53,3 +53,21 @@ export const divideByTenTo18Squares = (v) => {
   if (!v) return 0;
   return v / 10 ** 18;
 };
+
+export const hexToNumberString = (hex) => {
+  const parseNumber = parseInt(hex, 16).toString();
+  return divideByTenTo18Squares(parseNumber);
+};
+//true이면 stake and borrow 할 수 있는 상태
+// export const checkNftOktoGo = async(stakedNftList, tokenId) =>{
+//   const address = window.klaytn.selectedAddress;
+
+//   const tempMap = _.map(stakedNftList, function(o) {
+//       if (o.nftTokenId === tokenId) return o;
+//   });
+//   const checkA = tempMap.loanAmount == 0? true: false;
+
+//   const tempAddress = nftContractInstance.ownerOf(tokenId);
+//   const checkB = tempAddress == address? true: false;
+//   return  checkA && checkB;
+// }

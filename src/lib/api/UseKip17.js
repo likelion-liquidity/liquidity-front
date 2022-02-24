@@ -25,6 +25,7 @@ export const MintToken = (contractAdrress, address, id, uri) => {
   console.log('data ', data);
   return axios.post(`v1/contract/${contractAdrress}/token`, data);
 };
+
 // export const getOwnerTokens = (contractAdrress, address) => {
 //     return axios.get(`v1/contract/${contractAdrress}/owner/${address}`);
 //   };

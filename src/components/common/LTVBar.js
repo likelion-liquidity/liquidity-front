@@ -43,17 +43,18 @@ const St = {
   `
 };
 
-const value = 100 / 60;
-
 const LTVBar = ({
   collateralValue = 0, // 담보가치
   borrowedValue = 0, //빌린 금액
-  repayAmount = 0
+  repayAmount = 0,
+  maxLtv = 45,
+  liqLtv = 60
 }) => {
+  const value = 100 / liqLtv;
   const [ltvCurrentPosition, setLtvCurrentPosition] = useState(0);
   const [ltvCurrentPositionWidth, setLtvCurrentPositionWidth] = useState(0);
-  const [ltv45Width, setLtv45Width] = useState(0);
-  const [ltv60Width, setLtv60Width] = useState(0);
+  const [ltv45Width, setLtv45Width] = useState(0); //maxLtv
+  const [ltv60Width, setLtv60Width] = useState(0); //liqLtv
   const ltvbarRef = useRef(null);
 
   const getOuterSize = () => {
@@ -62,7 +63,7 @@ const LTVBar = ({
     setLtvCurrentPositionWidth(
       ltvBarElementWidth * ((ltvCurrentPosition * value) / 100)
     );
-    setLtv45Width(ltvBarElementWidth * ((45 * value) / 100));
+    setLtv45Width(ltvBarElementWidth * ((maxLtv * value) / 100));
     setLtv60Width(ltvBarElementWidth);
   };
 
@@ -90,10 +91,10 @@ const LTVBar = ({
           </St.LtvPercentInfoInner>
         </St.LtvPercentInfoOuter>
         <St.LtvPercentInfoOuter ltvWidth={ltv45Width}>
-          <St.LtvPercentInfoInner>45%</St.LtvPercentInfoInner>
+          <St.LtvPercentInfoInner>{`${maxLtv}%`}</St.LtvPercentInfoInner>
         </St.LtvPercentInfoOuter>
         <St.LtvPercentInfoOuter ltvWidth={ltv60Width}>
-          <St.LtvPercentInfoInner>60%</St.LtvPercentInfoInner>
+          <St.LtvPercentInfoInner>{`${liqLtv}%`}</St.LtvPercentInfoInner>
         </St.LtvPercentInfoOuter>
       </St.FigureContainer>
       <St.LTVBarOuter id="ltv-outer" ref={ltvbarRef}>

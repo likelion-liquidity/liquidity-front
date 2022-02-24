@@ -29,13 +29,13 @@ const Total = ({ whiteListNFTList }) => {
   const [nftTokenArray, setNftTokenArray] = useState(null);
 
   const getNftCollectionAddress = () => {
-    for (let i = 0; i < whiteListNFTList.length; i++){
+    for (let i = 0; i < whiteListNFTList.length; i++) {
       if (whiteListNFTList[i].name === nftCollectionName) {
         return whiteListNFTList[i].address;
       }
     }
   };
-  
+
   const handleStakedCheckButton = () => {
     setIsDisplayStaked((prev) => !prev);
 
@@ -79,14 +79,11 @@ const Total = ({ whiteListNFTList }) => {
       );
       if (!selectedWhiteList) return;
       console.log(address);
-      const stakedNftListTemp = await getStakedNftList(
+      let stakedNftList = await getStakedNftList(
         address,
         selectedWhiteList.address
       );
-      let stakedNftList = stakedNftListTemp.map((stakedNftInfo) => {
-        const { hasOwnership, loanAmount, nftTokenId } = stakedNftInfo;
-        return { hasOwnership, loanAmount, nftTokenId };
-      });
+
       /* 청산 된 것은 보여줄 필요 없음  */
       stakedNftList = stakedNftList.filter(
         (stakedNftInfo) => stakedNftInfo.hasOwnership
@@ -104,9 +101,13 @@ const Total = ({ whiteListNFTList }) => {
     nftList();
   }, [whiteListNFTList, nftInfo]);
 
+  console.log('stakedNftList= ', stakedNftList);
   return (
     <St.TotalAssetWrapper>
-      <NFTInfoContainer nftTitle={nftInfo?.nftTitle} />
+      <NFTInfoContainer
+        nftTitle={nftInfo?.nftTitle}
+        floorPrice={nftInfo?.floorPrice}
+      />
       <TotalAssetsContainer
         stakedNftList={stakedNftList}
         floorPrice={nftInfo?.floorPrice}

@@ -227,11 +227,7 @@ const TestPage = ({ from }) => {
       //스테킹 된거와 내 어드레스에 있는 nft 를 보여줌
       const cardList = [...res.data.items, ...res2.data.items];
 
-      const stakedNftListTemp = await getStakedNftList(address, KIP17_MK);
-      let stakedNftList = stakedNftListTemp.map((stakedNftInfo) => {
-        const { hasOwnership, loanAmount, nftTokenId } = stakedNftInfo;
-        return { hasOwnership, loanAmount, nftTokenId };
-      });
+      let stakedNftList = await getStakedNftList(address, KIP17_MK);
       /* 청산안되있는 스테이킹 된것들만   */
       stakedNftList = stakedNftList.filter(
         (stakedNftInfo) => stakedNftInfo.hasOwnership
