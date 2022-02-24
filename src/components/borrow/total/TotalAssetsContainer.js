@@ -4,7 +4,7 @@ import BorrowRepayModal from 'components/modal/BorrowRepayModal';
 import { LTVBar, Button } from 'components/common';
 import palette from 'styles/palette';
 import useModal from 'hooks/useModal';
-import { addComma } from 'lib/helpers';
+import { addComma, divideByTenTo18Squares } from 'lib/helpers';
 import LENDING_ABI from 'abi/LendingABI.json';
 import { LENDING_ADDRESS, KIP7_ADDRESS, KIP17_MK } from 'lib/staticData';
 import Caver from 'caver-js';
@@ -68,14 +68,14 @@ const TotalAssetsContainer = ({ stakedNftList, floorPrice }) => {
   const { openModal, closeModal, ModalPortal } = useModal();
   const [collateralValue, setCollateralValue] = useState(0);
   const [borrowedValue, setBorrowedValue] = useState(0);
-  
+
   const proceed = async () => {
     const [address] = await window.klaytn.enable();
     const caver = new Caver(window.klaytn);
     const contract = caver.contract.create(LENDING_ABI, LENDING_ADDRESS); // Lendinng contract
 
     let num = parseInt('0x00', 2).toString(16);
-    const amount = modalState.inputValue * (10 ** 18);
+    const amount = modalState.inputValue * 10 ** 18;
     console.log(amount);
     let data = null;
     if (modalState.title === 'Borrow') {
@@ -160,12 +160,12 @@ const TotalAssetsContainer = ({ stakedNftList, floorPrice }) => {
       <St.Wrapper>
         <St.AssetsWrapper>
           <DisplayAssetCotainer
-            title={'COLLATERAL VALUE'}
-            value={addComma(collateralValue)}
+            title={'Collateral Value'}
+            value={addComma(divideByTenTo18Squares(collateralValue))}
           />
           <DisplayAssetCotainer
-            title={'Borrowed VALUE'}
-            value={addComma(borrowedValue)}
+            title={'Total Borrowed Value'}
+            value={addComma(divideByTenTo18Squares(borrowedValue))}
           />
         </St.AssetsWrapper>
 

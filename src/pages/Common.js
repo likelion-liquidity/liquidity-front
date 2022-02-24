@@ -2,66 +2,15 @@ import { useEffect, useState } from 'react';
 import NFTCardContainer from 'components/borrow/stake/NFTCardContainer';
 import NFTInfoHeader from 'components/borrow/stake/NFTInfoHeader';
 import NFTDescriptionContainer from 'components/borrow/stake/NFTDescriptionContainer';
-import { NFT_TOKEN_ARRAY } from 'lib/staticData';
-import { useLocation } from 'react-router-dom';
-import { getPathName } from 'lib/helpers';
-import { getStakedNftList } from 'lib/api/useLending';
+import useNftInfo from 'hooks/useNftInfo';
 
 const CommonTestPage = ({ whiteListNFTList }) => {
-  const [nftInfo, setNftInfo] = useState({
-    address: '',
-    availableLoanAmount: '',
-    floorPrice: '',
-    isOwned: '',
-    isStaked: '',
-    liqLtv: '',
-    maxLtv: '',
-    symbol: '',
-    nftKlayPrice: '',
-    nftTitle: ''
-  });
+  const { nftInfo, setNftInfo } = useNftInfo({ whiteListNFTList });
   const [isOpenDescriptionContainer, setIsOpenDescriptionContainer] =
     useState(false);
   const [selectedNftTokendId, setSelectedNftTokendId] = useState('');
   const [selectedNft, setSelectedNft] = useState(null);
   const [nftTokenArray, setNftTokenArray] = useState(null);
-
-  const location = useLocation();
-
-  useEffect(() => {
-    if (!whiteListNFTList) return;
-    const nftTitle = getPathName(location.pathname);
-    const NFT = whiteListNFTList.find((nftInfo) => nftInfo.name === nftTitle);
-    if (!NFT) return;
-    console.log(NFT);
-    const {
-      address,
-      availableLoanAmount,
-      floorPrice,
-      isOwned,
-      isStaked,
-      liqLtv,
-      maxLtv,
-      name,
-      nftKlayPrice,
-      symbol
-    } = NFT;
-
-    setNftInfo({
-      ...nftInfo,
-      nftTitle: name,
-      address,
-      availableLoanAmount,
-      floorPrice,
-      isOwned,
-      isStaked,
-      liqLtv,
-      maxLtv,
-      name,
-      nftKlayPrice,
-      symbol
-    });
-  }, [location.pathname, whiteListNFTList]);
 
   const handleOnClickNFT = (nftTokenId) => {
     setSelectedNftTokendId(nftTokenId);

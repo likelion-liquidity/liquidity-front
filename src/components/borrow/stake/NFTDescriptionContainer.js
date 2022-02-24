@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Button, LTVBar } from 'components/common';
 import styled from 'styled-components';
 import palette from 'styles/palette';
-import { addComma } from 'lib/helpers';
+import { addComma, divideByTenTo18Squares } from 'lib/helpers';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import Caver from 'caver-js';
@@ -84,9 +84,14 @@ const NFTDescriptionContainer = ({
       const kip17Address = nftInfo?.address;
       /* approve */
       const selectKip17 = new caver.klay.KIP17(kip17Address);
-      const approveResponse = await selectKip17.approve(LENDING_ADDRESS, 2, {
-        from: address
-      });
+      const approveResponse = await selectKip17.approve(
+        LENDING_ADDRESS,
+        selectedNft.tokenId,
+        {
+          from: address
+        }
+      );
+      console.log('approveResponse =', approveResponse);
       /* approveResponse 결과 값에 따른 로직플로우 추가 */
 
       /* stake */
@@ -99,9 +104,7 @@ const NFTDescriptionContainer = ({
           type: 'SMART_CONTRACT_EXECUTION',
           from: address,
           to: LENDING_ADDRESS,
-          data: contract.methods
-            .stake('0x629cB3144C8F76C06Bb0f18baD90e4af32284E2C', num)
-            .encodeABI(),
+          data: contract.methods.stake(kip17Address, num).encodeABI(),
           value: '',
           gas: '800000'
         })
@@ -109,7 +112,7 @@ const NFTDescriptionContainer = ({
           console.log('transactionHash', hash);
         })
         .on('receipt', (receipt) => {
-          // success
+          handleMoveStakeNFT();
           console.log('receipt', receipt);
         })
         .on('error', (e) => {
@@ -233,7 +236,7 @@ const NFTDescriptionContainer = ({
         </St.DescriptionTokenId>
 
         <div style={{ textAlign: 'center' }}>
-          DepositValue :{addComma(depositValue)}$
+          DepositValue :{addComma(divideByTenTo18Squares(depositValue))}$
         </div>
         <St.LtvBarContainer>
           <div
@@ -242,8 +245,10 @@ const NFTDescriptionContainer = ({
             }}
           >
             <LTVBar
-              collateralValue={collateralValue}
-              borrowedValue={borrowedValue - depositValue}
+              collateralValue={divideByTenTo18Squares(collateralValue)}
+              borrowedValue={divideByTenTo18Squares(
+                borrowedValue - depositValue
+              )}
               repayAmount={0}
             />
           </div>
