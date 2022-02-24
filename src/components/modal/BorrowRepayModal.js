@@ -65,7 +65,7 @@ const CommonModal = ({ modal }) => {
             <br />
             {modal.subMessage}
           </p>
-          <Input placeholder={modal.inputPlaceholder} lcon="$" onChange={onChangeInput}/>
+          <Input placeholder={modal.inputPlaceholder} style={{color:"#000"}} lcon="$" onChange={onChangeInput}/>
           <LTVBar />
         </St.PopPanelContainer>
 
