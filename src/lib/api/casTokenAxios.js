@@ -11,7 +11,7 @@ const axios = Axios.create({
 
   headers: {
     Authorization: authorization,
-    'x-chain-id': '1001'
+    'x-chain-id': process.env.REACT_APP_MODE === 'production' ? '8217' : '1001'
   },
 
   timeout: 3000
