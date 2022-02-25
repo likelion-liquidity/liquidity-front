@@ -2,11 +2,9 @@ import Asset from 'components/common/Asset';
 import Button from 'components/common/Button';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { getStakedNftList } from 'lib/api/useLending';
-import { KIP17_MK } from 'lib/staticData';
+
 import styled from 'styled-components';
 import palette from 'styles/palette';
-import { divideByTenTo18Squares } from 'lib/helpers';
 
 const St = {
   Container: styled.div``,

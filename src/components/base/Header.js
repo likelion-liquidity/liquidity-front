@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import styled from 'styled-components';
 import useModal from 'hooks/useModal';
 import { NavLink, Link } from 'react-router-dom';
@@ -93,7 +93,7 @@ const Appbar = ({ account, setAccount, isConnected, setIsConnected }) => {
     if (klaytn) {
       try {
         const res = await getKaikasAccts();
-        console.log('res = ', res);
+
         setAccountInfo(klaytn);
         setIsConnected(true);
         klaytn.on('accountsChanged', () => setAccountInfo(klaytn));
@@ -110,8 +110,6 @@ const Appbar = ({ account, setAccount, isConnected, setIsConnected }) => {
       );
     }
   };
-
-  console.log('account = ', account);
 
   const setAccountInfo = async () => {
     const klaytn = getKlaytnProvider();

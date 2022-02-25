@@ -2,7 +2,6 @@ import { useState } from 'react';
 import styled from 'styled-components';
 import NFTCardContainer from 'components/borrow/stake/NFTCardContainer';
 import { Asset } from 'components/common';
-import { DUMMY } from 'pages/Dummy';
 
 const St = {
   FilterContainer: styled.div`

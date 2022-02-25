@@ -21,7 +21,7 @@ const useNftInfo = ({ whiteListNFTList }) => {
     const nftTitle = getPathName(location.pathname);
     const NFT = whiteListNFTList.find((nftInfo) => nftInfo.name === nftTitle);
     if (!NFT) return;
-    console.log(NFT);
+
     const {
       address,
       availableLoanAmount,

@@ -1,11 +1,6 @@
 import caver from 'caver-js';
 import KIP17ABI from '../abi/KIP17TokenABI.json';
-import {
-  ACCESS_KEY_ID,
-  SECRET_ACCESS_KEY,
-  CHAIN_ID,
-  NFT_CONTRACT_ADDRESS
-} from '../constants';
+import { NFT_CONTRACT_ADDRESS } from '../constants';
 
 // const option = {
 //   headers: [
@@ -46,7 +41,7 @@ export const getBalance = (address) => {
     const balance = caver.utils.convertFromPeb(
       caver.utils.hexToNumberString(response)
     );
-    console.log(`BALANCE: ${balance}`);
+
     return balance;
   });
 };

@@ -1,14 +1,10 @@
-import { NFTCard, Loading, EmptyCard } from 'components/common';
+import { NFTCard, EmptyCard } from 'components/common';
 import { useState, useEffect } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import { LENDING_ADDRESS } from 'lib/staticData';
 //import useFetch from 'hooks/useFetch';
 import styled from 'styled-components';
-import {
-  getTokenInfo,
-  getEosTokenAddress,
-  getNftContract
-} from 'lib/api/UseTokenApi';
+import { getEosTokenAddress } from 'lib/api/UseTokenApi';
 
 const St = {
   CardContainer: styled.div`
@@ -45,14 +41,11 @@ const NFTCardContainer = ({
 
   const getTokens = async () => {
     try {
-      console.log('whiteListNFTList = ', whiteListNFTList);
       const [address] = await window.klaytn.enable();
       const selectedWhiteList = whiteListNFTList.find(
         (item) => item.name === nftTitle
       );
-      console.log('selectedWhiteList ', selectedWhiteList);
       if (!selectedWhiteList) return;
-      console.log(selectedWhiteList);
 
       setIsLoading(true);
       /* 내 어드레스 nft */
@@ -97,8 +90,6 @@ const NFTCardContainer = ({
     );
   }
 
-  console.log('nftTokenArray= ', nftTokenArray);
-  console.log('isDisplayStaked= ', isDisplayStaked);
   return (
     <St.CardContainer>
       <Container>
@@ -106,8 +97,6 @@ const NFTCardContainer = ({
           {nftTokenArray?.map((nft, index) => {
             const isStaked = stakedNftList?.find((nftStaked) => {
               const tokenId = parseInt(nft.tokenId, 16).toString();
-              console.log('tokenId = ', tokenId);
-
               return nftStaked.nftTokenId === tokenId;
             });
             if (isDisplayStaked) {
