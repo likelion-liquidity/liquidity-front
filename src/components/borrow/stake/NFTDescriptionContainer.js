@@ -320,7 +320,8 @@ const NFTDescriptionContainer = ({
       const liqLtv = divideByTenTo18Squares(parseInt(nftInfo.liqLtv));
       const maxBorrowValue = collateralValue * (maxLtv / 100); //최대 빌릴 수 있는량
       const liqValue = collateralValue * (liqLtv / 100); //최대 빌릴 수 있는량
-      const canMaxBorrowValue = maxBorrowValue - currentBorrowAmount; //내가 최대로 빌릴수 있는 량
+      console.log(currentBorrowAmount);
+      const canMaxBorrowValue = divideByTenTo18Squares(tenTo18Squares(maxBorrowValue) - currentBorrowAmount); //내가 최대로 빌릴수 있는 량
       console.log('collateralValue = ', collateralValue);
 
       console.log('maxLtv = ', maxLtv);
