@@ -59,6 +59,7 @@ const CommonModal = ({
   currentBorrowAmount,
   nftCollectionAddress
 }) => {
+  const isBorrow = modalState.title === 'Borrow';
   const [inputValue, setInputValue] = useState(0);
   const handleConfirm = () => {
     proceed();
@@ -71,8 +72,14 @@ const CommonModal = ({
     let value = 0;
     if (!e.target.value) value = 0;
     value = parseFloat(e.target.value);
-    if (value >= canMaxBorrowValue) {
-      value = canMaxBorrowValue;
+    if (isBorrow) {
+      if (value >= canMaxBorrowValue) {
+        value = canMaxBorrowValue;
+      }
+    } else if (!isBorrow) {
+      if (value >= modalState.stableBalance) {
+        value = modalState.stableBalance;
+      }
     }
     //setModalState({ ...modalState, inputValue: e.target.value });
     setInputValue(value);
@@ -127,6 +134,7 @@ const CommonModal = ({
         .on('receipt', (receipt) => {
           // success
           closeModal();
+          window.reload();
           console.log('receipt', receipt);
         })
         .on('error', (e) => {
@@ -143,7 +151,11 @@ const CommonModal = ({
       <St.PopPanel>
         <St.PopPanelHd> {modalState.title}</St.PopPanelHd>
         <St.PopPanelContainer>
-          max Borrow Value :{canMaxBorrowValue}
+          {isBorrow ? (
+            <span> max Borrow Value :{canMaxBorrowValue}</span>
+          ) : (
+            <span> max Repay Value :{modalState.stableBalance}</span>
+          )}
           <p>
             {modalState.message}
             <br />
@@ -171,6 +183,7 @@ const CommonModal = ({
             )}
             maxLtv={divideByTenTo18Squares(parseInt(modalState.nftInfo.maxLtv))}
             liqLtv={divideByTenTo18Squares(parseInt(modalState.nftInfo.liqLtv))}
+            isBorrow={isBorrow}
           />
         </St.PopPanelContainer>
 
