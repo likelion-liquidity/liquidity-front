@@ -102,6 +102,7 @@ const Total = ({ whiteListNFTList }) => {
   }, [whiteListNFTList, nftInfo]);
 
   console.log('stakedNftList= ', stakedNftList);
+
   return (
     <St.TotalAssetWrapper>
       <NFTInfoContainer
@@ -126,6 +127,7 @@ const Total = ({ whiteListNFTList }) => {
       <NFTDescriptionContainer
         nftInfo={nftInfo}
         selectedNft={selectedNft}
+        stakedNftList={stakedNftList}
         isOpenDescriptionContainer={isOpenDescriptionContainer}
         isStakedSelectedNft={isStakedSelectedNft}
         nftCollectionAddress={getNftCollectionAddress()}

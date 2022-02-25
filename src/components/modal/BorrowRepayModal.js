@@ -54,7 +54,10 @@ const CommonModal = ({
   modalState,
   selectedNft,
   stableBalance,
-  closeModal
+  closeModal,
+  canMaxBorrowValue,
+  currentBorrowAmount,
+  nftCollectionAddress
 }) => {
   const [inputValue, setInputValue] = useState(0);
   const handleConfirm = () => {
@@ -65,9 +68,15 @@ const CommonModal = ({
     modalState.cancelFunction();
   };
   const onChangeInput = (e) => {
+    let value = 0;
+    if (!e.target.value) value = 0;
+    value = parseFloat(e.target.value);
+    if (value >= canMaxBorrowValue) {
+      value = canMaxBorrowValue;
+    }
     //setModalState({ ...modalState, inputValue: e.target.value });
-    setInputValue(e.target.value);
-    modalState.inputValue = e.target.value;
+    setInputValue(value);
+    modalState.inputValue = value;
   };
 
   const proceed = async () => {
@@ -84,11 +93,13 @@ const CommonModal = ({
       /* 10 ** 18  */
       amount = BigNumber(tenTo18Squares(amount));
       console.log('amount = ', amount);
+      console.log('nftCollectionAddress= ', nftCollectionAddress);
+      console.log('num= ', num);
       let data = null;
 
       if (modalState.title === 'Borrow') {
         data = contract.methods
-          .borrow(amount, modalState.nftCollectionAddress, num)
+          .borrow(amount, nftCollectionAddress, num)
           .encodeABI();
       } else {
         const kip7 = new caver.klay.KIP7(KIP7_ADDRESS);
@@ -132,6 +143,7 @@ const CommonModal = ({
       <St.PopPanel>
         <St.PopPanelHd> {modalState.title}</St.PopPanelHd>
         <St.PopPanelContainer>
+          max Borrow Value :{canMaxBorrowValue}
           <p>
             {modalState.message}
             <br />
@@ -142,6 +154,8 @@ const CommonModal = ({
             style={{ color: '#000' }}
             lcon="$"
             onChange={onChangeInput}
+            value={inputValue}
+            type="number"
           />
           {modalState.stableBalance}
           <LTVBar
@@ -151,7 +165,10 @@ const CommonModal = ({
             // borrowedValue={divideByTenTo18Squares(borrowedValue - depositValue)}
             // repayAmount={0}
             // collateralValue={modalState.nftInfo.f}
-            borrowedValue={inputValue}
+            inputValue={inputValue}
+            borrowedValue={divideByTenTo18Squares(
+              parseInt(currentBorrowAmount)
+            )}
             maxLtv={divideByTenTo18Squares(parseInt(modalState.nftInfo.maxLtv))}
             liqLtv={divideByTenTo18Squares(parseInt(modalState.nftInfo.liqLtv))}
           />
