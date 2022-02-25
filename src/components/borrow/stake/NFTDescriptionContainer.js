@@ -97,9 +97,10 @@ const NFTDescriptionContainer = ({
         if (!res) return;
         if (res.status === 200) {
           let balance = res.data.balance;
-          balance = parseInt(balance, 16).toString();
+          balance = hexToNumberString(balance);
           console.log('balance = ', balance);
           setStableBalance(balance);
+
           //setModalState({ ...modalState, stableBalance: balance });
         }
       } catch (e) {
@@ -304,7 +305,11 @@ const NFTDescriptionContainer = ({
       const tokenId = parseInt(selectedNft.tokenId, 16).toString();
       return tokenId === stakedNft.nftTokenId;
     });
-    if (!stakeInfo) return;
+    console.log('stakeInfo= ', stakeInfo);
+    if (!stakeInfo) {
+      setCurrnetBorrowAmount(0);
+      return;
+    }
     setCurrnetBorrowAmount(stakeInfo.loanAmount);
   }, [selectedNft, stakedNftList]);
 
@@ -321,9 +326,10 @@ const NFTDescriptionContainer = ({
       const maxBorrowValue = collateralValue * (maxLtv / 100); //최대 빌릴 수 있는량
       const liqValue = collateralValue * (liqLtv / 100); //최대 빌릴 수 있는량
       console.log(currentBorrowAmount);
-      const canMaxBorrowValue = divideByTenTo18Squares(tenTo18Squares(maxBorrowValue) - currentBorrowAmount); //내가 최대로 빌릴수 있는 량
+      const canMaxBorrowValue = divideByTenTo18Squares(
+        tenTo18Squares(maxBorrowValue) - currentBorrowAmount
+      ); //내가 최대로 빌릴수 있는 량
       console.log('collateralValue = ', collateralValue);
-
       console.log('maxLtv = ', maxLtv);
       console.log('maxBorrowValue = ', maxBorrowValue);
       console.log('canMaxBorrowValue = ', canMaxBorrowValue);
