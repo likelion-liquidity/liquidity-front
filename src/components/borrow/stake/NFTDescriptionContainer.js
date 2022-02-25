@@ -17,6 +17,7 @@ import BorrowRepayModal from 'components/modal/BorrowRepayModal';
 import { LENDING_ADDRESS, KIP7_ADDRESS } from 'lib/staticData';
 import { getBalance } from 'lib/api/UseKip7';
 import LENDING_ABI from 'abi/LendingABI.json';
+import { toastError, toastSuccess } from 'components/common/Toast';
 
 const St = {
   DescriptionContainer: styled.div`
@@ -152,11 +153,18 @@ const NFTDescriptionContainer = ({
           console.log('transactionHash', hash);
         })
         .on('receipt', (receipt) => {
-          handleMoveStakeNFT(nftInfo.nftTitle);
+          const resolveAfter1Sec = new Promise((resolve) =>
+            setTimeout(resolve, 1000)
+          );
+          toast.promise(resolveAfter1Sec, {
+            pending: 'Transaction is being processed...',
+            success: 'Congrats! Transaction has been confirmed!',
+          }).then(() => setTimeout(()=>handleMoveStakeNFT(nftInfo.nftTitle), 2000));
           console.log('receipt', receipt);
         })
         .on('error', (e) => {
           // failed
+          toastError("Transaction has been failed.");
           console.log('error ', e);
         });
     } catch (e) {
