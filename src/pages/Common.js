@@ -31,7 +31,10 @@ const CommonTestPage = ({ whiteListNFTList }) => {
 
   return (
     <div>
-      <NFTInfoHeader nftTitle={nftInfo?.nftTitle} />
+      <NFTInfoHeader
+        nftTitle={nftInfo?.nftTitle}
+        floorPrice={nftInfo?.floorPrice}
+      />
       <NFTCardContainer
         nftTitle={nftInfo?.nftTitle}
         handleOnClickNFT={handleOnClickNFT}

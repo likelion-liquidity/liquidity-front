@@ -103,7 +103,8 @@ export const NFT_LIST = [
     title: 'KlayLion',
     logo_image:
       'https://lh3.googleusercontent.com/62sZVScyxqlvpNh6J0JhiudQFegqTvqx_11YZxWJnwZqbLbvYklFjtVHWKwDZkLxH3acnJMUEsZhmUqTPcB_NRk9uv0RR0fw61_B=s130',
-    banner_image: '',
+    banner_image:
+      'https://images.unsplash.com/photo-1600562718259-5cae2c9d2235?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80',
     symbol: 'KL'
   }
 ];
