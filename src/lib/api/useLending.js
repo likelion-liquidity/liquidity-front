@@ -1,4 +1,4 @@
-import caver from 'klaytn/caver';
+import { caver } from 'lib/api/UseKaikas';
 import { LENDING_ADDRESS } from 'lib/staticData';
 import LENDING_ABI from 'abi/LendingABI.json';
 
