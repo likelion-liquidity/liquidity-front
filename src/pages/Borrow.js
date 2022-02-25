@@ -143,7 +143,7 @@ const Borrow = ({ whiteListNFTList }) => {
                 key={`asstes-${index}`}
                 imgProps={{ src: '', alt: '' }}
                 titleProps={{ title: e.name }}
-                ltvProps={{ ltv: `${e.liqLtv}%` }}
+                ltvProps={{ ltv: `${e.liqLtv}` }}
                 priceProps={{
                   price: `${e.floorPrice}`
                 }}

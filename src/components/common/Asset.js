@@ -101,7 +101,7 @@ const Asset = ({
       {titleProps && <St.TitleContainer>{titleProps.title}</St.TitleContainer>}
       {ltvProps && (
         <St.LtvContainer>
-          {addComma(divideByTenTo18Squares(ltvProps.ltv))}
+          {`${addComma(divideByTenTo18Squares(ltvProps.ltv))}%`}
         </St.LtvContainer>
       )}
       {priceProps && (
