@@ -49,7 +49,7 @@ function App() {
     network: null
   });
   const [whiteListNFTList, setWhiteListNFTList] = useState([]);
-
+  const [isConnected, setIsConnected] = useState(false);
   const getWhiteList = async () => {
     try {
       const klaytn = getKlaytnProvider(); // klaytn obj
@@ -118,7 +118,46 @@ function App() {
     }
   };
 
+  const loadAccountInfo = async () => {
+    const klaytn = getKlaytnProvider();
+   
+    if (klaytn) {
+      try {
+        const res = await getKaikasAccts();
+        console.log('res = ', res);
+        setAccountInfo(klaytn);
+        setIsConnected(true);
+        klaytn.on('accountsChanged', () => setAccountInfo(klaytn));
+        toast.success('Your wallet is connected!!', {
+          autoClose: 1500,
+          position: toast.POSITION.BOTTOM_CENTER
+        });
+      } catch (error) {
+        console.log('User denied account access');
+      }
+    } else {
+      console.log(
+        'Non-Kaikas browser detected. You should consider trying Kaikas!'
+      );
+    }
+  };
+
+  const setAccountInfo = async () => {
+    const klaytn = getKlaytnProvider();
+    if (klaytn === undefined) return;
+
+    const account = klaytn.selectedAddress;
+    const balance = await caver.klay.getBalance(account);
+    setAccount({
+      ...account,
+      account,
+      balance: caver.utils.fromPeb(balance, 'KLAY')
+    });
+    localStorage.setItem('address', account.account);
+  };
+
   useEffect(() => {
+    loadAccountInfo();
     getWhiteList();
   }, []);
 
@@ -132,7 +171,7 @@ function App() {
       <div id="root-modal" />
       <Router>
         <St.BaseRoot>
-          <Header account={account} setAccount={setAccount} />
+          <Header account={account} setAccount={setAccount} isConnected={isConnected} setIsConnected={setIsConnected}/>
           <St.ContentView>
             <Routes>
               <Route

@@ -75,9 +75,8 @@ const St = {
   `
 };
 
-const Appbar = ({ account, setAccount }) => {
+const Appbar = ({ account, setAccount, isConnected, setIsConnected }) => {
   const { openModal, ModalPortal, closeModal } = useModal();
-  const [isConnected, setIsConnected] = useState(false);
 
   const loadAccountInfo = async () => {
     const klaytn = getKlaytnProvider();
