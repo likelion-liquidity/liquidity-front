@@ -157,7 +157,7 @@ const CommonModal = ({
             value={inputValue}
             type="number"
           />
-          {modalState.stableBalance}
+          your balance : {modalState.stableBalance}
           <LTVBar
             collateralValue={divideByTenTo18Squares(
               parseInt(modalState.nftInfo.floorPrice)

@@ -20,6 +20,7 @@ const St = {
   LTVBarInner: styled.div`
     position: absolute;
     width: ${(props) => props.ltvCurrentPosition}%;
+    transition: width 0.5s;
     height: 100%;
     background-color: ${palette.blue_6};
     border-radius: 20px;
@@ -39,6 +40,7 @@ const St = {
     transform: translateX(-100%);
     display: inline-block;
     font-size: 12px;
+
     font-weight: 300;
   `
 };
