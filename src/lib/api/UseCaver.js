@@ -1,20 +1,21 @@
-import caver from 'caver-js';
+import Caver from 'caver-js';
 import KIP17ABI from '../abi/KIP17TokenABI.json';
 import { NFT_CONTRACT_ADDRESS } from '../constants';
 
-// const option = {
-//   headers: [
-//     {
-//       name: "Authorization",
-//       value:
-//         "Basic " +
-//         Buffer.from(ACCESS_KEY_ID + ":" + SECRET_ACCESS_KEY).toString("base64"),
-//     },
-//     { name: "x-chain-id", value: CHAIN_ID },
-//   ],
-// };
+const option = {
+  headers: [
+    {
+      name: "Authorization",
+      value:
+        "Basic " +
+        Buffer.from(ACCESS_KEY_ID + ":" + SECRET_ACCESS_KEY).toString("base64"),
+    },
+    { name: "x-chain-id", value: CHAIN_ID },
+  ],
+};
 
-//const caver = new Caver(new Caver.providers.HttpProvider("https://node-api.klaytnapi.com/v1/klaytn", option));
+const caver = new Caver(new Caver.providers.HttpProvider("https://node-api.klaytnapi.com/v1/klaytn", option));
+
 const NFTContract = new caver.contract(KIP17ABI, NFT_CONTRACT_ADDRESS);
 
 export const fetchCardsOf = async (address) => {
