@@ -51,7 +51,7 @@ export const tenTo18Squares = (v) => {
 
 export const divideByTenTo18Squares = (v) => {
   if (!v) return 0;
-  return v / 10 ** 18;
+  return Math.round(v / 10 ** 18);
 };
 
 export const hexToNumberString = (hex) => {
