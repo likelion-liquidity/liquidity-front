@@ -12,12 +12,11 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import Caver from 'caver-js';
 import useModal from 'hooks/useModal';
-import BigNumber from 'bignumber.js';
 import BorrowRepayModal from 'components/modal/BorrowRepayModal';
 import { LENDING_ADDRESS, KIP7_ADDRESS } from 'lib/staticData';
 import { getBalance } from 'lib/api/UseKip7';
 import LENDING_ABI from 'abi/LendingABI.json';
-import { toastError, toastSuccess } from 'components/common/Toast';
+import { toastError } from 'components/common/Toast';
 
 const St = {
   DescriptionContainer: styled.div`
@@ -72,7 +71,6 @@ const NFTDescriptionContainer = ({
   nftCollectionAddress,
   stakedNftList
 }) => {
-  console.log('nftInfo = ', nftInfo);
   const navigate = useNavigate();
   const location = useLocation();
   const { openModal, closeModal, ModalPortal } = useModal();
@@ -99,13 +97,13 @@ const NFTDescriptionContainer = ({
         if (res.status === 200) {
           let balance = res.data.balance;
           balance = hexToNumberString(balance);
-          console.log('balance = ', balance);
+
           setStableBalance(balance);
 
           //setModalState({ ...modalState, stableBalance: balance });
         }
       } catch (e) {
-        console.log('[seo] error ', e);
+        console.log('error ', e);
       }
     };
     fecth();
@@ -113,7 +111,6 @@ const NFTDescriptionContainer = ({
 
   const handleStake = async () => {
     try {
-      console.log('[seo] handleStake selectedNft ', selectedNft);
       const [address] = await window.klaytn.enable();
 
       const caver = new Caver(window.klaytn);
@@ -128,7 +125,7 @@ const NFTDescriptionContainer = ({
           from: address
         }
       );
-      console.log('approveResponse =', approveResponse);
+
       /* approveResponse 결과 값에 따른 로직플로우 추가 */
 
       /* stake */
@@ -137,7 +134,7 @@ const NFTDescriptionContainer = ({
       // // 10진수화된 2진수를, 16진수로 변환
       // num = num.toString(16);
       let num = parseInt(selectedNft.tokenId, 16).toString();
-      console.log('num = ', num);
+
       caver.klay
         .sendTransaction({
           type: 'SMART_CONTRACT_EXECUTION',
@@ -148,40 +145,29 @@ const NFTDescriptionContainer = ({
           gas: '800000'
         })
         .on('transactionHash', (hash) => {
-          console.log('transactionHash', hash);
+          //console.log('transactionHash', hash);
         })
         .on('receipt', (receipt) => {
           const resolveAfter1Sec = new Promise((resolve) =>
             setTimeout(resolve, 1000)
           );
-          toast.promise(resolveAfter1Sec, {
-            pending: 'Transaction is being processed...',
-            success: 'Congrats! Transaction has been confirmed!',
-          }).then(() => setTimeout(()=>handleMoveStakeNFT(nftInfo.nftTitle), 2000));
-          console.log('receipt', receipt);
+          toast
+            .promise(resolveAfter1Sec, {
+              pending: 'Transaction is being processed...',
+              success: 'Congrats! Transaction has been confirmed!'
+            })
+            .then(() =>
+              setTimeout(() => handleMoveStakeNFT(nftInfo.nftTitle), 2000)
+            );
         })
         .on('error', (e) => {
           // failed
-          toastError("Transaction has been failed.");
+          toastError('Transaction has been failed.');
           console.log('error ', e);
         });
     } catch (e) {
       console.log(e);
     }
-  };
-  console.log('selectedNft ', selectedNft);
-  const handleRepay = async () => {
-    const resolveAfter3Sec = new Promise((resolve) =>
-      setTimeout(resolve, 3000)
-    );
-    toast.promise(resolveAfter3Sec, {
-      pending: 'Promise is pending',
-      success: 'Promise resolved 👌',
-      error: 'Promise rejected 🤯'
-    });
-
-    await resolveAfter3Sec;
-    handleMoveStakeNFT(nftInfo.nftTitle);
   };
 
   // const proceed = async () => {
@@ -279,7 +265,7 @@ const NFTDescriptionContainer = ({
 
   const handleOnClick = (e) => {
     const nextState = { ...modalState };
-    console.log(e.target.id);
+
     if (e.target.id === 'borrow') {
       setModalState({
         ...nextState,
@@ -301,10 +287,6 @@ const NFTDescriptionContainer = ({
     openModal();
   };
 
-  console.log('[seo] isBorrowPage ', isBorrowPage);
-  console.log('[seo] stakedNftList ', stakedNftList);
-  console.log(nftInfo);
-
   const [currentBorrowAmount, setCurrnetBorrowAmount] = useState(0);
   useEffect(() => {
     if (!stakedNftList) return;
@@ -313,7 +295,7 @@ const NFTDescriptionContainer = ({
       const tokenId = parseInt(selectedNft.tokenId, 16).toString();
       return tokenId === stakedNft.nftTokenId;
     });
-    console.log('stakeInfo= ', stakeInfo);
+
     if (!stakeInfo) {
       setCurrnetBorrowAmount(0);
       return;
@@ -333,15 +315,11 @@ const NFTDescriptionContainer = ({
       const liqLtv = divideByTenTo18Squares(parseInt(nftInfo.liqLtv));
       const maxBorrowValue = collateralValue * (maxLtv / 100); //최대 빌릴 수 있는량
       const liqValue = collateralValue * (liqLtv / 100); //최대 빌릴 수 있는량
-      console.log(currentBorrowAmount);
+
       const canMaxBorrowValue = divideByTenTo18Squares(
         tenTo18Squares(maxBorrowValue) - currentBorrowAmount
       ); //내가 최대로 빌릴수 있는 량
-      console.log('collateralValue = ', collateralValue);
-      console.log('maxLtv = ', maxLtv);
-      console.log('maxBorrowValue = ', maxBorrowValue);
-      console.log('canMaxBorrowValue = ', canMaxBorrowValue);
-      console.log('liqValue = ', liqValue);
+
       setCanMaxBorrowValue(canMaxBorrowValue);
       setLiqValue(liqValue);
     };

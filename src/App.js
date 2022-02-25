@@ -3,17 +3,11 @@ import { ToastContainer, toast } from 'react-toastify';
 import styled from 'styled-components';
 import { getKaikasAccts } from 'lib/api/UseKaikas';
 import { Helmet } from 'react-helmet-async';
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  Outlet
-} from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Borrow from 'pages/Borrow';
 import Header from 'components/base/Header';
 import Common from 'pages/Common';
 import Total from 'pages/Total';
-import Test from 'pages/Test';
 import Footer from 'components/base/Footer';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'styles/bootstrap.custom.css';
@@ -66,9 +60,10 @@ function App() {
       const whiteListNFT = await contract.methods.getWhiteListNftList().call();
       const getNftDataContractCall = async (nftAddress) => {
         const nftData = await contract.methods.getNftData(nftAddress).call();
-        
-        let isOwned = false, isStaked = false;
-        
+
+        let isOwned = false,
+          isStaked = false;
+
         const { items: nfts } = (
           await getEosTokenAddress(nftAddress, klaytn.selectedAddress)
         ).data;
@@ -81,9 +76,11 @@ function App() {
             }
           }
         }
-        
-        const stakedNftList = await lendingContract.methods.getStakedNftList(klaytn.selectedAddress, nftAddress).call();
-        if(stakedNftList.length !== 0) isStaked = true;
+
+        const stakedNftList = await lendingContract.methods
+          .getStakedNftList(klaytn.selectedAddress, nftAddress)
+          .call();
+        if (stakedNftList.length !== 0) isStaked = true;
 
         return { ...nftData, address: nftAddress, isStaked, isOwned };
       };
@@ -112,7 +109,6 @@ function App() {
         return { ...nftContractInfo.data, ...finddata };
       });
       setWhiteListNFTList(whiteListNFTList);
-      
     } catch (e) {
       console.log(e);
     }
@@ -120,11 +116,10 @@ function App() {
 
   const loadAccountInfo = async () => {
     const klaytn = getKlaytnProvider();
-   
+
     if (klaytn) {
       try {
         const res = await getKaikasAccts();
-        console.log('res = ', res);
         setAccountInfo(klaytn);
         setIsConnected(true);
         klaytn.on('accountsChanged', () => setAccountInfo(klaytn));
@@ -171,7 +166,12 @@ function App() {
       <div id="root-modal" />
       <Router>
         <St.BaseRoot>
-          <Header account={account} setAccount={setAccount} isConnected={isConnected} setIsConnected={setIsConnected}/>
+          <Header
+            account={account}
+            setAccount={setAccount}
+            isConnected={isConnected}
+            setIsConnected={setIsConnected}
+          />
           <St.ContentView>
             <Routes>
               <Route
@@ -186,7 +186,6 @@ function App() {
                 path="manage/:nftname"
                 element={<Total whiteListNFTList={whiteListNFTList} />}
               />
-              <Route path="test" element={<Test from={account.account} />} />
             </Routes>
           </St.ContentView>
           <ToastContainer />

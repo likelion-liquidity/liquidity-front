@@ -1,7 +1,6 @@
 import caver from 'klaytn/caver';
 import { LENDING_ADDRESS } from 'lib/staticData';
 import LENDING_ABI from 'abi/LendingABI.json';
-import { getEosTokenAddress } from 'lib/api/UseTokenApi';
 
 export const getStakedNftList = async (address, nftAddress) => {
   try {

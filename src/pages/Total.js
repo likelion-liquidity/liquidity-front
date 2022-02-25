@@ -71,9 +71,9 @@ const Total = ({ whiteListNFTList }) => {
 
   const nftList = async () => {
     try {
-      let address = '0x34910aAbDC57937666C1D0ec87cE9337b171fdbB';
+      let address = window.klaytn.selectedAddress;
       if (!address) return;
-      console.log('whiteListNFTList= ', whiteListNFTList);
+
       const selectedWhiteList = whiteListNFTList?.find(
         (item) => item.name === nftInfo.nftTitle
       );
@@ -89,7 +89,6 @@ const Total = ({ whiteListNFTList }) => {
         (stakedNftInfo) => stakedNftInfo.hasOwnership
       );
       setStakedNftList(stakedNftList);
-      console.log('stakedNftList= ', stakedNftList);
     } catch (e) {
       console.log(e);
     }
@@ -100,8 +99,6 @@ const Total = ({ whiteListNFTList }) => {
     if (!whiteListNFTList?.length < 0) return;
     nftList();
   }, [whiteListNFTList, nftInfo]);
-
-  console.log('stakedNftList= ', stakedNftList);
 
   return (
     <St.TotalAssetWrapper>

@@ -54,9 +54,6 @@ const LTVBar = ({
   liqLtv = 60,
   isBorrow = true
 }) => {
-  console.log('maxLtv = ', maxLtv);
-  console.log('liqLtv = ', liqLtv);
-
   const value = 100 / liqLtv;
   const [ltvCurrentPosition, setLtvCurrentPosition] = useState(0);
   const [ltvCurrentPositionWidth, setLtvCurrentPositionWidth] = useState(0);
@@ -90,7 +87,6 @@ const LTVBar = ({
 
   /* input 입력시 */
   useEffect(() => {
-    console.log('test', (borrowedValue + inputValue) / collateralValue);
     if (isBorrow) {
       setLtvCurrentPosition(
         parseFloat(
@@ -107,9 +103,6 @@ const LTVBar = ({
 
     getOuterSize();
   }, [collateralValue, borrowedValue, inputValue, getOuterSize, isBorrow]);
-
-  console.log('inputValue = ', inputValue);
-  console.log('ltvCurrentPositionWidth = ', ltvCurrentPositionWidth);
 
   return (
     <St.LTVBarWrapper>
