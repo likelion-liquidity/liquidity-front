@@ -82,22 +82,39 @@ export const NFT_STAKED_LIST = [
 // 0x629cb3144c8f76c06bb0f18bad90e4af32284e2c;
 
 export const NFT_LIST = [
+  // {
+  //   title: 'Metabumz',
+  //   symbol: 'BM',
+  //   logo_image:
+  //     'https://lh3.googleusercontent.com/nfnONfp2XMHD9ub5vIqoYUFJw_R1j25I47QfNkvIZztEHqOnBksNdrnII_-AZFdlonlTFSBmnrJFVO3yPtEccpVkIWjSezs14P1U=s130',
+  //   banner_image:
+  //     'https://lh3.googleusercontent.com/TFP7iOG2IWdNNJ3PVVtAzFCwDiEm3q_2ZC9D4p2PV87lIPoJIcwtmJBv02-poHugY0mVOiC2ovaGeFxgl4n6crEn9vzylHKYlbEV7A=h600'
+  // },
   {
-    title: 'Metabumz',
-    symbol: 'BM',
+    title: 'Sunmiya',
+    symbol: 'SM',
     logo_image:
-      'https://lh3.googleusercontent.com/nfnONfp2XMHD9ub5vIqoYUFJw_R1j25I47QfNkvIZztEHqOnBksNdrnII_-AZFdlonlTFSBmnrJFVO3yPtEccpVkIWjSezs14P1U=s130',
-    banner_image:
-      'https://lh3.googleusercontent.com/TFP7iOG2IWdNNJ3PVVtAzFCwDiEm3q_2ZC9D4p2PV87lIPoJIcwtmJBv02-poHugY0mVOiC2ovaGeFxgl4n6crEn9vzylHKYlbEV7A=h600'
-  },
-  {
-    title: 'Metakongz',
-    symbol: 'MK',
-    logo_image:
-      'https://lh3.googleusercontent.com/AX_uuKN-OFhtHXtzw5PJ3K-bGW5tg2svacBEv8xO_ii3UCEo6UTjqec4MiXFGP3gsxPD-p-W0d315pEvIOxG3pKNWfT3G8KvAgIl=s130',
+      'https://lh3.googleusercontent.com/f4gveNvJbpfeTVBrUHSMr5U9QlKPu-9yqzfg3gwe1dZST1iJra-5J-g1Tps5HttiSRQvcnR8wujMh1nqHWxg7E-yvmkz-dAjq7vR=s130',
 
     banner_image:
+      'https://lh3.googleusercontent.com/isGOT2tj3bEtBzegMzIQN076sOIkB3M15qLBylXUm91neIZwE7S6biba0tKEnhu4GmbHfovnMK2I4_zT6XHmZxHrTYOI8MKwuPo8hz4=h600'
+  },
+  {
+    title: 'Kongz',
+    symbol: 'MKC',
+    logo_image:
+      'https://lh3.googleusercontent.com/AX_uuKN-OFhtHXtzw5PJ3K-bGW5tg2svacBEv8xO_ii3UCEo6UTjqec4MiXFGP3gsxPD-p-W0d315pEvIOxG3pKNWfT3G8KvAgIl=s130',
+    banner_image:
       'https://lh3.googleusercontent.com/LkkMZIONLcKnqkzI-J17FZlXBkmnmDH2unCJ6o_blsjrRvINYJ7XySH7wg3xsJ78WTyQpGhgqWSCt5ytQkfE67M-Cyfy4xlXuqjQW4Y=h600'
+  },
+  {
+    title: 'Mongz',
+    symbol: 'MZ',
+    logo_image:
+      'https://lh3.googleusercontent.com/QQznhGXPgiHc_-7Ub5bJre8XFhQnqfOBpMDY9pJD7-ewE2r-kMEIzqtkFTEhmg81yrwWPZGk9KJ8samIlmr57ZLGHlO27vXxmWXn7A=s130',
+
+    banner_image:
+      'https://lh3.googleusercontent.com/UCNdsKhqGQLbVsQRsPjjGVIGHILm9QxDL0QBQozNm_JmGNf-_OeSrztk0knFtvM34whLOPeuFAPJwuaQREiuV-6fuXXD8yDPrdTGxw=h600'
   },
   {
     title: 'KlayLion',
