@@ -1,379 +1,379 @@
 [
-	{
-		"constant": false,
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "targetNftAddress",
-				"type": "address"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_maxLtv",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_liqLtv",
-				"type": "uint256"
-			}
-		],
-		"name": "addWhiteList",
-		"outputs": [],
-		"payable": false,
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"anonymous": false,
-		"inputs": [
-			{
-				"indexed": true,
-				"internalType": "address",
-				"name": "previousOwner",
-				"type": "address"
-			},
-			{
-				"indexed": true,
-				"internalType": "address",
-				"name": "newOwner",
-				"type": "address"
-			}
-		],
-		"name": "OwnershipTransferred",
-		"type": "event"
-	},
-	{
-		"constant": false,
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "targetNftAddress",
-				"type": "address"
-			}
-		],
-		"name": "removeWhiteList",
-		"outputs": [],
-		"payable": false,
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"constant": false,
-		"inputs": [],
-		"name": "renounceOwnership",
-		"outputs": [],
-		"payable": false,
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"constant": false,
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "targetNftAddress",
-				"type": "address"
-			},
-			{
-				"internalType": "uint256",
-				"name": "availableLoanAmount",
-				"type": "uint256"
-			}
-		],
-		"name": "setAvailableLoanAmount",
-		"outputs": [],
-		"payable": false,
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"constant": false,
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "targetNftAddress",
-				"type": "address"
-			},
-			{
-				"internalType": "uint256",
-				"name": "nftKlayPrice",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "klayExchangeRate",
-				"type": "uint256"
-			}
-		],
-		"name": "setFloorPrice",
-		"outputs": [],
-		"payable": false,
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"constant": false,
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "targetNftAddress",
-				"type": "address"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_liqLtv",
-				"type": "uint256"
-			}
-		],
-		"name": "setLiqLtv",
-		"outputs": [],
-		"payable": false,
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"constant": false,
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "targetNftAddress",
-				"type": "address"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_maxLtv",
-				"type": "uint256"
-			}
-		],
-		"name": "setMaxLtv",
-		"outputs": [],
-		"payable": false,
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"constant": false,
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "newOwner",
-				"type": "address"
-			}
-		],
-		"name": "transferOwnership",
-		"outputs": [],
-		"payable": false,
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"constant": true,
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "targetNftAddress",
-				"type": "address"
-			}
-		],
-		"name": "getAvailableLoanAmount",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"payable": false,
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"constant": true,
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "targetNftAddress",
-				"type": "address"
-			}
-		],
-		"name": "getFloorPrice",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"payable": false,
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"constant": true,
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "targetNftAdrress",
-				"type": "address"
-			}
-		],
-		"name": "getLiqLtv",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"payable": false,
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"constant": true,
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "targetNftAddress",
-				"type": "address"
-			}
-		],
-		"name": "getMaxLtv",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"payable": false,
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"constant": true,
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "targetNftAddress",
-				"type": "address"
-			}
-		],
-		"name": "getNftData",
-		"outputs": [
-			{
-				"components": [
-					{
-						"internalType": "bool",
-						"name": "activated",
-						"type": "bool"
-					},
-					{
-						"internalType": "uint256",
-						"name": "floorPrice",
-						"type": "uint256"
-					},
-					{
-						"internalType": "uint256",
-						"name": "availableLoanAmount",
-						"type": "uint256"
-					},
-					{
-						"internalType": "uint256",
-						"name": "maxLtv",
-						"type": "uint256"
-					},
-					{
-						"internalType": "uint256",
-						"name": "liqLtv",
-						"type": "uint256"
-					},
-					{
-						"internalType": "uint256",
-						"name": "nftKlayPrice",
-						"type": "uint256"
-					}
-				],
-				"internalType": "struct DataHolder.NftData",
-				"name": "",
-				"type": "tuple"
-			}
-		],
-		"payable": false,
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"constant": true,
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "targetNftAddress",
-				"type": "address"
-			}
-		],
-		"name": "getNftKlayPrice",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"payable": false,
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"constant": true,
-		"inputs": [],
-		"name": "getWhiteListNftList",
-		"outputs": [
-			{
-				"internalType": "address[]",
-				"name": "",
-				"type": "address[]"
-			}
-		],
-		"payable": false,
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"constant": true,
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "targetNftAddress",
-				"type": "address"
-			}
-		],
-		"name": "isWhiteList",
-		"outputs": [
-			{
-				"internalType": "bool",
-				"name": "",
-				"type": "bool"
-			}
-		],
-		"payable": false,
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"constant": true,
-		"inputs": [],
-		"name": "owner",
-		"outputs": [
-			{
-				"internalType": "address",
-				"name": "",
-				"type": "address"
-			}
-		],
-		"payable": false,
-		"stateMutability": "view",
-		"type": "function"
-	}
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "previousOwner",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "newOwner",
+        "type": "address"
+      }
+    ],
+    "name": "OwnershipTransferred",
+    "type": "event"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "targetNftAddress",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_maxLtv",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_liqLtv",
+        "type": "uint256"
+      }
+    ],
+    "name": "addWhiteList",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "targetNftAddress",
+        "type": "address"
+      }
+    ],
+    "name": "getAvailableLoanAmount",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "targetNftAddress",
+        "type": "address"
+      }
+    ],
+    "name": "getFloorPrice",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "targetNftAdrress",
+        "type": "address"
+      }
+    ],
+    "name": "getLiqLtv",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "targetNftAddress",
+        "type": "address"
+      }
+    ],
+    "name": "getMaxLtv",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "targetNftAddress",
+        "type": "address"
+      }
+    ],
+    "name": "getNftData",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "bool",
+            "name": "activated",
+            "type": "bool"
+          },
+          {
+            "internalType": "uint256",
+            "name": "floorPrice",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "availableLoanAmount",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "maxLtv",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "liqLtv",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "nftKlayPrice",
+            "type": "uint256"
+          }
+        ],
+        "internalType": "struct DataHolder.NftData",
+        "name": "",
+        "type": "tuple"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "targetNftAddress",
+        "type": "address"
+      }
+    ],
+    "name": "getNftKlayPrice",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "getWhiteListNftList",
+    "outputs": [
+      {
+        "internalType": "address[]",
+        "name": "",
+        "type": "address[]"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "targetNftAddress",
+        "type": "address"
+      }
+    ],
+    "name": "isWhiteList",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "owner",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "targetNftAddress",
+        "type": "address"
+      }
+    ],
+    "name": "removeWhiteList",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [],
+    "name": "renounceOwnership",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "targetNftAddress",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "availableLoanAmount",
+        "type": "uint256"
+      }
+    ],
+    "name": "setAvailableLoanAmount",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "targetNftAddress",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "nftKlayPrice",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "klayExchangeRate",
+        "type": "uint256"
+      }
+    ],
+    "name": "setFloorPrice",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "targetNftAddress",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_liqLtv",
+        "type": "uint256"
+      }
+    ],
+    "name": "setLiqLtv",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "targetNftAddress",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_maxLtv",
+        "type": "uint256"
+      }
+    ],
+    "name": "setMaxLtv",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "newOwner",
+        "type": "address"
+      }
+    ],
+    "name": "transferOwnership",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  }
 ]
