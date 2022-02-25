@@ -6,6 +6,7 @@ import BigNumber from 'bignumber.js';
 import { LENDING_ADDRESS, KIP7_ADDRESS } from 'lib/staticData';
 import LENDING_ABI from 'abi/LendingABI.json';
 import { divideByTenTo18Squares, tenTo18Squares, addComma } from 'lib/helpers';
+import { toastError, toastSuccess } from 'components/common/Toast';
 
 const St = {
   PopPanel: styled.div`
@@ -141,15 +142,17 @@ const CommonModal = ({
         })
         .on('receipt', (receipt) => {
           // success
+          toastSuccess("Contrats! Transaction has been confirmed!!")
           closeModal();
           window.location.reload();
           console.log('receipt', receipt);
         })
         .on('error', (e) => {
           // failed
+          toastError("Transaction has been failed.");
           console.log('error ', e);
         });
-    } catch (e) {
+      } catch (e) {
       console.log(e);
     }
   };
