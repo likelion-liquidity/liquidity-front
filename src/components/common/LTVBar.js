@@ -46,10 +46,14 @@ const St = {
 const LTVBar = ({
   collateralValue = 0, // 담보가치
   borrowedValue = 0, //빌린 금액
+  inputValue = 0, //모달에 입력된 빌리거나 , 갚는 값
   repayAmount = 0,
   maxLtv = 45,
   liqLtv = 60
 }) => {
+  console.log('maxLtv = ', maxLtv);
+  console.log('liqLtv = ', liqLtv);
+
   const value = 100 / liqLtv;
   const [ltvCurrentPosition, setLtvCurrentPosition] = useState(0);
   const [ltvCurrentPositionWidth, setLtvCurrentPositionWidth] = useState(0);
@@ -81,6 +85,20 @@ const LTVBar = ({
     getOuterSize();
   }, [collateralValue, borrowedValue, getOuterSize]);
 
+  /* input 입력시 */
+  useEffect(() => {
+    console.log('test', (borrowedValue + inputValue) / collateralValue);
+    setLtvCurrentPosition(
+      parseFloat(
+        (((borrowedValue + inputValue) / collateralValue) * 100).toFixed(2)
+      )
+    );
+    getOuterSize();
+  }, [collateralValue, borrowedValue, inputValue, getOuterSize]);
+
+  console.log('inputValue = ', inputValue);
+  console.log('ltvCurrentPositionWidth = ', ltvCurrentPositionWidth);
+
   return (
     <St.LTVBarWrapper>
       <St.FigureContainer>
@@ -98,7 +116,9 @@ const LTVBar = ({
         </St.LtvPercentInfoOuter>
       </St.FigureContainer>
       <St.LTVBarOuter id="ltv-outer" ref={ltvbarRef}>
-        <St.LTVBarInner ltvCurrentPosition={(ltvCurrentPosition / 60) * 100} />
+        <St.LTVBarInner
+          ltvCurrentPosition={(ltvCurrentPosition / liqLtv) * 100}
+        />
       </St.LTVBarOuter>
     </St.LTVBarWrapper>
   );
