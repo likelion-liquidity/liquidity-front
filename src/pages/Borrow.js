@@ -125,7 +125,8 @@ const Borrow = ({ whiteListNFTList }) => {
       </St.FilterContainer>
       <St.ContentViewHeaderContainer>
         <St.Th1>nft</St.Th1>
-        <St.Th2>ltv</St.Th2>
+        <St.Th2>max ltv</St.Th2>
+        <St.Th2>liq ltv</St.Th2>
         <St.Th3>floor price</St.Th3>
       </St.ContentViewHeaderContainer>
       <St.ContentViewContainer>
@@ -143,7 +144,7 @@ const Borrow = ({ whiteListNFTList }) => {
                 key={`asstes-${index}`}
                 imgProps={{ src: '', alt: '' }}
                 titleProps={{ title: e.name }}
-                ltvProps={{ ltv: `${e.liqLtv}` }}
+                ltvProps={{ ltv: `${e.liqLtv}`, maxLtv: `${e.maxLtv}` }}
                 priceProps={{
                   price: `${e.floorPrice}`
                 }}

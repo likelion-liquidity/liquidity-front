@@ -99,6 +99,12 @@ const Asset = ({
         </St.ImageContainer>
       )}
       {titleProps && <St.TitleContainer>{titleProps.title}</St.TitleContainer>}
+
+      {ltvProps && (
+        <St.LtvContainer>
+          {`${addComma(divideByTenTo18Squares(ltvProps.maxLtv))}%`}
+        </St.LtvContainer>
+      )}
       {ltvProps && (
         <St.LtvContainer>
           {`${addComma(divideByTenTo18Squares(ltvProps.ltv))}%`}
