@@ -66,10 +66,14 @@ const NFTCardContainer = ({
         LENDING_ADDRESS
       );
 
-      const nftTokenArray = [
+      let nftTokenArray = [
         ...myAddressNftRes.data.items,
         ...lendingStakedNftListRes.data.items
       ];
+      nftTokenArray = nftTokenArray.filter(
+        (nftToken) =>
+          nftToken.owner === address || nftToken.previousOwner === address
+      );
 
       setNftTokenArray(nftTokenArray);
       setIsLoading(false);
@@ -92,6 +96,8 @@ const NFTCardContainer = ({
       </Container>
     );
   }
+
+  console.log('nftTokenArray= ', nftTokenArray);
   console.log('isDisplayStaked= ', isDisplayStaked);
   return (
     <St.CardContainer>
