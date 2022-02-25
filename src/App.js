@@ -153,8 +153,13 @@ function App() {
 
   useEffect(() => {
     loadAccountInfo();
-    getWhiteList();
+    // getWhiteList();
   }, []);
+  useEffect(() => {
+    if (isConnected) {
+      getWhiteList();
+    }
+  }, [isConnected]);
 
   return (
     <>

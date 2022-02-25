@@ -101,6 +101,7 @@ const Appbar = ({ account, setAccount, isConnected, setIsConnected }) => {
           autoClose: 1500,
           position: toast.POSITION.BOTTOM_CENTER
         });
+        window.location.reload();
       } catch (error) {
         console.log('User denied account access');
       }

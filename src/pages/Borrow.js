@@ -1,8 +1,8 @@
 import Asset from 'components/common/Asset';
 import Button from 'components/common/Button';
+import Loading from 'components/common/Loading';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-
 import styled from 'styled-components';
 import palette from 'styles/palette';
 
@@ -53,6 +53,16 @@ const St = {
   `,
   Text: styled.div`
     margin-left: 5px;
+  `,
+  LoadingWrapper: styled.div`
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  `,
+  LoadingContainer: styled.div`
+    display: flex;
+    justify-content: center;
   `
 };
 
@@ -116,50 +126,68 @@ const Borrow = ({ whiteListNFTList }) => {
 
   return (
     <St.Container>
-      <div style={{ display: 'flex', justifyContent: 'center' }}>
-        <h1>Borrow</h1>
-      </div>
-      <St.FilterContainer>
-        <St.ChkBox type="checkbox" onClick={() => onClickCheckBox()} />
-        <St.Text>My Assets</St.Text>
-      </St.FilterContainer>
-      <St.ContentViewHeaderContainer>
-        <St.Th1>nft</St.Th1>
-        <St.Th2>max ltv</St.Th2>
-        <St.Th2>liq ltv</St.Th2>
-        <St.Th3>floor price</St.Th3>
-      </St.ContentViewHeaderContainer>
-      <St.ContentViewContainer>
-        {whiteListNFTList?.map((e, index) => {
-          if (checkStatus && !e.isOwned && !e.isStaked) {
-            skipCount++;
-            return;
-          }
-          if (
-            index - skipCount >= (pageN - 1) * 5 &&
-            index - skipCount < 5 * pageN
-          ) {
-            return (
-              <Asset
-                key={`asstes-${index}`}
-                imgProps={{ src: '', alt: '' }}
-                titleProps={{ title: e.name }}
-                ltvProps={{ ltv: `${e.liqLtv}`, maxLtv: `${e.maxLtv}` }}
-                priceProps={{
-                  price: `${e.floorPrice}`
-                }}
-                buttonProps={{
-                  handleOnClick: () => handleMoveStakeNFT(e.name, e.isStaked),
-                  title: e.isStaked ? 'Open Manage' : null
-                }}
-              />
-            );
-          }
-        })}
-      </St.ContentViewContainer>
-      {whiteListNFTList ? (
-        <St.PaginationContainer>{renderPagination()}</St.PaginationContainer>
-      ) : null}
+      {window?.klaytn?.selectedAddress ? (
+        <>
+          <div style={{ display: 'flex', justifyContent: 'center' }}>
+            <h1>Borrow</h1>
+          </div>
+          <St.FilterContainer>
+            <St.ChkBox type="checkbox" onClick={() => onClickCheckBox()} />
+            <St.Text>My Assets</St.Text>
+          </St.FilterContainer>
+          <St.ContentViewHeaderContainer>
+            <St.Th1>nft</St.Th1>
+            <St.Th2>max ltv</St.Th2>
+            <St.Th2>liq ltv</St.Th2>
+            <St.Th3>floor price</St.Th3>
+          </St.ContentViewHeaderContainer>
+          <St.ContentViewContainer>
+            {whiteListNFTList?.map((e, index) => {
+              if (checkStatus && !e.isOwned && !e.isStaked) {
+                skipCount++;
+                return;
+              }
+              if (
+                index - skipCount >= (pageN - 1) * 5 &&
+                index - skipCount < 5 * pageN
+              ) {
+                return (
+                  <Asset
+                    key={`asstes-${index}`}
+                    imgProps={{ src: '', alt: '' }}
+                    titleProps={{ title: e.name }}
+                    ltvProps={{ ltv: `${e.liqLtv}`, maxLtv: `${e.maxLtv}` }}
+                    priceProps={{
+                      price: `${e.floorPrice}`
+                    }}
+                    buttonProps={{
+                      handleOnClick: () =>
+                        handleMoveStakeNFT(e.name, e.isStaked),
+                      title: e.isStaked ? 'Open Manage' : null
+                    }}
+                  />
+                );
+              }
+            })}
+          </St.ContentViewContainer>
+          {whiteListNFTList && (
+            <St.PaginationContainer>
+              {renderPagination()}
+            </St.PaginationContainer>
+          )}
+        </>
+      ) : (
+        <St.LoadingWrapper>
+          <div>
+            <St.LoadingContainer>
+              <Loading size={100} color={palette.blue_9} />
+            </St.LoadingContainer>
+
+            <div style={{ fontSize: '20px' }}>Connect Wallet First</div>
+            <div style={{ textAlign: 'center' }}>Now Only Kaikas</div>
+          </div>
+        </St.LoadingWrapper>
+      )}
     </St.Container>
   );
 };
