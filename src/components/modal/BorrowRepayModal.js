@@ -60,8 +60,12 @@ const CommonModal = ({
   currentBorrowAmount,
   nftCollectionAddress
 }) => {
-  const isBorrow = modalState.title === 'Borrow';
+  const [isBorrow, setIsBorrow] = useState(false);
   const [inputValue, setInputValue] = useState(0);
+  useEffect(() => {
+    const isBorrow = modalState.title === 'Borrow';
+    setIsBorrow(isBorrow);
+  }, [modalState]);
   const handleConfirm = () => {
     proceed();
     //modal.confirmFunction();
@@ -70,6 +74,7 @@ const CommonModal = ({
     modalState.cancelFunction();
   };
   const onChangeInput = (e) => {
+    const isBorrow = modalState.title === 'Borrow';
     let value = 0;
     if (!e.target.value) value = 0;
     if (isNaN(e.target.value)) value = 0;
@@ -88,8 +93,13 @@ const CommonModal = ({
         if (isCanAllRepay) value = borrowAmount;
         // 최대 갚을 수 있는 값 세팅
         else value = modalState.stableBalance;
+      } else if (value >= borrowAmount) {
+        /* 스테아블 보다 많지만 BorrowAmount 보다 큰 경우 */
+        // 최대 상환 값 세팅
+        if (isCanAllRepay) value = borrowAmount;
       }
     }
+    //console.log('change value', value);
     //setModalState({ ...modalState, inputValue: e.target.value });
     setInputValue(value);
     modalState.inputValue = value;
@@ -105,12 +115,8 @@ const CommonModal = ({
       // let num = parseInt(modalState.selectedNft.tokenId);
       let num = parseInt(selectedNft.tokenId, 16).toString();
       let amount = inputValue;
-      console.log('amount = ', amount);
       /* 10 ** 18  */
       amount = BigNumber(tenTo18Squares(amount));
-      console.log('amount = ', amount);
-      console.log('nftCollectionAddress= ', nftCollectionAddress);
-      console.log('num= ', num);
       let data = null;
 
       if (modalState.title === 'Borrow') {
@@ -142,17 +148,17 @@ const CommonModal = ({
         })
         .on('receipt', (receipt) => {
           // success
-          toastSuccess("Contrats! Transaction has been confirmed!!")
+          toastSuccess('Contrats! Transaction has been confirmed!!');
           closeModal();
           window.location.reload();
           console.log('receipt', receipt);
         })
         .on('error', (e) => {
           // failed
-          toastError("Transaction has been failed.");
+          toastError('Transaction has been failed.');
           console.log('error ', e);
         });
-      } catch (e) {
+    } catch (e) {
       console.log(e);
     }
   };
