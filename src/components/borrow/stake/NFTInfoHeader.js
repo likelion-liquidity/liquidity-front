@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import useGetImage from 'hooks/useGetImage';
+import { addComma, divideByTenTo18Squares } from 'lib/helpers';
 const St = {
   NFTDescriptionImageContainer: styled.div`
     height: 200px;
@@ -110,7 +111,7 @@ const NFTInfoHeader = ({ nftTitle = '', floorPrice = 0 }) => {
               <img src="https://static.opensea.io/tokens/KLAY.png" alt="" />
             </St.CoinLogo>
             <St.Price>
-              <span> {floorPrice} </span>
+              <span> {addComma(divideByTenTo18Squares(floorPrice))} </span>
             </St.Price>
           </div>
           <div style={{ textAlign: 'center' }}>floor price</div>

@@ -1,5 +1,11 @@
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { Button, Input, LTVBar } from 'components/common';
+import Caver from 'caver-js';
+import BigNumber from 'bignumber.js';
+import { LENDING_ADDRESS, KIP7_ADDRESS } from 'lib/staticData';
+import LENDING_ABI from 'abi/LendingABI.json';
+import { divideByTenTo18Squares, tenTo18Squares } from 'lib/helpers';
 
 const St = {
   PopPanel: styled.div`
@@ -44,29 +50,111 @@ const St = {
   `
 };
 
-const CommonModal = ({ modal }) => {
+const CommonModal = ({
+  modalState,
+  selectedNft,
+  stableBalance,
+  closeModal
+}) => {
+  const [inputValue, setInputValue] = useState(0);
   const handleConfirm = () => {
-    modal.confirmFunction();
+    proceed();
+    //modal.confirmFunction();
   };
   const handleCancel = () => {
-    modal.cancelFunction();
+    modalState.cancelFunction();
   };
   const onChangeInput = (e) => {
-    modal.inputValue = e.target.value;
+    //setModalState({ ...modalState, inputValue: e.target.value });
+    setInputValue(e.target.value);
+    modalState.inputValue = e.target.value;
+  };
+
+  const proceed = async () => {
+    try {
+      const [address] = await window.klaytn.enable();
+      const caver = new Caver(window.klaytn);
+      const contract = caver.contract.create(LENDING_ABI, LENDING_ADDRESS); // Lendinng contract
+
+      // let num = parseInt(modalState.selectedNft.tokenId, 2).toString(16);
+      // let num = parseInt(modalState.selectedNft.tokenId);
+      let num = parseInt(selectedNft.tokenId, 16).toString();
+      let amount = inputValue;
+      console.log('amount = ', amount);
+      /* 10 ** 18  */
+      amount = BigNumber(tenTo18Squares(amount));
+      console.log('amount = ', amount);
+      let data = null;
+
+      if (modalState.title === 'Borrow') {
+        data = contract.methods
+          .borrow(amount, modalState.nftCollectionAddress, num)
+          .encodeABI();
+      } else {
+        const kip7 = new caver.klay.KIP7(KIP7_ADDRESS);
+        const res = await kip7.approve(LENDING_ADDRESS, amount, {
+          from: address
+        });
+
+        data = contract.methods
+          .repay(amount, modalState.nftCollectionAddress, num)
+          .encodeABI();
+      }
+
+      caver.klay
+        .sendTransaction({
+          type: 'SMART_CONTRACT_EXECUTION',
+          from: address,
+          to: LENDING_ADDRESS,
+          data,
+          value: '',
+          gas: '800000'
+        })
+        .on('transactionHash', (hash) => {
+          console.log('transactionHash', hash);
+        })
+        .on('receipt', (receipt) => {
+          // success
+          closeModal();
+          console.log('receipt', receipt);
+        })
+        .on('error', (e) => {
+          // failed
+          console.log('error ', e);
+        });
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   return (
     <>
       <St.PopPanel>
-        <St.PopPanelHd> {modal.title}</St.PopPanelHd>
+        <St.PopPanelHd> {modalState.title}</St.PopPanelHd>
         <St.PopPanelContainer>
           <p>
-            {modal.message}
+            {modalState.message}
             <br />
-            {modal.subMessage}
+            {modalState.subMessage}
           </p>
-          <Input placeholder={modal.inputPlaceholder} style={{color:"#000"}} lcon="$" onChange={onChangeInput}/>
-          <LTVBar />
+          <Input
+            placeholder={modalState.inputPlaceholder}
+            style={{ color: '#000' }}
+            lcon="$"
+            onChange={onChangeInput}
+          />
+          {modalState.stableBalance}
+          <LTVBar
+            collateralValue={divideByTenTo18Squares(
+              parseInt(modalState.nftInfo.floorPrice)
+            )}
+            // borrowedValue={divideByTenTo18Squares(borrowedValue - depositValue)}
+            // repayAmount={0}
+            // collateralValue={modalState.nftInfo.f}
+            borrowedValue={inputValue}
+            maxLtv={divideByTenTo18Squares(parseInt(modalState.nftInfo.maxLtv))}
+            liqLtv={divideByTenTo18Squares(parseInt(modalState.nftInfo.liqLtv))}
+          />
         </St.PopPanelContainer>
 
         <St.PopButtonContainer>
@@ -76,10 +164,10 @@ const CommonModal = ({ modal }) => {
             size="small"
             color="red_6"
           >
-            {modal.cancelButttonMessage}
+            {modalState.cancelButttonMessage}
           </Button>
           <Button type="button" onClick={handleConfirm} size="small">
-            {modal.confirmButtonMessage}
+            {modalState.confirmButtonMessage}
           </Button>
         </St.PopButtonContainer>
       </St.PopPanel>
