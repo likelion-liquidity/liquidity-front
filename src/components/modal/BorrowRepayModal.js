@@ -5,7 +5,7 @@ import Caver from 'caver-js';
 import BigNumber from 'bignumber.js';
 import { LENDING_ADDRESS, KIP7_ADDRESS } from 'lib/staticData';
 import LENDING_ABI from 'abi/LendingABI.json';
-import { divideByTenTo18Squares, tenTo18Squares } from 'lib/helpers';
+import { divideByTenTo18Squares, tenTo18Squares, addComma } from 'lib/helpers';
 import { toastError, toastSuccess } from 'components/common/Toast';
 
 const St = {
@@ -60,6 +60,7 @@ const CommonModal = ({
   currentBorrowAmount,
   nftCollectionAddress
 }) => {
+  const isBorrow = modalState.title === 'Borrow';
   const [inputValue, setInputValue] = useState(0);
   const handleConfirm = () => {
     proceed();
@@ -71,9 +72,23 @@ const CommonModal = ({
   const onChangeInput = (e) => {
     let value = 0;
     if (!e.target.value) value = 0;
+    if (isNaN(e.target.value)) value = 0;
     value = parseFloat(e.target.value);
-    if (value >= canMaxBorrowValue) {
-      value = canMaxBorrowValue;
+    if (isBorrow) {
+      if (value >= canMaxBorrowValue) {
+        value = canMaxBorrowValue;
+      }
+    } else if (!isBorrow) {
+      const borrowAmount = divideByTenTo18Squares(currentBorrowAmount);
+      // 스테이블  현재 버로우 어마운트보다 클경우
+      const isCanAllRepay = modalState.stableBalance > borrowAmount;
+      // 크게 입력했을시
+      if (value >= modalState.stableBalance) {
+        // 최대 상환 값 세팅
+        if (isCanAllRepay) value = borrowAmount;
+        // 최대 갚을 수 있는 값 세팅
+        else value = modalState.stableBalance;
+      }
     }
     //setModalState({ ...modalState, inputValue: e.target.value });
     setInputValue(value);
@@ -129,6 +144,7 @@ const CommonModal = ({
           // success
           toastSuccess("Contrats! Transaction has been confirmed!!")
           closeModal();
+          window.location.reload();
           console.log('receipt', receipt);
         })
         .on('error', (e) => {
@@ -141,12 +157,38 @@ const CommonModal = ({
     }
   };
 
+  const getMaxRepay = () => {
+    const borrowAmount = divideByTenTo18Squares(currentBorrowAmount);
+    // 스테이블  현재 버로우 어마운트보다 클경우
+    const isCanAllRepay = modalState.stableBalance > borrowAmount;
+    let value = 0;
+    // 최대 상환 값 세팅
+    if (isCanAllRepay) value = borrowAmount;
+    // 최대 갚을 수 있는 값 세팅
+    else value = modalState.stableBalance;
+    return value;
+  };
+
   return (
     <>
       <St.PopPanel>
         <St.PopPanelHd> {modalState.title}</St.PopPanelHd>
         <St.PopPanelContainer>
-          max Borrow Value :{canMaxBorrowValue}
+          {isBorrow ? (
+            <span> max Borrow Value :{canMaxBorrowValue}</span>
+          ) : (
+            <>
+              <div>
+                <span>
+                  Borrow Value :
+                  {addComma(divideByTenTo18Squares(currentBorrowAmount))}
+                </span>
+              </div>
+              <div>
+                <span>max Repay Value :{addComma(getMaxRepay())}</span>
+              </div>
+            </>
+          )}
           <p>
             {modalState.message}
             <br />
@@ -160,7 +202,7 @@ const CommonModal = ({
             value={inputValue}
             type="number"
           />
-          {modalState.stableBalance}
+          your balance :{addComma(modalState.stableBalance)}
           <LTVBar
             collateralValue={divideByTenTo18Squares(
               parseInt(modalState.nftInfo.floorPrice)
@@ -174,6 +216,7 @@ const CommonModal = ({
             )}
             maxLtv={divideByTenTo18Squares(parseInt(modalState.nftInfo.maxLtv))}
             liqLtv={divideByTenTo18Squares(parseInt(modalState.nftInfo.liqLtv))}
+            isBorrow={isBorrow}
           />
         </St.PopPanelContainer>
 

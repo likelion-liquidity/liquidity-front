@@ -69,9 +69,6 @@ const NFTDescriptionContainer = ({
   isOpenDescriptionContainer,
   selectedNft,
   isStakedSelectedNft,
-  depositValue = 0, //floor price
-  collateralValue = 0, //test
-  borrowedValue = 0, //test
   nftCollectionAddress,
   stakedNftList
 }) => {
@@ -101,9 +98,10 @@ const NFTDescriptionContainer = ({
         if (!res) return;
         if (res.status === 200) {
           let balance = res.data.balance;
-          balance = parseInt(balance, 16).toString();
+          balance = hexToNumberString(balance);
           console.log('balance = ', balance);
           setStableBalance(balance);
+
           //setModalState({ ...modalState, stableBalance: balance });
         }
       } catch (e) {
@@ -315,12 +313,17 @@ const NFTDescriptionContainer = ({
       const tokenId = parseInt(selectedNft.tokenId, 16).toString();
       return tokenId === stakedNft.nftTokenId;
     });
-    if (!stakeInfo) return;
+    console.log('stakeInfo= ', stakeInfo);
+    if (!stakeInfo) {
+      setCurrnetBorrowAmount(0);
+      return;
+    }
     setCurrnetBorrowAmount(stakeInfo.loanAmount);
   }, [selectedNft, stakedNftList]);
 
   const [canMaxBorrowValue, setCanMaxBorrowValue] = useState();
   const [liqValue, setLiqValue] = useState(0);
+
   useEffect(() => {
     const getMaxBorrowValue = () => {
       const collateralValue = divideByTenTo18Squares(
@@ -331,7 +334,9 @@ const NFTDescriptionContainer = ({
       const maxBorrowValue = collateralValue * (maxLtv / 100); //최대 빌릴 수 있는량
       const liqValue = collateralValue * (liqLtv / 100); //최대 빌릴 수 있는량
       console.log(currentBorrowAmount);
-      const canMaxBorrowValue = divideByTenTo18Squares(tenTo18Squares(maxBorrowValue) - currentBorrowAmount); //내가 최대로 빌릴수 있는 량
+      const canMaxBorrowValue = divideByTenTo18Squares(
+        tenTo18Squares(maxBorrowValue) - currentBorrowAmount
+      ); //내가 최대로 빌릴수 있는 량
       console.log('collateralValue = ', collateralValue);
       console.log('maxLtv = ', maxLtv);
       console.log('maxBorrowValue = ', maxBorrowValue);
@@ -358,10 +363,11 @@ const NFTDescriptionContainer = ({
           <div>
             <span style={{ marginRight: '10px' }}>
               Collateral Value :
-              {addComma(divideByTenTo18Squares(collateralValue))}$
+              {addComma(divideByTenTo18Squares(nftInfo.floorPrice))}$
             </span>
             <span>
-              Borrowed Value :{addComma(divideByTenTo18Squares(borrowedValue))}$
+              Borrowed Value :
+              {addComma(divideByTenTo18Squares(currentBorrowAmount))}$
             </span>
           </div>
         </div>
@@ -373,7 +379,7 @@ const NFTDescriptionContainer = ({
             }}
           >
             <LTVBar
-              collateralValue={divideByTenTo18Squares(collateralValue)}
+              collateralValue={divideByTenTo18Squares(nftInfo.floorPrice)}
               borrowedValue={divideByTenTo18Squares(currentBorrowAmount)}
               repayAmount={0}
               maxLtv={divideByTenTo18Squares(parseInt(nftInfo.maxLtv))}

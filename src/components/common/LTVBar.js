@@ -20,6 +20,7 @@ const St = {
   LTVBarInner: styled.div`
     position: absolute;
     width: ${(props) => props.ltvCurrentPosition}%;
+    transition: width 0.5s;
     height: 100%;
     background-color: ${palette.blue_6};
     border-radius: 20px;
@@ -39,6 +40,7 @@ const St = {
     transform: translateX(-100%);
     display: inline-block;
     font-size: 12px;
+
     font-weight: 300;
   `
 };
@@ -49,7 +51,8 @@ const LTVBar = ({
   inputValue = 0, //모달에 입력된 빌리거나 , 갚는 값
   repayAmount = 0,
   maxLtv = 45,
-  liqLtv = 60
+  liqLtv = 60,
+  isBorrow = true
 }) => {
   console.log('maxLtv = ', maxLtv);
   console.log('liqLtv = ', liqLtv);
@@ -88,13 +91,22 @@ const LTVBar = ({
   /* input 입력시 */
   useEffect(() => {
     console.log('test', (borrowedValue + inputValue) / collateralValue);
-    setLtvCurrentPosition(
-      parseFloat(
-        (((borrowedValue + inputValue) / collateralValue) * 100).toFixed(2)
-      )
-    );
+    if (isBorrow) {
+      setLtvCurrentPosition(
+        parseFloat(
+          (((borrowedValue + inputValue) / collateralValue) * 100).toFixed(2)
+        )
+      );
+    } else {
+      setLtvCurrentPosition(
+        parseFloat(
+          (((borrowedValue - inputValue) / collateralValue) * 100).toFixed(2)
+        )
+      );
+    }
+
     getOuterSize();
-  }, [collateralValue, borrowedValue, inputValue, getOuterSize]);
+  }, [collateralValue, borrowedValue, inputValue, getOuterSize, isBorrow]);
 
   console.log('inputValue = ', inputValue);
   console.log('ltvCurrentPositionWidth = ', ltvCurrentPositionWidth);
