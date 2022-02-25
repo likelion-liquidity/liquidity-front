@@ -105,6 +105,7 @@ const Appbar = ({ account, setAccount, isConnected, setIsConnected }) => {
         console.log('User denied account access');
       }
     } else {
+      alert('🚧해당 사이트는 Kaikas만 지원합니다!🚧');
       console.log(
         'Non-Kaikas browser detected. You should consider trying Kaikas!'
       );
