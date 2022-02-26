@@ -24,6 +24,10 @@ const St = {
 };
 
 function EmptyCard() {
+  const moveOpensea = () => {
+    window.open('https://www.opensea.io');
+  };
+
   return (
     <St.PostInfo>
       <span style={{ marginRight: '5px' }}>
@@ -35,7 +39,9 @@ function EmptyCard() {
           해당 NFT를 여기서 구매해보세요.
         </span>
         <St.ButtonContainer>
-          <Button color="blue_5">OpenSea 바로가기</Button>
+          <Button color="blue_5" onClick={moveOpensea}>
+            OpenSea 바로가기
+          </Button>
         </St.ButtonContainer>
       </div>
     </St.PostInfo>
