@@ -78,8 +78,12 @@ const St = {
 const Appbar = ({ account, setAccount, isConnected, setIsConnected }) => {
   const { openModal, ModalPortal, closeModal } = useModal();
 
-  const loadAccountInfo = async () => {
+  const loadAccountInfo = async (buttonClicked) => {
     const klaytn = getKlaytnProvider();
+    const connect = window.sessionStorage.getItem('connect');
+    if (!buttonClicked && connect === 'false') return;
+
+    console.log('connect = ', connect);
     if (isConnected) {
       clearAccountInfo(setAccount);
       setIsConnected(false);
@@ -87,13 +91,14 @@ const Appbar = ({ account, setAccount, isConnected, setIsConnected }) => {
         autoClose: 1500,
         position: toast.POSITION.BOTTOM_CENTER
       });
+      window.location.reload();
+      window.sessionStorage.setItem('connect', false);
       return;
     }
 
-    if (klaytn) {
+    if (connect && klaytn) {
       try {
         const res = await getKaikasAccts();
-
         setAccountInfo(klaytn);
         setIsConnected(true);
         klaytn.on('accountsChanged', () => setAccountInfo(klaytn));
@@ -101,6 +106,7 @@ const Appbar = ({ account, setAccount, isConnected, setIsConnected }) => {
           autoClose: 1500,
           position: toast.POSITION.BOTTOM_CENTER
         });
+        window.sessionStorage.setItem('connect', true);
         window.location.reload();
       } catch (error) {
         console.log('User denied account access');
@@ -139,18 +145,20 @@ const Appbar = ({ account, setAccount, isConnected, setIsConnected }) => {
     klaytn.on('networkChanged', () => setNetworkInfo(klaytn.networkVersion));
   };
 
-  useEffect(async () => {
+  useEffect(() => {
     setNetworkInfo();
-    // loadAccountInfo();
   }, []);
 
+  useEffect(() => {
+    //loadAccountInfo(false);
+  }, []);
   const links = [
     // { name: 'Borrow', path: '/borrow' }
   ];
 
   const handleConnectWallet = () => {
-    openModal();
-    loadAccountInfo();
+    //openModal();
+    loadAccountInfo(true);
   };
 
   return (

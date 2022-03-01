@@ -8,6 +8,7 @@ import Borrow from 'pages/Borrow';
 import Header from 'components/base/Header';
 import Common from 'pages/Common';
 import Total from 'pages/Total';
+import Index from 'pages/index';
 import Footer from 'components/base/Footer';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'styles/bootstrap.custom.css';
@@ -113,54 +114,17 @@ function App() {
       console.log(e);
     }
   };
-
-  const loadAccountInfo = async () => {
-    const klaytn = getKlaytnProvider();
-
-    if (klaytn) {
-      try {
-        const res = await getKaikasAccts();
-        setAccountInfo(klaytn);
-        setIsConnected(true);
-        klaytn.on('accountsChanged', () => setAccountInfo(klaytn));
-        toast.success('Your wallet is connected!!', {
-          autoClose: 1500,
-          position: toast.POSITION.BOTTOM_CENTER
-        });
-      } catch (error) {
-        console.log('User denied account access');
-      }
-    } else {
-      console.log(
-        'Non-Kaikas browser detected. You should consider trying Kaikas!'
-      );
-    }
-  };
-
-  const setAccountInfo = async () => {
-    const klaytn = getKlaytnProvider();
-    if (klaytn === undefined) return;
-
-    const account = klaytn.selectedAddress;
-    const balance = await caver.klay.getBalance(account);
-    setAccount({
-      ...account,
-      account,
-      balance: caver.utils.fromPeb(balance, 'KLAY')
-    });
-    localStorage.setItem('address', account.account);
-  };
-
-  useEffect(() => {
-    loadAccountInfo();
-    // getWhiteList();
-  }, []);
+  // useEffect(() => {
+  //   loadAccountInfo();
+  //   // getWhiteList();
+  // }, []);
   useEffect(() => {
     if (isConnected) {
       getWhiteList();
     }
   }, [isConnected]);
 
+  console.log('isConnected ', isConnected);
   return (
     <>
       <Helmet>
@@ -179,6 +143,7 @@ function App() {
           />
           <St.ContentView>
             <Routes>
+              <Route path="/test" element={<Index />} />
               <Route
                 path="/"
                 element={<Borrow whiteListNFTList={whiteListNFTList} />}
